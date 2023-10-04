@@ -3,6 +3,8 @@ int main()
 {
 
 
+printf("Pobeda");
+
 
 
     return 0;
