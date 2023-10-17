@@ -6,17 +6,18 @@ int* num1(int a) { // генераци€ числа длины ј
 	srand(time(NULL));
 
 	int* N;
+	unsigned int H = 0;
 	N = (int*)malloc(a * sizeof(int));
 	for (int i = 0; i < a; i++) {
 		N[i] = rand() % 9 + 1;
 		printf("%d", N[i]);
+		H += N[i] * (int)pow(10, i);
 	}
 	return N;
 }
 void game(int* N, int a) {// игра
 	printf("The game started!\nYou have to guess the number.\n");
-	int arr[5];
-	
+	int* arr = (int*)malloc(a * sizeof(int));	
 
 	do { //сама игра
 		printf("Enter a number: ");
@@ -31,23 +32,17 @@ void game(int* N, int a) {// игра
 			digC /= 10;
 		}
 
-		for (int i = a-1; i >= 0; i--) {
+		for (int i = 0; i < a; i++) {
+			if (arr[i] == N[i])
+				printf("Bull! You guessed a digital of number: %d;\n", N[i]);
 			for (int k = 0; k < a; k++)
 				if (arr[k] == N[i]) {
 					printf("Cow! You guessed a digital of number: %d;\n", N[i]);
 					break;
-			}
-			if (arr[i] == N[i])
-				printf("Bull! You guessed a digital of number: %d;\n", N[i]);
-			//int f = i;
-			/*for (int k = 0; k < a; k++) {
-				if (arr[k] == N[f]) {
-					printf("Bull! You guessed a digital of number: %d;\n", N[i]);
-					f++;
-				}
-			}*/
+			}			
 		}
 	} while (1);
+	free(arr);
 }
 int main() {
 	int a;
