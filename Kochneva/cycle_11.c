@@ -8,7 +8,7 @@ int main()
     double min_diff = 1.0, current_diff, a;
     double nearest_a = 0;
 
-    printf("Введите натуральное число: ");
+    printf("Р’РІРµРґРёС‚Рµ РЅР°С‚СѓСЂР°Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ: ");
     scanf_s("%d", &n);
 
     for (i = 1; i <= n; i++)
@@ -22,7 +22,7 @@ int main()
         }
     }
 
-    printf("Ближайшее значение: %.6f\n", nearest_a);
+    printf("Р‘Р»РёР¶Р°Р№С€РµРµ Р·РЅР°С‡РµРЅРёРµ: %.6f\n", nearest_a);
 
     return 0;
 }
