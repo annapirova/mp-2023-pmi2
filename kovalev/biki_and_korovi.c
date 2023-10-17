@@ -17,10 +17,10 @@ int main()
     }
     for(i=0;i<n;i++)
     {
-        int j=rand()%9;
+        int j=1+rand()%9;
         while(isx[j]==-1)
         {
-            j=rand()%9;
+            j=rand()%10;
         }
         ch+=(isx[j]*pow(10,i));
         isx[j]=-1;
