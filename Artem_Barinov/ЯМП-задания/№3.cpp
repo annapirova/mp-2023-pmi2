@@ -13,21 +13,24 @@ unsigned int num1(int a) { // генерация числа длины А
 		N[i] = rand() % 9 + 1;
 		H += N[i] * (int)pow(10, i);
 	}
-	printf("number: %u", H);
+	printf("number: %u\n", H);
 	return H;
 }
 void game(unsigned int H, int a) {// игра
 	printf("The game started!\nYou have to guess the number.\n");
 	int arr[5];
 	int N[5];
-
 	int HC = H;
-	for (int j = 0; j < a; j++) {
-		N[j] = HC % 10;
-		HC /= 10;
-	}
+	for (int j = 0; j < a; j++){ N[j] = HC % 10;HC /= 10;}
 
+	int bull = 0;
+	int P = 0; // количество попыток
 	do { //сама игра
+		if (bull == a) { // *угадали все цифры (все быки) - завершаем игру*
+			printf("You win!!!\n");
+			printf("Number of attemps: %d\n", P);
+			return;
+		}
 		printf("Enter a number: ");
 		unsigned int dig = 0;
 		scanf_s("%u", &dig);
@@ -40,17 +43,22 @@ void game(unsigned int H, int a) {// игра
 			digC /= 10;
 		}
 
-		for (int i = 0; i < a; i++) {
+		for (int i = 0; i < a; i++) { // проверяем совпадения цифр
 			if (arr[i] == N[i]) {
 				printf("Bull! You guessed a digital of number: %d;\n", N[i]);
-				break;
+				bull++;
+				continue;
 			}
-			for (int k = 0; k < a; k++)
+			for (int k = 0; k < a; k++) {
 				if (arr[k] == N[i]) {
 					printf("Cow! You guessed a digital of number: %d;\n", N[i]);
 					break;
-			}			
+				}
+				else
+					printf("No matches!");
+			}
 		}
+		++P;
 	} while (1);
 }
 int main() {
