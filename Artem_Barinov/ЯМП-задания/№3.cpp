@@ -7,8 +7,10 @@ int* num1(int a) { // генерация числа длины А
 
 	int* N;
 	N = (int*)malloc(a * sizeof(int));
-	for (int i = 0; i < a; i++)
-		N[i] = rand() % 10 + 1;
+	for (int i = 0; i < a; i++) {
+		N[i] = rand() % 9 + 1;
+		printf("%d", N[i]);
+	}
 	return N;
 }
 void game(int* N, int a) {// игра
@@ -20,31 +22,30 @@ void game(int* N, int a) {// игра
 		printf("Enter a number: ");
 		unsigned int dig = 0;
 		scanf_s("%u", &dig);
-		/*if (scanf_s("%u", &dig) != 1) {
-			printf("Wrong simbol! Try again!\n");
-			rewind(stdin);
-			continue;
-		}*/
+		
 		if (dig == 0)
 			return;
-		int digC = 0;
+		int digC = dig;
 		for (int j = 0; j < a; j++) {
-			arr[j] = dig % 10;
+			arr[j] = digC % 10;
 			digC /= 10;
 		}
 
-		for (int i = a; i >= 0; i--) {
-			for (int k = 0; k < a; k++) {
-				if (arr[k] == N[i])
+		for (int i = a-1; i >= 0; i--) {
+			for (int k = 0; k < a; k++)
+				if (arr[k] == N[i]) {
 					printf("Cow! You guessed a digital of number: %d;\n", N[i]);
+					break;
 			}
-			int f = i;
-			for (int k = 0; k < a; k++) {
+			if (arr[i] == N[i])
+				printf("Bull! You guessed a digital of number: %d;\n", N[i]);
+			//int f = i;
+			/*for (int k = 0; k < a; k++) {
 				if (arr[k] == N[f]) {
 					printf("Bull! You guessed a digital of number: %d;\n", N[i]);
-					f--;
+					f++;
 				}
-			}
+			}*/
 		}
 	} while (1);
 }
