@@ -10,14 +10,14 @@ int main() {
     int closest = INT_MAX;
     int index1 = 0, index2 = 0;
     int targetValue;
-    printf("Введите 6 элементов массива:\n");
+    printf("Р’РІРµРґРёС‚Рµ 6 СЌР»РµРјРµРЅС‚РѕРІ РјР°СЃСЃРёРІР°:\n");
 
     for (i = 0; i < 6; i++)
     {
         scanf_s("%d", &inputArray[i]);
     }
 
-    printf("Введите целевое значение:\n");
+    printf("Р’РІРµРґРёС‚Рµ С†РµР»РµРІРѕРµ Р·РЅР°С‡РµРЅРёРµ:\n");
     scanf_s("%d", &targetValue);
 
     for (i = 0; i < 6; i++)
@@ -33,6 +33,6 @@ int main() {
             }
         }
     }
-    printf("Пара с ближайшей суммой к вашему значению: %d и %d\n", inputArray[index1], inputArray[index2]);
+    printf("РџР°СЂР° СЃ Р±Р»РёР¶Р°Р№С€РµР№ СЃСѓРјРјРѕР№ Рє РІР°С€РµРјСѓ Р·РЅР°С‡РµРЅРёСЋ: %d Рё %d\n", inputArray[index1], inputArray[index2]);
     return 0;
 }
