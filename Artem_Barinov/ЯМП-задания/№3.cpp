@@ -13,23 +13,27 @@ int* num1(int a) { // генераци€ числа длины ј
 }
 void game(int* N, int a) {// игра
 	printf("The game started!\nYou have to guess the number.\n");
-	printf("Enter a number: ");
-
 	int arr[5];
-	int digC = 0;
-	for (int j = 0; j < 5; j++) {
-		arr[j] = dig % 10;
-		digC /= 10;
-	}
+	
 
 	do { //сама игра
+		printf("Enter a number: ");
 		unsigned int dig = 0;
-		if (scanf_s("%u", &dig) != 0) {
+		scanf_s("%u", &dig);
+		/*if (scanf_s("%u", &dig) != 1) {
 			printf("Wrong simbol! Try again!\n");
 			rewind(stdin);
 			continue;
+		}*/
+		if (dig == 0)
+			return;
+		int digC = 0;
+		for (int j = 0; j < a; j++) {
+			arr[j] = dig % 10;
+			digC /= 10;
 		}
-		for (int i = a; i >= 0; i++) {
+
+		for (int i = a; i >= 0; i--) {
 			for (int k = 0; k < a; k++) {
 				if (arr[k] == N[i])
 					printf("Cow! You guessed a digital of number: %d;\n", N[i]);
@@ -37,7 +41,7 @@ void game(int* N, int a) {// игра
 			int f = i;
 			for (int k = 0; k < a; k++) {
 				if (arr[k] == N[f]) {
-					printf("Cow! You guessed a digital of number: %d;\n", N[i]);
+					printf("Bull! You guessed a digital of number: %d;\n", N[i]);
 					f--;
 				}
 			}
