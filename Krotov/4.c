@@ -4,6 +4,7 @@ int main4() {
     int n;
     printf("Dlina chisla (от 2 до 5): \n");
     scanf_s("%d", &n);
+
     if (n < 2 || n > 5) {
         printf("Error.\n");
         return 0;
@@ -11,6 +12,7 @@ int main4() {
     int secretNumber[n];
     int guess[n];
     printf("Chislo c %d ciframi ", n);
+    
     for (int i = 0; i < n; i++) 
     {
         scanf_s("%d", &secretNumber[i]);
