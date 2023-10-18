@@ -3,19 +3,18 @@
 #include "stdlib.h"
 int main()
 {
-    int n,a,num,j,i,k;
-    n = 5 + rand()%95;
-    int m[n];
-    for (a = 0; a < n; a++)
+    int a,num,j,i,k;
+    int m[100];
+    for (a = 0; a < 100; a++)
     {
         m[a] = rand()%100;
     }
     scanf("%d",&num);
     for (k = 0; k < 200;k++)
     {
-        for (i = 0; i < n - 1;i++)
+        for (i = 0; i < 100 - 1;i++)
         {
-            for (j = i + 1; j < n;j++)
+            for (j = i + 1; j < 100;j++)
             {
                 if (num + k == m[i] + m[j])
                 {
