@@ -3,16 +3,15 @@
 #include "stdlib.h"
 int main()
 {
-    int n,a,num,j,i,comme;
-    n = 5 + rand()%95;
-    int m[n];
-    for (a = 0; a < n; a++)
+    int a,num,j,i,comme;
+    int m[100];
+    for (a = 0; a < 100; a++)
     {
         m[a] = rand()%10000;
     }
-    for (i = 0; i < n - 1; i++)
+    for (i = 0; i < 100 - 1; i++)
     {
-        for (j = 1; j < n; j++)
+        for (j = 1; j < 100; j++)
         {
             comme = 0;
             if (m[i] == m[j])
