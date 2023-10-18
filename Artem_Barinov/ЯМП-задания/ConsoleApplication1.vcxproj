@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Circуls.cpp" />
     <ClCompile Include="Вар1.cpp" />
     <ClCompile Include="№13.cpp" />
     <ClCompile Include="№3.cpp" />
