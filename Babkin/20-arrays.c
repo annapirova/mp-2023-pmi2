@@ -16,7 +16,7 @@ int main()
         {
             for (j = i + 1; j < 100;j++)
             {
-                if (num + k == m[i] + m[j])
+                if ((num + k == m[i] + m[j]) || (num - k == m[i] + m[j]))
                 {
                     printf("%d , %d", &m[i],&m[j]);
                     return 0;
