@@ -5,7 +5,7 @@ int main()
 {
     int a,num,j,i,k;
     int m[100];
-    for (a = 0; a < 100; a++)
+    for (a = 0; a < 100; a++) //o
     {
         m[a] = rand()%100;
     }
