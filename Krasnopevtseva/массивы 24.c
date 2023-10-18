@@ -7,24 +7,20 @@ int main()
 	setlocale(LC_CTYPE, "Russian");
 	const int size = 10;
 	int array[10], kol=0;
-	printf("Введите массив из 10 элементов\n");
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г¬Г Г±Г±ГЁГў ГЁГ§ 10 ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў\n");
 	for (int i = 0; i < size; i++)
 	{
 		scanf_s("%d", &array[i]);
-	}
-	for (int i = 0; i < size; i++)
-	{
-		printf("%d " , array[i]);
 	}
 	for (int i = 0; i < size; i++)
 		for (int m = 0; m < size; m++)
 			if (array[m] == array[i] && m != i)
 				kol++;
 	if (kol == 0)
-		printf("Одинаковых элементов нет \n");
+		printf("ГЋГ¤ГЁГ­Г ГЄГ®ГўГ»Гµ ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў Г­ГҐГІ \n");
 	else
 	{
-		printf("Повторения есть в количестве " "%d " "штук", kol);
+		printf("ГЏГ®ГўГІГ®Г°ГҐГ­ГЁГї ГҐГ±ГІГј Гў ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГҐ " "%d " "ГёГІГіГЄ", kol);
 	}
 	return 0;
 }
