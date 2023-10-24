@@ -7,21 +7,19 @@ int main()
     int m[100];
     for (a = 0; a < 100; a++)
     {
-        m[a] = rand()%10000;
+        m[a] = rand()%1000;
+        printf("%d\n",m[a]);
     }
-    for (i = 0; i < 100 - 1; i++)
+    for (i = 0; i < 100; i++)
     {
-        for (j = 1; j < 100; j++)
+        for (j = 0; i + j < 100; j++)
         {
-            comme = 0;
-            if (m[i] == m[j])
+            if ((m[i] == m[i+j]) && (j + i != i))
             {
-                comme = 1;
-                printf("This array has some equal elements");
+                printf("It has some equal elements: %d on %d and %d on %d",m[i],i,m[i+j],i+j);
+                return 0;
             }
-            if (comme == 1) {break;}
         }
-        if (comme == 1) {break;}
     }
     return 0;
 }
