@@ -24,11 +24,11 @@ void game(unsigned int G, int a) {
 	for (int j = 0; j < a; j++) { N[j] = GC % 10; GC /= 10; }
 
 	int bull = 0;
-	int Pop = 0; // kol-vo popitok
+	int Popitka = 0; // kol-vo popitok
 	do { 
 		if (bull == a) { // *Vse ygadano - igra zaverhaetcya*
 			printf("You win!!!\n");
-			printf("Kol-vo popitok: %d\n", Pop);
+			printf("Kol-vo popitok: %d\n", Popitka);
 			return;
 		}
 		printf("vvedite chislo: ");
@@ -59,8 +59,8 @@ void game(unsigned int G, int a) {
 					printf("Net sovpadenii!");
 			}
 		}
-		++Pop;
-	} while (1);
+		++Popitka;
+	} while (bull!=a);
 }
 int main() {
 	int a;
