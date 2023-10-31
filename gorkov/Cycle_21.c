@@ -1,4 +1,4 @@
-//задача 21 из циклов
+//cycle 21 
 #include "stdio.h"
 int main()
 {
