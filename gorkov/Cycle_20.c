@@ -1,4 +1,4 @@
-//задача 20 из циклов
+//cycle 20 
 #include "stdio.h"
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 		a /= 10;
 		k++;
 	}
-	//если слева, то k-l и k-n в printf
+	//for b) replace k-l and k-n in printf
 	printf("%ld =numberMax placeFromRight=%ld,\n%ld =numberMin place=%ld \n", max, l, min, n);
 	return 0;
 
