@@ -1,4 +1,4 @@
-//угадай число Вар1
+//guess the number
 #include "stdio.h"
 #include "time.h"
 #include "stdlib.h"
