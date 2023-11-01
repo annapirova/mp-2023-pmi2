@@ -42,7 +42,7 @@
     <ClCompile Include="mass 28.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="A bez B.cpp">
+    <ClCompile Include="perestanovka.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
