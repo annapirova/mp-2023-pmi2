@@ -16,7 +16,7 @@ int main()
 	A = (int*)malloc(length * sizeof(int));
 	B = (int*)malloc(0 * sizeof(int));
 	C = (int*)malloc(0 * sizeof(int));
-	for (int j = 0; j < length; j++) 
+	for (int j = 0; j < length; j++)
 	{
 		printf("A[%d] = ", j);
 		scanf_s("%d", &A[j]);
@@ -26,7 +26,7 @@ int main()
 		int k = 0;
 		while ((k < pos_b) && (B[k] != A[pos_a])) k++;
 		{
-			if (k == pos_b) 
+			if (k == pos_b)
 			{
 				B[pos_b] = A[pos_a];
 				C[pos_b] = 1;
@@ -44,10 +44,10 @@ int main()
 	{
 		sum += C[k];
 	}
-	average = sum / length_c;
+	average = sum / length_b;
 	for (int i = 0; i < length_b + 1; i++)
 	{
-		if (C[i] > average) 
+		if (C[i] > average)
 		{
 			printf("%d\n", B[i]);
 		}
