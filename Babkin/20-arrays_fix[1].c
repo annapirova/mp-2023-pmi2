@@ -14,7 +14,7 @@ int main()
     {
       for (i = 0;i < 100; i++)
       {
-        for (j = 0; i+j < 100; j++)
+        for (j = 1; i+j < 100; j++)
         {
           if ((m[i] + m[i+j] == num + k) || (m[i] + m[i+j] == num - k)) 
           {
