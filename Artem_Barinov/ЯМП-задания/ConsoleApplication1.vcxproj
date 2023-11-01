@@ -128,8 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="A bez B.cpp" />
     <ClCompile Include="Circуls.cpp" />
     <ClCompile Include="mass 25-26.cpp" />
+    <ClCompile Include="mass 28.cpp" />
     <ClCompile Include="mass 5-6.cpp" />
     <ClCompile Include="massive 1-4.cpp" />
     <ClCompile Include="Вар1.cpp" />
