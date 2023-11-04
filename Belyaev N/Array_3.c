@@ -5,18 +5,17 @@
 
 int main()
 {
-	int pos_a, pos_b, length, length_b, length_c, sum, average;
+	int pos_a, pos_b, length, sum, average, elements;
 	int* A;
-	int* B;
-	int* C;
-	length = sizeof(A) / sizeof(A[0]);
+	int B[10] = {0};
+	int C[10] = {0};
 	pos_a = 0; pos_b = 0; sum = 0;
 	printf("Enter length of array - ");
 	scanf_s("%d", &length);
 	A = (int*)malloc(length * sizeof(int));
-	B = (int*)malloc(0 * sizeof(int));
-	C = (int*)malloc(0 * sizeof(int));
-	for (int j = 0; j < length; j++)
+	elements = 0;
+	printf("Enter elements of array != 0\n");
+	for (int j = 0; j < length; j++) 
 	{
 		printf("A[%d] = ", j);
 		scanf_s("%d", &A[j]);
@@ -26,7 +25,7 @@ int main()
 		int k = 0;
 		while ((k < pos_b) && (B[k] != A[pos_a])) k++;
 		{
-			if (k == pos_b)
+			if (k == pos_b) 
 			{
 				B[pos_b] = A[pos_a];
 				C[pos_b] = 1;
@@ -38,16 +37,21 @@ int main()
 			}
 		}
 	}
-	length_b = sizeof(B) / sizeof(B[0]);
-	length_c = sizeof(C) / sizeof(C[0]);
-	for (int k = 0; k < length_c; k++)
+	for (int j = 0; j < length; j++)
+	{
+		if (B[j] != 0)
+		{
+			elements = elements + 1;
+		}
+	}
+	for (int k = 0; k < length; k++)
 	{
 		sum += C[k];
 	}
-	average = sum / length_b;
-	for (int i = 0; i < length_b + 1; i++)
+	average = sum / elements;
+	for (int i = 0; i < length; i++)
 	{
-		if (C[i] > average)
+		if (C[i] > average) 
 		{
 			printf("%d\n", B[i]);
 		}
