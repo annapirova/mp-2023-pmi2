@@ -128,7 +128,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="perestanovka.cpp" />
     <ClCompile Include="Circуls.cpp" />
+    <ClCompile Include="mass 25-26.cpp" />
+    <ClCompile Include="mass 28.cpp" />
+    <ClCompile Include="mass 29.cpp" />
+    <ClCompile Include="massive 1-4.cpp" />
     <ClCompile Include="Вар1.cpp" />
     <ClCompile Include="№13.cpp" />
     <ClCompile Include="№3.cpp" />
