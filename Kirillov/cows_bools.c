@@ -17,13 +17,14 @@ int main() {
     int secretNumber[5];
     for (int i = 0; i < numberLength; i++) {
         int digit;
-        int isUnique;
+        int isUnique = 0;
         do {
             digit = rand() % 10;
             isUnique = 1;
             for (int j = 0; j < i; j++) {
                 if (secretNumber[j] == digit) {
                     isUnique = 0;
+                    break;
                 }
             }
             if (isUnique) {
@@ -35,7 +36,9 @@ int main() {
     printf("Try to guess a %d-digit number (digits are not repeated).\n", numberLength);
 
     int attempts = 0;
-    while (1) {
+    int gameFinished = 0;
+
+    while (!gameFinished) {
         int guess[5];
         printf("Enter your guess: ");
 
@@ -49,7 +52,7 @@ int main() {
 
         if (!validInput) {
             while (getchar() != '\n');
-            
+            continue;
         }
 
         int bulls = 0, cows = 0;
@@ -61,7 +64,7 @@ int main() {
                 for (int j = 0; j < numberLength; j++) {
                     if (guess[i] == secretNumber[j]) {
                         cows++;
-                        
+                        break;
                     }
                 }
             }
@@ -72,7 +75,7 @@ int main() {
         attempts++;
         if (bulls == numberLength) {
             printf("Congratulations! You guessed the number in %d attempts.\n", attempts);
-            break;
+            gameFinished = 1;
         }
     }
 
