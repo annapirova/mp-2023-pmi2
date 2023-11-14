@@ -45,7 +45,7 @@
     <ClCompile Include="perestanovka.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kassa\Kassa.cpp">
+    <ClCompile Include="..\..\..\Kassa\Kassa zadacha.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
