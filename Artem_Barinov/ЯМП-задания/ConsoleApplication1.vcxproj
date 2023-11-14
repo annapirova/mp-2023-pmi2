@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Kassa\Kassa zadacha.cpp" />
+    <ClCompile Include="..\..\..\Kassa\Kassa.cpp" />
     <ClCompile Include="perestanovka.cpp" />
     <ClCompile Include="Circуls.cpp" />
     <ClCompile Include="mass 25-26.cpp" />
