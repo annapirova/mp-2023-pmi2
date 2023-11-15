@@ -7,9 +7,10 @@ int main()
   int cows, bools = 0;
   int cpu[5] = {10,10,10,10,10}, yout[5] = {11,11,11,11,11};
   printf("Print the length of your number: ");
-  scanf("%d\n", &n);
+  scanf("%d", &n);
+  printf("\n");
   if (n > 0)
-  {cpu[0] = 1 + rand()%9;}
+  {cpu[0] = 1 + rand()%9;printf("%d",cpu[0]);}
   for (i=1;i < n;i++)
   {
     c = k = 1;
@@ -33,9 +34,11 @@ int main()
         k += 1; 
       }
     }
+    printf("%d",cpu[i]);
   }
   printf("print your number: ");
-  scanf("%d\n", &yournum);
+  scanf("%d", &yournum);
+  printf("\n");
   for (u=n-1;u>-1;u--)
   {
     yout[u] = yournum % 10;
@@ -65,7 +68,8 @@ int main()
     {
       printf("Oopsy,you guessed wrong. There are %d cows and %d bools. Try again\n", cows, bools);
       printf("print your number: ");
-      scanf("%d\n", &yournum);
+      scanf("%d", &yournum);
+      printf("\n");
       for (u=n-1;u>-1;u--)
       {
         yout[u] = yournum % 10;
