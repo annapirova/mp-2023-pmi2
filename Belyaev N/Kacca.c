@@ -59,7 +59,7 @@ void func_add(int a[], int current, int count)
 	printf("Product added to receipt\n");
 }
 
-void func_gen(int a[], char* b[], int c[], double d[], int e[], int count) // a - QR, b - Name, c - Price, d - Discount, e - Purchases
+void func_gen(int a[], char* b[], int c[], double d[], int e[], int count, int length) // a - QR, b - Name, c - Price, d - Discount, e - Purchases
 {
 	int B[10] = { 0 };
 	int C[10] = { 0 };
@@ -87,7 +87,7 @@ void func_gen(int a[], char* b[], int c[], double d[], int e[], int count) // a 
 	}
 	for (int i = 0; i < count; i++)
 	{
-		for (int j = 0; j < count; j++)
+		for (int j = 0; j < length; j++)
 		{
 			if (B[i] == a[j])
 			{
@@ -96,11 +96,10 @@ void func_gen(int a[], char* b[], int c[], double d[], int e[], int count) // a 
 				printf("Amount: %d - ", C[i]);
 				printf("Total: %d \n", c[j] * C[i]);
 				total += c[j] * C[i];
-				sum += (c[j] - (c[j]*(d[j]/100))) * C[i];
+				sum += (c[j] - (c[j] * (d[j] / 100))) * C[i];
 			}
 		}
 	}
-
 	printf("Receipt:\n Total: %d\n Discount: %.1f\n To pay: %.1f\n", total, total - sum, sum);
  }
 
@@ -138,7 +137,7 @@ int main()
 		case 2: current = func_scan(current); break;
 		case 3: func_desc(QR, Name, Price, Discount, current, length); break;
 		case 4: func_add(Purchases, current, count); count++; break;
-		case 5: func_gen(QR, Name, Price, Discount, Purchases, count); break;
+		case 5: func_gen(QR, Name, Price, Discount, Purchases, count, length); break;
 		default: func_error(); break;
 		}
 	} while (operation != 6);
