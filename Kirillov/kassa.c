@@ -159,27 +159,53 @@ int main() {
 
 	struct Receipt myReceipt;
 	myReceipt.itemCount = 0;
-
-	while (1) {
-		printf("Scan barcode for find: ");
-		scanf_s("%d", &userbrcode);
-		if (checkProduct(userbrcode)) {
-			myReceipt = addToReceipt(myReceipt, returnByBarcode(userbrcode));
-			findByBarcode(userbrcode);
-		}
-		else if (userbrcode == -0) {
+	int operation;
+	printf("Enter 1 to scan barcode,2 to get product info,3 to add item to receipt ,4 generate a purchase receipt,5 to get sum of receipt\n");
+	printf("Enter any number to close the purchase: ");
+	do
+	{
+		printf("Select the command: ");
+		scanf_s("%d", &operation);
+		switch (operation)
+		{
+		case 1: 
+			printf("Scan barcode for find: ");
+			scanf_s("%d", &userbrcode);
+			if (checkProduct(userbrcode) == 0) { 
+				printf("Product #%d didn't find\n", userbrcode); 
+			}
 			break;
-		}
-		else {
-			printf("Product #%d didn't find\n", userbrcode);
+			
 
+		case 2: 
+			if (checkProduct(userbrcode)) { 
+				findByBarcode(userbrcode); 
+			}
+			break;
+			
+			
+			
+		case 3: 
+			myReceipt = addToReceipt(myReceipt, returnByBarcode(userbrcode));
+			printf("Product was added successfully");
+			break;
+			
+
+		case 4: 
+			printf("\nAll list of products: \n");
+			printReceipt(myReceipt);
+			break;
+			
+			
+		case 5: 
+			receiptSum(myReceipt);
+			break;
+			
+		
 		}
-		
-		
-	}
-	printf("\nAll list of products: \n");
-	printReceipt(myReceipt);
-	receiptSum(myReceipt);
+
+	} while ((operation>0)&&(operation<6));
+	
 	return 0;
 
 }
