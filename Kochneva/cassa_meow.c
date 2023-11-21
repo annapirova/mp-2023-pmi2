@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-void startup_menu()		// Функция startup_menu выводит меню
+void startup_menu()		// Р¤СѓРЅРєС†РёСЏ startup_menu РІС‹РІРѕРґРёС‚ РјРµРЅСЋ
 {
 	printf("What function do you need?\n");
 	printf("1 - scan product\n");
@@ -12,25 +12,25 @@ void startup_menu()		// Функция startup_menu выводит меню
 	printf("3 - close bill\n");
 }
 
-void scan(int* product, int n, int arr_product[], int arr_count_pr[]) // Функция scan заполняет массив product количеством товаров
+void scan(int* product, int n, int arr_product[], int arr_count_pr[]) // Р¤СѓРЅРєС†РёСЏ scan Р·Р°РїРѕР»РЅСЏРµС‚ РјР°СЃСЃРёРІ product РєРѕР»РёС‡РµСЃС‚РІРѕРј С‚РѕРІР°СЂРѕРІ
 {
 	printf("input product\n");
 	int i, c = 0;
-	scanf_s("%d", product);		// Ввод номера товара
+	scanf_s("%d", product);		// Р’РІРѕРґ РЅРѕРјРµСЂР° С‚РѕРІР°СЂР°
 	printf("\n");
-	for (i = 0; i < n; i++) {	// Проверка наличия товара
+	for (i = 0; i < n; i++) {	// РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ С‚РѕРІР°СЂР°
 		if (arr_product[i] == *product) {
 			arr_count_pr[i]++;
 			c++;
 		}
 	}
 	if (c == 0)
-		printf("no such code in store\n");	// если код не найден
+		printf("no such code in store\n");	// РµСЃР»Рё РєРѕРґ РЅРµ РЅР°Р№РґРµРЅ
 	c = 0;
-	printf("select new command\n"); // если код найден
+	printf("select new command\n"); // РµСЃР»Рё РєРѕРґ РЅР°Р№РґРµРЅ
 
 }
-void view_info(int* product, int n, int arr_product[], int arr_product_cost[], int arr_discount[]) // Функция view_info выводит информацию о товаре
+void view_info(int* product, int n, int arr_product[], int arr_product_cost[], int arr_discount[]) // Р¤СѓРЅРєС†РёСЏ view_info РІС‹РІРѕРґРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РѕРІР°СЂРµ
 {
 	int i;
 	if (*product == -1)
@@ -41,13 +41,13 @@ void view_info(int* product, int n, int arr_product[], int arr_product_cost[], i
 				printf("code - %d\n", arr_product[i]);
 				printf("cost(without discount) - %d\n", arr_product_cost[i]);
 				printf("discount - %d\n", arr_discount[i]);
-				printf("cost(with discount) - %.2lf\n", (double)arr_product_cost[i] * (1 - (double)arr_discount[i] / 100)); // формула расчета стоимости с учетом скидки. 2lf - два знака после запятой
+				printf("cost(with discount) - %.2lf\n", (double)arr_product_cost[i] * (1 - (double)arr_discount[i] / 100)); 
 			}
 		}
 	printf("input new comand\n");
 
 }
-void close_bill(int arr_count_pr[], int n, int arr_product[], int arr_discount[], int arr_product_cost[], double* sum) // Функция close_bill выводит итоговую сумму с учетом скидки и закрывает чек
+void close_bill(int arr_count_pr[], int n, int arr_product[], int arr_discount[], int arr_product_cost[], double* sum) // Р¤СѓРЅРєС†РёСЏ close_bill РІС‹РІРѕРґРёС‚ РёС‚РѕРіРѕРІСѓСЋ СЃСѓРјРјСѓ СЃ СѓС‡РµС‚РѕРј СЃРєРёРґРєРё Рё Р·Р°РєСЂС‹РІР°РµС‚ С‡РµРє
 {
 	int i;
 	printf("bill:\n");
@@ -67,39 +67,39 @@ void close_bill(int arr_count_pr[], int n, int arr_product[], int arr_discount[]
 	printf("\n");
 }
 
-int main() // Главная функция
+int main() // Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 {
 	srand(time(NULL));
-	int arr_product[10] = { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999, 1234 }; // массив кодов товаров
+	int arr_product[10] = { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999, 1234 }; // РјР°СЃСЃРёРІ РєРѕРґРѕРІ С‚РѕРІР°СЂРѕРІ
 	int arr_discount[10], arr_count_pr[10] = { 0 }, i, n = 10, k, product = -1, c = 0;
 	double sum = 0;
-	int arr_product_cost[10] = { 10, 20, 65, 58, 74, 120, 374, 71, 103, 512 }; // массив стоимостей товаров
+	int arr_product_cost[10] = { 10, 20, 65, 58, 74, 120, 374, 71, 103, 512 }; // РјР°СЃСЃРёРІ СЃС‚РѕРёРјРѕСЃС‚РµР№ С‚РѕРІР°СЂРѕРІ
 
 	for (i = 0; i < n; i++)
-		arr_discount[i] = 1 + rand() % 50; // рандомная скидка от 1 до 50
+		arr_discount[i] = 1 + rand() % 50; // СЂР°РЅРґРѕРјРЅР°СЏ СЃРєРёРґРєР° РѕС‚ 1 РґРѕ 50%
 
 	printf("|||||IBMeow cash termina|||||\n");
 	printf("Shift 1\n");
-	startup_menu(); // вывод главного меню
+	startup_menu(); // РІС‹РІРѕРґ РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ
 	do {
-		scanf_s("%d", &k); // ввод команды
-		switch (k) {	// switch case для выбора команды
-		case 1: // если ввели 1
+		scanf_s("%d", &k); // РІРІРѕРґ РєРѕРјР°РЅРґС‹ 
+                switch (k) {	// switch case РґР»СЏ РІС‹Р±РѕСЂР° РєРѕРјР°РЅРґС‹
+                case 1: // РµСЃР»Рё РІРІРµР»Рё 1
 		{
-			scan(&product, n, arr_product, arr_count_pr); // вызов функции scan
+			scan(&product, n, arr_product, arr_count_pr); // РІС‹Р·РѕРІ С„СѓРЅРєС†РёРё scan
 			break;
 		}
-		case 2: // если ввели 2
+		case 2: // РµСЃР»Рё РІРІРµР»Рё 2
 		{
-			view_info(&product, n, arr_product, arr_product_cost, arr_discount); // вызов функции view_info
+			view_info(&product, n, arr_product, arr_product_cost, arr_discount); // РІС‹Р·РѕРІ С„СѓРЅРєС†РёРё view_info
 			break;
 		}
-		case 3: // если ввели 3
+		case 3: // РµСЃР»Рё РІРІРµР»Рё 3
 		{
-			close_bill(arr_count_pr, n, arr_product, arr_discount, arr_product_cost, &sum); // вызов функции close_bill
+			close_bill(arr_count_pr, n, arr_product, arr_discount, arr_product_cost, &sum); // РІС‹Р·РѕРІ С„СѓРЅРєС†РёРё close_bill
 			break;
 		}
-		default: // обработка ошибок
+		default: // РѕР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє
 		{
 			printf("Unknown command\n");
 			printf("Input new command\n");
@@ -107,6 +107,6 @@ int main() // Главная функция
 		}
 
 		}
-	} while (k != 3); // цикл до команды 3
+	} while (k != 3); // С†РёРєР» РґРѕ РєРѕРјР°РЅРґС‹ 3
 	return 0;
 }
