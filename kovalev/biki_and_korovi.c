@@ -17,27 +17,49 @@ int main()
     }
     for(i=0;i<n;i++)
     {
-        int j=rand()%9;
+        int j=1+rand()%9;
         while(isx[j]==-1)
         {
-            j=rand()%9;
+            j=rand()%10;
         }
         ch+=(isx[j]*pow(10,i));
         isx[j]=-1;
     }
     printf("%d\n",ch);
     /*random chisla*/
-    int popitka;
-    scanf("%d\n", &popitka);
-
-    
-    while (popitka!=ch)
+    int k=1,ch_mas[n];
+    for(i=n-1;i>=0;i--)
     {
-        int kor=0,bik=0;
-        scanf("%d\n", &popitka);
-
+        ch_mas[i]=(ch%(int)pow(10,k))/pow(10,k-1);
+        k++;
     }
-
+    int popitka,popitka_mas[n];
+    do
+    {   int bik=0,kor=0,k=1;
+        scanf("%d", &popitka);
+        if(popitka==ch) break;
+        for(i=n-1;i>=0;i--)
+    {
+        popitka_mas[i]=(popitka%(int)pow(10,k))/pow(10,k-1);
+        k++;
+    }
+    for(i=0;i<n;i++)
+    {
+        if (ch_mas[i]==popitka_mas[i])
+        {
+            bik++;
+        }
+        else
+        {
+            for(j=0;j<n;j++)
+            {
+            if(ch_mas[i]==popitka_mas[j]) kor++;
+            }
+        }
+    }
+    printf("Кол-во быков-%d ",bik);
+    printf("Кол-во коров-%d\n",kor);
+     } while (1);
     printf("Вы угадали! Это число-%d",ch);
-  return 0;
+    return 0;
 }
