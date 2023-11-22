@@ -18,7 +18,7 @@ void print_services_list() {
 // ‘ункци€ дл€ сканировани€ продукта
 void scan_product(int* product, int product_code[], int product_counts[]) {
     printf("Input product code\n");  // "¬ведите код продукта"
-    scanf_s("%d", product);  // —читывание кода продукта
+    scanf_s("%d", product);  
 
     int index, f = 0;
     for (index = 0; index < NUM_PRODUCTS; index++) {
@@ -47,7 +47,7 @@ void print_product_info(int* product, int product_code[], int product_prices[], 
             printf("Product code - %d\n", product_code[i]);  // выводим код продукта
             printf("Price(without discount) - %d\n", product_prices[i]);  // выводим цену без скидки
             printf("Discount - %.2lf\n", discounts[i]);  // выводим скидку
-            printf("Price(with discount) - %.2lf\n", (double)product_prices[i] * discounts[i]);  // выводим цену со скидкой
+            printf("Price(with discount) - %.2lf\n", (double)product_prices[i] *(1 - discounts[i]));  // выводим цену со скидкой
         }
     }
 }
@@ -62,7 +62,7 @@ void produce_receipt(int product_counts[], int product_code[],
     for (int i = 0; i < NUM_PRODUCTS; i++) {
         if (product_counts[i] != 0) {  
             // ¬ычисл€ем итоговую стоимость за продукт с учетом скидки и количества(если продукт отсканирован)
-            double final_price = (double)product_prices[i] * discounts[i] * product_counts[i];
+            double final_price = (double)product_prices[i] *(1 - discounts[i]) * product_counts[i];
             printf("%d %d %.2lf %.2lf\n", product_code[i], product_counts[i], discounts[i], final_price);
             *total += final_price;  //  обща€ стоимость покупок
         }
@@ -70,13 +70,30 @@ void produce_receipt(int product_counts[], int product_code[],
 
     printf("\nTotal %.2lf\n", *total);  
 }
+// ‘ункци€ дл€ сортировки продуктов по цене
+void sort_by_price(int product_code[], int product_prices[], int products_number) {
+    for (int i = 0; i < products_number - 1; i++) {
+        for (int j = 0; j < products_number - i - 1; j++) {
+            // ≈сли текущий элемент больше следующего, мен€ем их местами
+            if (product_prices[j] > product_prices[j + 1]) {
+                int temp_price = product_prices[j];
+                product_prices[j] = product_prices[j + 1];
+                product_prices[j + 1] = temp_price;
+
+                int temp_code = product_code[j];
+                product_code[j] = product_code[j + 1];
+                product_code[j + 1] = temp_code;
+            }
+        }
+    }
+}
 
 int main() {
 
     
     int product_code[NUM_PRODUCTS] = { 2125, 2136, 2147, 2158, 2169 };
     int product_prices[NUM_PRODUCTS] = { 666, 66, 96, 999, 23 };
-    double discounts[NUM_PRODUCTS] = { 1.10, 1.10, 1.20, 1.30, 1.10 };
+    double discounts[NUM_PRODUCTS] = { 0.30, 0.05, 0.10, 0.40, 0 };
     int product_counts[NUM_PRODUCTS] = { 0 };
     int product = -1;
 
