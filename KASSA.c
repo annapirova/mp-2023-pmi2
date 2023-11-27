@@ -1,82 +1,126 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 #include <stdlib.h> 
 #include <string.h>
 #include <time.h>
 
-#define NUM_PRODUCTS 5  //  количество продуктов
+#define NUM_PRODUCTS 5  //  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-// Функция для вывода списка возможных операций
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void print_services_list() {
-    printf("1 - scan new product\n");  // "сканировать новый продукт"
-    printf("2 - see information about last scanned product\n");  // "посмотреть информацию о последнем отсканированном продукте"
-    printf("3 - produce info about product\n");  // "создать информацию о продукте"
-    printf("4 - exit the program\n");  // "выход из программы"
+    printf("1 - scan new product\n");  // "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    printf("2 - see information about last scanned product\n");  // "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    printf("3 - produce info about product\n");  // "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    printf("4 - exit the program\n");  // "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 }
 
-// Функция для сканирования продукта
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void scan_product(int* product, int product_code[], int product_counts[]) {
-    printf("Input product code\n");  // "Введите код продукта"
-    scanf_s("%d", product);  // Считывание кода продукта
+    int total_scanned = 0; // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° РѕР±С‰РµРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РѕС‚СЃРєР°РЅРёСЂРѕРІР°РЅРЅС‹С… С‚РѕРІР°СЂРѕРІ
+    int product_check = -1; // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ СЃРІРµСЂРєРё РІРІРµРґРµРЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РєРѕРґР° С‚РѕРІР°СЂР°
+
+    printf("Input product code\n"); // "Р’РІРµРґРёС‚Рµ РєРѕРґ РїСЂРѕРґСѓРєС‚Р°"
+    scanf_s("%d", product);
+
+    if (*product == product_check) {
+        printf("Product is invalide\n"); // "РўРѕРІР°СЂ РЅРµРґРµР№СЃС‚РІРёС‚РµР»РµРЅ"
+        return;
+    }
 
     int index, f = 0;
     for (index = 0; index < NUM_PRODUCTS; index++) {
         if (product_code[index] == *product) {
-            product_counts[index]++;  
+            product_counts[index]++;
             f = 1;
+            total_scanned++; // СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡РµС‚С‡РёРє РѕС‚СЃРєР°РЅРёСЂРѕРІР°РЅРЅС‹С… С‚РѕРІР°СЂРѕРІ
         }
     }
 
     if (f == 0) {
-        printf("Product doesn't exist\n");  // "Такого продукта не существует"
+        printf("Product doesn't exist\n"); // "РўР°РєРѕРіРѕ РїСЂРѕРґСѓРєС‚Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚"
+    }
+    else {
+        printf("Total scanned: %d\n", total_scanned); // РІС‹РІРѕРґРёРј РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЃРєР°РЅРёСЂРѕРІР°РЅРЅС‹С… С‚РѕРІР°СЂРѕРІ
     }
 }
 
-// Функция для вывода информации о продукте
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void print_product_info(int* product, int product_code[], int product_prices[], double discounts[]) {
     int i;
     if (*product == -1) {
-        printf("Scan any product first\n");  // "Сначала отсканируйте любой продукт"
+        printf("Scan any product first\n");  // "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
         return;
     }
 
-    // Перебираем все продукты и ищем совпадение по коду
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
     for (i = 0; i < NUM_PRODUCTS; i++) {
         if (product_code[i] == *product) {
-            printf("Product code - %d\n", product_code[i]);  // выводим код продукта
-            printf("Price(without discount) - %d\n", product_prices[i]);  // выводим цену без скидки
-            printf("Discount - %.2lf\n", discounts[i]);  // выводим скидку
-            printf("Price(with discount) - %.2lf\n", (double)product_prices[i] * discounts[i]);  // выводим цену со скидкой
+            printf("Product code - %d\n", product_code[i]);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            printf("Price(without discount) - %d\n", product_prices[i]);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            printf("Discount - %.2lf\n", discounts[i]);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            printf("Price(with discount) - %.2lf\n", (double)product_prices[i] * (1 - discounts[i]));  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
 }
 
-// Функция для формирования чека
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 void produce_receipt(int product_counts[], int product_code[],
     double discounts[], int product_prices[], double* total) {
 
-    printf("Receipt:\n");  // "Чек:"
-    printf("Product code  count  discount  price\n");  // "Код продукта  количество  скидка  цена"
+    printf("Receipt:\n");  // "пїЅпїЅпїЅ:"
+    printf("Product code  count  discount  price\n");  // "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅ"
 
     for (int i = 0; i < NUM_PRODUCTS; i++) {
-        if (product_counts[i] != 0) {  
-            // Вычисляем итоговую стоимость за продукт с учетом скидки и количества(если продукт отсканирован)
-            double final_price = (double)product_prices[i] * discounts[i] * product_counts[i];
+        if (product_counts[i] != 0) {
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+            double final_price = (double)product_prices[i] * (1 - discounts[i]) * product_counts[i];
             printf("%d %d %.2lf %.2lf\n", product_code[i], product_counts[i], discounts[i], final_price);
-            *total += final_price;  //  общая стоимость покупок
+            *total += final_price;  //  пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
 
-    printf("\nTotal %.2lf\n", *total);  
+    printf("\nTotal %.2lf\n", *total);
+}
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+int diff_products_bought(int product_counts[]) {
+    int count = 0;
+    for (int i = 0; i < NUM_PRODUCTS; i++) {
+        if (product_counts[i] > 0) count++;
+    }
+    return count;
+}
+
+// Р¤СѓРЅРєС†РёСЏ РїРѕРєР°Р·С‹РІР°РµС‚, СЃРєРѕР»СЊРєРѕ Рё РєР°РєРѕР№ РїСЂРѕРґСѓРєС‚ РєСѓРїРёР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
+void products_bought(int product_counts[], char names[][20]) {
+    for (int i = 0; i < NUM_PRODUCTS; i++) {
+        if (product_counts[i] > 0)
+            printf("User bought %d of product: %s\n", product_counts[i], names[i]);
+    }
+}
+void sort_by_price(int product_code[], int product_prices[], int products_number) {
+    for (int i = 0; i < products_number - 1; i++) {
+        for (int j = 0; j < products_number - i - 1; j++) {
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            if (product_prices[j] > product_prices[j + 1]) {
+                int temp_price = product_prices[j];
+                product_prices[j] = product_prices[j + 1];
+                product_prices[j + 1] = temp_price;
+
+                int temp_code = product_code[j];
+                product_code[j] = product_code[j + 1];
+                product_code[j + 1] = temp_code;
+            }
+        }
+    }
 }
 
 int main() {
 
-    
+
     int product_code[NUM_PRODUCTS] = { 2125, 2136, 2147, 2158, 2169 };
     int product_prices[NUM_PRODUCTS] = { 666, 66, 96, 999, 23 };
-    double discounts[NUM_PRODUCTS] = { 1.10, 1.10, 1.20, 1.30, 1.10 };
+    double discounts[NUM_PRODUCTS] = { 0.30, 0.05, 0.10, 0.40, 0 };
     int product_counts[NUM_PRODUCTS] = { 0 };
     int product = -1;
 
@@ -88,7 +132,7 @@ int main() {
         "Eraser"
     };
 
-    // Выводим исходный список услуг
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     print_services_list();
 
     int command;
@@ -97,31 +141,34 @@ int main() {
     do {
         scanf_s("%d", &command);
         switch (command) {
-        case 1:   // команда "сканировать новый продукт"
+        case 1:
             scan_product(&product, product_code, product_counts);
             if (product != -1) {
                 for (int i = 0; i < NUM_PRODUCTS; i++) {
                     if (product_code[i] == product) {
-                        printf("Scanned product: %s\n", names[i]);  // "Отсканированный продукт:"
+                        printf("Scanned product: %s\n", names[i]);
                     }
                 }
             }
             break;
-        case 2:  
+        case 2:
             print_product_info(&product, product_code, product_prices, discounts);
             break;
-        case 3:  
+        case 3:
             produce_receipt(product_counts, product_code, discounts, product_prices, &total);
             break;
-        case 4:  
-            printf("Exiting the program, thanks for using!\n");  // "Выход из программы, спасибо за использование!"
+        case 4:
+            printf("User bought the following amount and types of products:\n");
+            products_bought(product_counts, names);  // РќРѕРІР°СЏ С„СѓРЅРєС†РёСЏ
+            printf("Total types of products bought: %d\n", diff_products_bought(product_counts)); // РќРѕРІР°СЏ С„СѓРЅРєС†РёСЏ
+            printf("Exiting the program, thanks for using!\n");
             break;
-        default:  
-            printf("Command doesn't exist\n");  
+        default:
+            printf("Command doesn't exist\n");
             break;
         }
-    } while (command != 4); 
-
-    return 0;  
+    } while (command != 4);
+    return 0;
 }
+
 
