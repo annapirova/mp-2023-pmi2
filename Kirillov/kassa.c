@@ -15,7 +15,7 @@ struct Product
 
 	int count;
 };
-struct Product store[2];
+struct Product store[5];
 
 struct Receipt 
 {
@@ -57,7 +57,7 @@ void printReceipt(struct Receipt receipt) {
 }
 
 bool checkProduct(unsigned int brcode) {
-	for (int i = 0;i < 2;i++) {
+	for (int i = 0;i < 5;i++) {
 		if (store[i].barcode == brcode) {
 			
 			return true;
@@ -123,7 +123,7 @@ void createStore() {
 }
 
 void findByBarcode(unsigned int brcode) {
-	for (int i = 0;i < 2;i++) {
+	for (int i = 0;i < 5;i++) {
 		if (store[i].barcode == brcode) {
 			printProduct(store[i]);
 			return;
@@ -134,7 +134,7 @@ void findByBarcode(unsigned int brcode) {
 }
 
 struct Product returnByBarcode(unsigned int brcode) {
-	for (int i = 0;i < 2;i++) {
+	for (int i = 0;i < 5;i++) {
 		if (store[i].barcode == brcode) {
 			return store[i];
 		}
@@ -144,18 +144,30 @@ struct Product returnByBarcode(unsigned int brcode) {
 	
 }
 
-void receiptSum(struct Receipt myR) {
+void addReceiptToArray(struct Receipt myR,int rba[],int cpa[]) {
+	int counter = 0;
+	for (int i = 0;i < myR.itemCount;i++) {
+		rba[i] = myR.products[i].barcode;
+		cpa[i] = myR.products[i].count;
+		
+	}
+	
+}
+void receiptSum(int rba[], int cpa[], struct Product str[],struct Receipt myR) {
 	int result = 0;
 	for (int i = 0;i < myR.itemCount;i++) {
-		result += ((myR.products[i].price * (100 - myR.products[i].discount) / 100) * myR.products[i].count);
+		result += ((returnByBarcode(rba[i]).price * (100 - returnByBarcode(rba[i]).discount)) / 100) * cpa[i];
 	}
-	printf("Sum: %d", result);
+	printf("Sum: %d \n", result);
 }
+
 
 
 int main() {
 	int userbrcode;
 	createStore();
+	int k = 0;
+	int receiptBarcodeArray[5], countProductsArray[5];
 
 	struct Receipt myReceipt;
 	myReceipt.itemCount = 0;
@@ -187,7 +199,7 @@ int main() {
 			
 		case 3: 
 			myReceipt = addToReceipt(myReceipt, returnByBarcode(userbrcode));
-			printf("Product was added successfully");
+			printf("Product was added successfully \n");
 			break;
 			
 
@@ -197,8 +209,9 @@ int main() {
 			break;
 			
 			
-		case 5: 
-			receiptSum(myReceipt);
+		case 5:
+			addReceiptToArray(myReceipt, receiptBarcodeArray, countProductsArray );
+			receiptSum(receiptBarcodeArray,countProductsArray, store, myReceipt); 
 			break;
 			
 		
