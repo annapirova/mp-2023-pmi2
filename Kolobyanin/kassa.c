@@ -5,27 +5,27 @@
 
 void command()
 {
-	printf("Выберете услугу\n");
-	printf("1 - Артикулы товаров\n");
-	printf("2 - Отсканируйте новый товар\n");
-	printf("3 - Информация о выбранном товаре\n");
-	printf("4 - Итоговый чек\n");
+	printf("Choose a service\n");
+	printf("1 - Articles products\n");
+	printf("2 - Scan the new product\n");
+	printf("3 - Information about the selected product\n");
+	printf("4 - Final receipt\n");
 }
 
 void art()
 {
-	printf("Артикул товара  8460 - Шоколадный батончик Snickers\n");
-	printf("Артикул товара  7376 - Печенье Oreo\n");
-	printf("Артикул товара  2568 - Слоёная булочка с джемом\n");
-	printf("Артикул товара  4320 - Газировка Coca Cola\n");
-	printf("Артикул товара  9126 - Жвачка Dirol\n");
-	printf("\nВыберете новую услугу\n");
+	printf("Article  8460 - Snickers Chocolate Bar\n");
+	printf("Article  7376 - Oreo Cookies\n");
+	printf("Article  2568 - Bun with jam\n");
+	printf("Article  4320 - Coca Cola soda\n");
+	printf("Article  9126 - Dirol Gum\n");
+	printf("\nChoose a new service\n");
 }
 
 void scan(int n, int* tovar , int code[], int count[], int check[], int* a, int* b)
 {
 	int i, k = 0, f = 0;
-	printf("\nВведите артикул интересуещего вас товара\n");
+	printf("\nEnter the article number of the product you are interested in\n");
 	scanf_s("%d", tovar);
 	for (i = 0;i < n;i++)
 	{
@@ -48,9 +48,9 @@ void scan(int n, int* tovar , int code[], int count[], int check[], int* a, int*
 		}
 	}
 	if (k == 0)
-		printf("Такого товара не существует\n");
+		printf("Error\n");
 	k = 0;
-	printf("\nВыберете новую услугу\n");
+	printf("\nChoose a new service\n");
 }
 
 void inf(int n, int* tovar ,int code[], int stoimost[], int skidka[])
@@ -60,18 +60,18 @@ void inf(int n, int* tovar ,int code[], int stoimost[], int skidka[])
 	{
 		if (code[i] == *tovar)
 		{
-			printf("Стоимость без скидки - %d\n", stoimost[i]);
-			printf("Скидка - %d\n", skidka[i]);
-			printf("Стоимость со скидкой - %.2lf\n", (double)stoimost[i] * (1 - (double)skidka[i] / 100));
+			printf("Cost without discount - %d\n", stoimost[i]);
+			printf("Discount - %d\n", skidka[i]);
+			printf("Discounted price - %.2lf\n", (double)stoimost[i] * (1 - (double)skidka[i] / 100));
 		}
 	}
-	printf("\nВыберете новую услугу\n");
+	printf("\nChoose a new service\n");
 }
 
 void chek(int n, int code[], int stoimost[], int skidka[], int count[], double sum, int check[])
 {
 	int i,j;
-	printf("Код товара Количество Скидка Стоимость\n");
+	printf("Article Quantity Discount  Cost\n");
 	for (i = 0; check[i]!=0 ;i++)
 	{
 		for (j = 0;j < n;j++)
@@ -81,10 +81,10 @@ void chek(int n, int code[], int stoimost[], int skidka[], int count[], double s
 		}
 		if(count[j]!=0)
 		{
-			printf("   %d ", code[j]);
-			printf("       %d ", count[j]);
-			printf("        %d ", skidka[j]);
-			printf("    %.2lf \n", (double)(stoimost[j] * (1 - (double)skidka[j] / 100)) * count[j]);
+			printf(" %d ", code[j]);
+			printf("     %d ", count[j]);
+			printf("       %d ", skidka[j]);
+			printf("   % .2lf \n", (double)(stoimost[j] * (1 - (double)skidka[j] / 100)) * count[j]);
 			sum += ((double)stoimost[j] * (1 - (double)skidka[j] / 100)) * count[j];
 		}
 	}
@@ -136,8 +136,8 @@ int main()
 		}
 		default:
 		{
-			printf("Нет такой команды\n");
-			printf("\nВыберете новую услугу\n");
+			printf("There is no such command\n");
+			printf("\nChoose a new service\n");
 			break;
 		}
 		}
