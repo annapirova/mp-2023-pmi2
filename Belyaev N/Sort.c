@@ -52,7 +52,7 @@ void duplicate(int* a, int length, int* b) // Создание дубликата массива А
 void hoarasort(int* b, int first, int last) // Сортировка Хоара
 {
 	int i = first, j = last;
-	double tmp, x = b[(first + last) / 2];
+	int tmp, x = b[(first + last) / 2];
 
 	do {
 		while (b[i] < x)
@@ -230,8 +230,8 @@ int main()
 	int choise, length;
 	int* a;
 	int* b;
-	a = (int*)malloc(0 * sizeof(int));
-	b = (int*)malloc(0 * sizeof(int));
+	a = (int*)malloc(1000000 * sizeof(int));
+	b = (int*)malloc(1000000 * sizeof(int));
 	QueryPerformanceFrequency(&freq);
 	int operation = 0;
 	printf("Operation list:\n 1. Create/Recreate array.\n 2. Show array.\n 3. Quick Sort Hoara.\n 4. Bubble sort.\n 5. Shell sort.\n 6. Merge sort.\n 7. Insertion sort.\n 8. Check sorted array.\n 9. Exit\n");
