@@ -11,6 +11,7 @@ int main()
 	int k = 0;
 	int sumUp[SIZE] = { 0 };
 	int sumDown[SIZE] = { 0 };
+	int sum[2 * SIZE] = { 0 };
 	srand(time(NULL));
 	for (int i = 0; i < m; i++)
 	{
@@ -37,11 +38,12 @@ int main()
 	}
 	for (int i = 0; i < m-1; i++)
 	{
-		printf("sumUp[%d] = %d\n", i, sumUp[i]);
+		sum[k++] = sumUp[i];
+		sum[k++] = sumDown[i];
 	}
-	for (int i = 0; i < m - 1; i++)
+	for (int i = 0; i < 2 * m - 2; i++)
 	{
-		printf("sumDown[%d] = %d\n", i, sumDown[i]);
+		printf("Sum[%d] = %d\n", i, sum[i]);
 	}
 	return 0;
 }
