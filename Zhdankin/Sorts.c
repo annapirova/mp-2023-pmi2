@@ -130,10 +130,6 @@ void insertionSort(int n, int B[], int A[], void AtoB(int n, int A[], int B[]))
 	double time;
 
 	QueryPerformanceCounter(&start);
-	for (int i = 0; i < n; i++)
-	{
-		B[i] = A[i];
-	}
 
 	for (i = 1; i < n; i++)
 	{
@@ -167,11 +163,6 @@ void selectionSort(int B[], int n, int A[], void AtoB(int n, int A[], int B[]))
 	double time;
 
 	QueryPerformanceCounter(&start);
-
-	for (int i = 0; i < n; i++)
-	{
-		B[i] = A[i];
-	}
 
 	for (i = 0; i < n - 1; i++)
 	{
