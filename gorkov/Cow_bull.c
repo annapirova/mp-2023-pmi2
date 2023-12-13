@@ -10,39 +10,27 @@ int main()
 	printf("Enter len of number ");
 	scanf_s("%d", &n);
 	l = n;
-	int a = 0, b, c, d, e, ch[MAX_NUMS], k, pos;
-	while (a != 0) {
-		a = rand() % 10;
+	int a, c=0, ch[MAX_NUMS],pac[10], pos;
+	for (i = 0; i < 10; i++) {
+		pac[i] = -1;
 	}
-	b = rand() % 10;
-	d = rand() % 10;
-	c = rand() % 10;
-	e = rand() % 10;
-	while (b == a)
-	{
-		b = rand() % 10;
+	for (i = 0; i < MAX_NUMS; i++) {
+		ch[i] = -1;
 	}
-	while ((c == a) || (c == b)) {
-		c = rand() % 10;
-	}
-	while ((d == c) || (d == a) || (d == b))
-	{
-		d = rand() % 10;
-	}
-	while ((e == c) || (e == a) || (e == b) || (e == d))
-	{
-		e = rand() % 10;
-	}
-	ch[0] = e;
-	ch[1] = d;
-	ch[2] = c;
-	ch[3] = b;
-	ch[4] = a;
 
 	for (i = 0; i < n; i++)
 	{
+		a = rand() % 10;
+		c = 0;
+		if ((i == 0) && (a == 0))a++;
+		while (c == 0) {
+			if (pac[a] == -1) { pac[a] = 1; ch[i] = a; c = 1; }
+			else a = rand() % 10;
+		}
 		printf("%d", ch[i]);
 	}
+	
+	
 	printf("\nEnter a number of given len ");
 	printf("\n");
 
