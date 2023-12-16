@@ -6,15 +6,30 @@
 int main()
 {
 	srand((unsigned int)time(NULL));
-	int m = 3, n, z, k;
-	
-	int Matrix_A[3][3] = { {1, 4, 5}, {2, 6, 2}, {0, 0, 0} };
-	int Matrix_B[3][3] = { {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
+	int m, n, z, k;
 
+	printf("Enter size of matrix(m*m):\n");
+	scanf_s("%i", &m);
+
+	int** Matrix_A = (int**)malloc(m * sizeof(int*));
+	for (int i = 0; i < m; i++)
+	{
+		Matrix_A[i] = (int*)malloc(m * sizeof(int));
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		printf("type elements of %i row\n", i + 1);
+		for (int j = 0; j < m; j++)
+		{
+			scanf_s("%d", &z);
+			Matrix_A[i][j] = z;
+		}
+	}
 	int check = 1;
 	for (int i = 0; i < m; i++)
 	{
-		for (int j = i+1; j < m; j++)
+		for (int j = i + 1; j < m; j++)
 		{
 			int sum = 0;
 			for (int k = 0; k < m; k++)
@@ -52,50 +67,10 @@ int main()
 		}
 		printf("\n");
 	}
-	printf("\n");
 
-	int check1 = 1;
-	for (int i = 0; i < m; i++)
-	{
-		for (int j = i + 1; j < m; j++)
-		{
-			int sum1 = 0;
-			for (int k = 0; k < m; k++)
-			{
-				sum1 += Matrix_B[i][k] * Matrix_B[j][k];
-			}
-
-			if ((i == j && sum1 != 1) || (i != j && sum1 != 0))
-			{
-				check1 = 0;
-				break;
-			}
-		}
-		if (!check1)
-		{
-			break;
-		}
+	for (int i = 0; i < m; i++) {
+		free(Matrix_A[i]);
 	}
-
-	if (check1 == 1)
-	{
-		printf("The matrix is orthogonal.\n");
-	}
-	else
-	{
-		printf("The matrix is not orthogonal.\n");
-	}
-	printf("\n");
-
-
-
-	for (int i = 0; i < m; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			printf("%d ", Matrix_B[i][j]);
-		}
-		printf("\n");
-	}
+	free(Matrix_A);
 	return 0;
 }
