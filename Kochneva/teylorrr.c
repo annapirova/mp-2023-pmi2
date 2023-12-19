@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 
-// Функция для вычисления гиперболического тангенса по ряду Тейлора
-double hyperbolic_tan(double x, int n) {
+// Функция для вычисления арккотангенса по ряду Тейлора
+double arcctg(double x, int n) {
     double result = 0;
-    for (int i = 1; i <= n; i++) {
-        double term = 1.0;
-        for (int j = 0; j < 2 * i; j++) {
-            term *= x / (2.0 * i);
-        }
+    int sign = 1;
+    for (int i = 0; i < n; i++) {
+        double term = sign * pow(x, 2 * i + 1) / (2 * i + 1);
         result += term;
+        sign = -sign;
     }
     return result;
 }
@@ -26,11 +25,11 @@ int main() {
     printf("Enter the number of terms for calculation (N): ");
     scanf_s("%d", &n);
 
-    // Вычисление оценки значения функции гиперболического тангенса
-    double approx_result = hyperbolic_tan(x, n);
+    // Вычисление оценки значения функции арккотангенса
+    double approx_result = arcctg(x, n);
 
     // Получение эталонного значения с использованием встроенной функции языка C
-    double actual_result = tanh(x);
+    double actual_result = atan(1 / x);
 
     // Вывод результатов
     printf("Actual value: %lf\n", actual_result);
@@ -40,3 +39,4 @@ int main() {
 
     return 0;
 }
+
