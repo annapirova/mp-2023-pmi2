@@ -1,13 +1,15 @@
-﻿#include "stdio.h"
+﻿#define _USE_MATH_DEFINES
+#include "stdio.h"
 #include "math.h"
 #include "stdlib.h"
 #include "malloc.h"
 
-int choise_func()
+
+double choise_func()
 {
-	int x;
+	double x;
 	printf("Enter x - ");
-	scanf_s("%d", &x);
+	scanf_s("%lf", &x);
 	return x;
 }
 
@@ -26,46 +28,96 @@ int elements_func()
 	scanf_s("%d", &N);
 	return N;
 }
+typedef double (*nextT)(double, int);
 
-void cos_func(int x, double accuracy, int N)
+typedef double (*firstT)(double);
+
+double first(double x)
 {
-	double sum = 1;
-	double current = 1;
-	int n = 1;
-	int k = -1;
-	do
+	return 1;
+}
+
+double nextCos(double x, int N)
+{
+	double fac = 1;
+	for (double i = 1; i <= 2*N; i++)
 	{
-		current = (pow(k, n) * pow(x, 2 * n)) / fact(2 * n);
-		sum += current;
+		fac *= i;
+	}
+	double res = 1.0 / fac;
+	for (int i = 0; i < 2 * N; i++)
+	{
+		res *= x;
+	}
+	if (N % 2 == 0)
+	{
+		return res;
+	}
+	else
+	{
+		return -res;
+	}
+}
+
+double nextCh(double x, int N)
+{
+	double fac = 1;
+	for (double i = 1; i <= 2 * N; i++)
+	{
+		fac *= i;
+	}
+	double res = 1.0 / fac;
+	for (int i = 0; i < 2 * N; i++)
+	{
+		res *= x;
+	}
+	return res;
+}
+
+double getCos(double x, double accuracy, firstT first, nextT next,  int N, double corr)
+{
+	int n = 0;
+	double elem = first(x);
+	n++;
+	double sum = elem;
+	double current = fabs(sum - corr);
+	while ((current > accuracy) && (n <= N))
+	{
+		elem = next(x, n);
+		sum += elem;
+		current = fabs(sum - corr);
 		n++;
-	} while ((fabs(current) > accuracy) && (n < N));
+	}
 	printf("Sum: %.10f\n", sum);
 	printf("Reference value: %.10f\n", cos(x));
 	printf("Difference: %.10f\n", fabs(cos(x)) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
-void ch_func(int x, double accuracy, int N)
+double getCh(double x, double accuracy, firstT first, nextT next, int N, double corr)
 {
-	double sum = 1;
-	double current = 1;
-	int n = 1;
-	do
+	int n = 0;
+	double elem = first(x);
+	n++;
+	double sum = elem;
+	double current = fabs(sum - corr);
+	while ((current > accuracy) && (n <= N))
 	{
-		current = pow(x, 2 * n) / fact(2 * n);
-		sum += current;
+		elem = next(x, n);
+		sum += elem;
+		current = fabs(sum - corr);
 		n++;
-	} while ((fabs(current) > accuracy) && (n < N));
+	}
 	printf("Sum: %.10f\n", sum);
 	printf("Reference value: %.10f\n", cosh(x));
 	printf("Difference: %.10f\n", fabs(cosh(x)) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
-int fact(n)
+double fact(n)
 {
-	int fac = 1;
-	for (int i = 1; i <= n; i++)
+	double fac = 1;
+	for (double i = 1; i <= n; i++)
 	{
 		fac *= i;
 	}
@@ -78,7 +130,7 @@ void func_error()
 
 int main()
 {	
-	int x = 1;
+	double x = 1;
 	double accuracy = 0.00001;
 	int N = 20;
 	int operation = 0;
@@ -92,10 +144,10 @@ int main()
 		case 1: x = choise_func(); break;
 		case 2: accuracy = accuracy_func(); break;
 		case 3: N = elements_func(); break;
-		case 4: cos_func(x, accuracy, N); break;
-		case 5: ch_func(x, accuracy, N); break;
+		case 4: getCos(x, accuracy, first, nextCos, N, cos(x)); break;
+		case 5: getCh(x, accuracy, first, nextCh, N, cosh(x)); break;
 		default: func_error(); break;
 		}
-	} while (operation != 5);
+	} while (operation != 6);
 	return 0;
 }
