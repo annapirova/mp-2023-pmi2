@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 
-// Ряд Тейлора для sin(x)
+// Р СЏРґ РўРµР№Р»РѕСЂР° РґР»СЏ sin(x)
 double taylorSin(double x, int N) {
     double result = 0;
     for (int i = 0; i < N; i++) {
-        int sign = i % 2 == 0 ? 1 : -1; // Чередующийся знак
+        int sign = i % 2 == 0 ? 1 : -1; // Р§РµСЂРµРґСѓСЋС‰РёР№СЃСЏ Р·РЅР°Рє
         int fact = 1;
         for (int j = 1; j <= 2 * i + 1; j++) {
-            fact *= j;  // Вычисление факториала
+            fact *= j;  // Р’С‹С‡РёСЃР»РµРЅРёРµ С„Р°РєС‚РѕСЂРёР°Р»Р°
         }
         result += sign * pow(x, 2 * i + 1) / fact;
     }
