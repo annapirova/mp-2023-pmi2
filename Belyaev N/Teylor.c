@@ -37,6 +37,11 @@ double first(double x)
 	return 1;
 }
 
+double firstSin(double x)
+{
+	return x;
+}
+
 double nextCos(double x, int N)
 {
 	double fac = 1;
@@ -56,6 +61,42 @@ double nextCos(double x, int N)
 	else
 	{
 		return -res;
+	}
+}
+
+double nextSin(double x, int N)
+{
+	double fac = 1;
+	for (double i = 1; i <= (2 * N) - 1; i++)
+	{
+		fac *= i;
+	}
+	double res = 1.0 / fac;
+	for (int i = 0; i < (2 * N) - 1; i++)
+	{
+		res *= x;
+	}
+	if (N % 2 != 0)
+	{
+		return res;
+	}
+	else
+	{
+		return -res;
+	}
+}
+
+double nextExp(double x, int N)
+{
+	double fac = 1;
+	for (double i = 1; i <= N; i++)
+	{
+		fac *= i;
+	}
+	double res = 1.0 / fac;
+	for (int i = 0; i < N; i++)
+	{
+		res *= x;
 	}
 }
 
@@ -91,6 +132,46 @@ double getCos(double x, double accuracy, firstT first, nextT next,  int N, doubl
 	printf("Sum: %.10f\n", sum);
 	printf("Reference value: %.10f\n", cos(x));
 	printf("Difference: %.10f\n", fabs(cos(x)) - fabs(sum));
+	printf("N = %d\n", n);
+}
+
+double getSin(double x, double accuracy, firstT first, nextT next, int N, double corr)
+{
+	int n = 1;
+	double elem = first(x);
+	n++;
+	double sum = elem;
+	double current = fabs(sum - corr);
+	while ((current > accuracy) && (n <= N))
+	{
+		elem = next(x, n);
+		sum += elem;
+		current = fabs(sum - corr);
+		n++;
+	}
+	printf("Sum: %.10f\n", sum);
+	printf("Reference value: %.10f\n", sin(x));
+	printf("Difference: %.10f\n", fabs(sin(x)) - fabs(sum));
+	printf("N = %d\n", n);
+}
+
+double getExp(double x, double accuracy, firstT first, nextT next, int N, double corr)
+{
+	int n = 0;
+	double elem = first(x);
+	n++;
+	double sum = elem;
+	double current = fabs(sum - corr);
+	while ((current > accuracy) && (n <= N))
+	{
+		elem = next(x, n);
+		sum += elem;
+		current = fabs(sum - corr);
+		n++;
+	}
+	printf("Sum: %.10f\n", sum);
+	printf("Reference value: %.10f\n", exp(x));
+	printf("Difference: %.10f\n", fabs(exp(x)) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
@@ -134,7 +215,7 @@ int main()
 	double accuracy = 0.00001;
 	int N = 20;
 	int operation = 0;
-	printf("Operation list:\n 1. Choise x (default 1)\n 2. Choise calculation accuracy (default 0.00001)\n 3. Select the number of series elements to perform the calculation (default 20)\n 4. cos(x)\n 5. ch(x)\n 6. Exit\n");
+	printf("Operation list:\n 1. Choise x (default 1)\n 2. Choise calculation accuracy (default 0.00001)\n 3. Select the number of series elements to perform the calculation (default 20)\n 4. cos(x)\n 5. sin(x)\n 6. e(x)\n 7. ch(x)\n 8. Exit\n");
 	do
 	{
 		printf("Enter number of operation - ");
@@ -145,9 +226,11 @@ int main()
 		case 2: accuracy = accuracy_func(); break;
 		case 3: N = elements_func(); break;
 		case 4: getCos(x, accuracy, first, nextCos, N, cos(x)); break;
-		case 5: getCh(x, accuracy, first, nextCh, N, cosh(x)); break;
+		case 5: getSin(x, accuracy, firstSin, nextSin, N, sin(x)); break;
+		case 6: getExp(x, accuracy, first, nextExp, N, exp(x)); break;
+		case 7: getCh(x, accuracy, first, nextCh, N, cosh(x)); break;
 		default: func_error(); break;
 		}
-	} while (operation != 6);
+	} while (operation != 8);
 	return 0;
 }
