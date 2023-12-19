@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-// Функция для вычисления гиперболического тангенса по ряду Тейлора
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ РіРёРїРµСЂР±РѕР»РёС‡РµСЃРєРѕРіРѕ С‚Р°РЅРіРµРЅСЃР° РїРѕ СЂСЏРґСѓ РўРµР№Р»РѕСЂР°
 double hyperbolic_tan(double x, int n) {
     double result = 0;
     for (int i = 1; i <= n; i++) {
@@ -18,7 +18,7 @@ int main() {
     double x, precision;
     int n;
 
-    // Запрос пользовательского ввода
+    // Р—Р°РїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РІРІРѕРґР°
     printf("Enter the value for x: ");
     scanf_s("%lf", &x);
     printf("Enter the precision for calculation: ");
@@ -26,13 +26,13 @@ int main() {
     printf("Enter the number of terms for calculation (N): ");
     scanf_s("%d", &n);
 
-    // Вычисление оценки значения функции гиперболического тангенса
+    // Р’С‹С‡РёСЃР»РµРЅРёРµ РѕС†РµРЅРєРё Р·РЅР°С‡РµРЅРёСЏ С„СѓРЅРєС†РёРё РіРёРїРµСЂР±РѕР»РёС‡РµСЃРєРѕРіРѕ С‚Р°РЅРіРµРЅСЃР°
     double approx_result = hyperbolic_tan(x, n);
 
-    // Получение эталонного значения с использованием встроенной функции языка C
+    // РџРѕР»СѓС‡РµРЅРёРµ СЌС‚Р°Р»РѕРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РІСЃС‚СЂРѕРµРЅРЅРѕР№ С„СѓРЅРєС†РёРё СЏР·С‹РєР° C
     double actual_result = tanh(x);
 
-    // Вывод результатов
+    // Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
     printf("Actual value: %lf\n", actual_result);
     printf("Approximated value: %lf\n", approx_result);
     printf("Difference: %lf\n", fabs(actual_result - approx_result));
