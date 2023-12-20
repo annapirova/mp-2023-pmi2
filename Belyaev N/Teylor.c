@@ -44,75 +44,23 @@ double firstSin(double x)
 
 double nextCos(double x, int N)
 {
-	double fac = 1;
-	for (double i = 1; i <= 2*N; i++)
-	{
-		fac *= i;
-	}
-	double res = 1.0 / fac;
-	for (int i = 0; i < 2 * N; i++)
-	{
-		res *= x;
-	}
-	if (N % 2 == 0)
-	{
-		return res;
-	}
-	else
-	{
-		return -res;
-	}
+	return (-x * x / (2*N-1) / (2 * N));
 }
 
 double nextSin(double x, int N)
 {
-	double fac = 1;
-	for (double i = 1; i <= (2 * N) - 1; i++)
-	{
-		fac *= i;
-	}
-	double res = 1.0 / fac;
-	for (int i = 0; i < (2 * N) - 1; i++)
-	{
-		res *= x;
-	}
-	if (N % 2 != 0)
-	{
-		return res;
-	}
-	else
-	{
-		return -res;
-	}
+	return (-x*x / (2*N) / (2 * N + 1));
 }
 
 double nextExp(double x, int N)
 {
-	double fac = 1;
-	for (double i = 1; i <= N; i++)
-	{
-		fac *= i;
-	}
-	double res = 1.0 / fac;
-	for (int i = 0; i < N; i++)
-	{
-		res *= x;
-	}
+
+	return (x / N);
 }
 
 double nextCh(double x, int N)
 {
-	double fac = 1;
-	for (double i = 1; i <= 2 * N; i++)
-	{
-		fac *= i;
-	}
-	double res = 1.0 / fac;
-	for (int i = 0; i < 2 * N; i++)
-	{
-		res *= x;
-	}
-	return res;
+	return ((x * x) / (2 * N - 1) / (2 * N));
 }
 
 double getCos(double x, double accuracy, firstT first, nextT next,  int N, double corr)
@@ -124,34 +72,34 @@ double getCos(double x, double accuracy, firstT first, nextT next,  int N, doubl
 	double current = fabs(sum - corr);
 	while ((current > accuracy) && (n <= N))
 	{
-		elem = next(x, n);
+		elem = elem * next(x, n);
 		sum += elem;
 		current = fabs(sum - corr);
 		n++;
 	}
 	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", cos(x));
-	printf("Difference: %.10f\n", fabs(cos(x)) - fabs(sum));
+	printf("Reference value: %.10f\n", corr);
+	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
 double getSin(double x, double accuracy, firstT first, nextT next, int N, double corr)
 {
-	int n = 1;
+	int n = 0;
 	double elem = first(x);
 	n++;
 	double sum = elem;
 	double current = fabs(sum - corr);
 	while ((current > accuracy) && (n <= N))
 	{
-		elem = next(x, n);
+		elem = elem * next(x, n);
 		sum += elem;
 		current = fabs(sum - corr);
 		n++;
 	}
 	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", sin(x));
-	printf("Difference: %.10f\n", fabs(sin(x)) - fabs(sum));
+	printf("Reference value: %.10f\n", corr);
+	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
@@ -164,14 +112,14 @@ double getExp(double x, double accuracy, firstT first, nextT next, int N, double
 	double current = fabs(sum - corr);
 	while ((current > accuracy) && (n <= N))
 	{
-		elem = next(x, n);
+		elem = elem * next(x, n);
 		sum += elem;
 		current = fabs(sum - corr);
 		n++;
 	}
 	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", exp(x));
-	printf("Difference: %.10f\n", fabs(exp(x)) - fabs(sum));
+	printf("Reference value: %.10f\n", corr);
+	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
@@ -184,14 +132,14 @@ double getCh(double x, double accuracy, firstT first, nextT next, int N, double 
 	double current = fabs(sum - corr);
 	while ((current > accuracy) && (n <= N))
 	{
-		elem = next(x, n);
+		elem = elem * next(x, n);
 		sum += elem;
 		current = fabs(sum - corr);
 		n++;
 	}
 	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", cosh(x));
-	printf("Difference: %.10f\n", fabs(cosh(x)) - fabs(sum));
+	printf("Reference value: %.10f\n", corr);
+	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
 	printf("N = %d\n", n);
 }
 
