@@ -63,7 +63,7 @@ double nextCh(double x, int N)
 	return ((x * x) / (2 * N - 1) / (2 * N));
 }
 
-double getCos(double x, double accuracy, firstT first, nextT next,  int N, double corr)
+double getSum(double x, double accuracy, firstT first, nextT next, int N, double corr)
 {
 	int n = 0;
 	double elem = first(x);
@@ -83,75 +83,6 @@ double getCos(double x, double accuracy, firstT first, nextT next,  int N, doubl
 	printf("N = %d\n", n);
 }
 
-double getSin(double x, double accuracy, firstT first, nextT next, int N, double corr)
-{
-	int n = 0;
-	double elem = first(x);
-	n++;
-	double sum = elem;
-	double current = fabs(sum - corr);
-	while ((current > accuracy) && (n <= N))
-	{
-		elem = elem * next(x, n);
-		sum += elem;
-		current = fabs(sum - corr);
-		n++;
-	}
-	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", corr);
-	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
-	printf("N = %d\n", n);
-}
-
-double getExp(double x, double accuracy, firstT first, nextT next, int N, double corr)
-{
-	int n = 0;
-	double elem = first(x);
-	n++;
-	double sum = elem;
-	double current = fabs(sum - corr);
-	while ((current > accuracy) && (n <= N))
-	{
-		elem = elem * next(x, n);
-		sum += elem;
-		current = fabs(sum - corr);
-		n++;
-	}
-	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", corr);
-	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
-	printf("N = %d\n", n);
-}
-
-double getCh(double x, double accuracy, firstT first, nextT next, int N, double corr)
-{
-	int n = 0;
-	double elem = first(x);
-	n++;
-	double sum = elem;
-	double current = fabs(sum - corr);
-	while ((current > accuracy) && (n <= N))
-	{
-		elem = elem * next(x, n);
-		sum += elem;
-		current = fabs(sum - corr);
-		n++;
-	}
-	printf("Sum: %.10f\n", sum);
-	printf("Reference value: %.10f\n", corr);
-	printf("Difference: %.10f\n", fabs(corr) - fabs(sum));
-	printf("N = %d\n", n);
-}
-
-double fact(n)
-{
-	double fac = 1;
-	for (double i = 1; i <= n; i++)
-	{
-		fac *= i;
-	}
-	return fac;
-}
 void func_error()
 {
 	printf("Operation not found");
@@ -173,10 +104,10 @@ int main()
 		case 1: x = choise_func(); break;
 		case 2: accuracy = accuracy_func(); break;
 		case 3: N = elements_func(); break;
-		case 4: getCos(x, accuracy, first, nextCos, N, cos(x)); break;
-		case 5: getSin(x, accuracy, firstSin, nextSin, N, sin(x)); break;
-		case 6: getExp(x, accuracy, first, nextExp, N, exp(x)); break;
-		case 7: getCh(x, accuracy, first, nextCh, N, cosh(x)); break;
+		case 4: getSum(x, accuracy, first, nextCos, N, cos(x)); break;
+		case 5: getSum(x, accuracy, firstSin, nextSin, N, sin(x)); break;
+		case 6: getSum(x, accuracy, first, nextExp, N, exp(x)); break;
+		case 7: getSum(x, accuracy, first, nextCh, N, cosh(x)); break;
 		default: func_error(); break;
 		}
 	} while (operation != 8);
