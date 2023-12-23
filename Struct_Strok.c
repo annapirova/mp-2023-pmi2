@@ -109,7 +109,7 @@ int main() {
     if (choice == 1) {
         char author[MAX_FIELD_LENGTH];
         printf("Введите имя автора: ");
-        scanf(" %[^\n]%*c", author); // Используйте этот формат, чтобы считать строку полностью
+        scanf(" %[^\n]%*c", author); 
         printf("\n");
         printBooksByAuthor(books, bookCount, author);
     }
