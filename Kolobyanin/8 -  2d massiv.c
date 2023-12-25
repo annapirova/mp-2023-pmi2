@@ -49,4 +49,8 @@ int main()
 		printf("\n");
 
 	}
+	for (int i = 0; i < stroka ; i++) 
+		for (int j = 0; j < stolbec ; j++) 
+			free(A[i][j]);
+	free(A);
 }
