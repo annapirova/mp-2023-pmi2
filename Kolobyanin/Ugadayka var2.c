@@ -6,17 +6,17 @@ int main()
     int answer;
     int numb;
     char s;
-    printf("Введите число от 1 до 1000: ");
+    printf("Vvedite chislo ot 1 do 1000: ");
     scanf_s("%i", &numb);
     int r, l;
     r = 1000;
     l = 1;
     int k = 0;
-    while (1)
+    do
     {
         int answer = (l+r)/2;
-        printf("Загаданное число %i ?\n", answer);
-        printf("Ваше число больше, меньше или равно? (введите <,>,=)\n");
+        printf("Zagadannoe chislo %i ?\n", answer);
+        printf("Vashe chislo bolshe, menshe ili ravno? (������� <,>,=)\n");
         scanf_s(" %c", &s);
         if (s == '>') 
         {
@@ -30,11 +30,11 @@ int main()
         }
         else if (s == '=') 
         { 
-            printf("Угадал\n");
-            printf("Количество попыток: ");
+            printf("Ugadal\n");
+            printf("Popitok: ");
             printf("%i", k);
             break;
         }
-    }
+    } while (s != '=');
     return 0;
 }
