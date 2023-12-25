@@ -4,21 +4,17 @@
 
 int main()
 {
-	int n;
 	int i, j;
 	int tmp;
-	printf("Vvedite dlinu massiva\n");
-	scanf_s("%d", &n);
-	printf(" \n");
-	int** a = (int*)malloc(sizeof(int) * n);
-	for (int i = 0; i < n; i++)
+	int a[10];
+	printf("Vvedite massiv iz 10 elementov\n");
+	for (int i = 0; i < 10; i++)
 	{
-		printf("Vvedite element massiva\n");
 		scanf_s("%d", &a[i]);
 	}
-	for (j = 0;j < n;j++)
+	for (j = 0;j < 10;j++)
 	{
-		for (i = 0;i < n - 1;i++)
+		for (i = 0;i < 9;i++)
 		{
 			if ((a[i] >= 0) && (a[i + 1] < 0))
 			{
@@ -29,11 +25,10 @@ int main()
 		}
 	}
 	printf("Itog: \n");
-	for (i = 0;i < n;i++)
+	for (i = 0;i < 10;i++)
 	{
 		printf(" %d", a[i]);
 	}
 	printf(" \n");
-	free(a);
 	return 0;
 }
