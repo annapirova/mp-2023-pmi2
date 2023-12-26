@@ -1,42 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int MagicSquare(int A[3][3])
+int main()
 {
-    int n = 3;
-    int i = 0, j = 0;
+    int i, j;
+    int f = -1;
     int sum1 = 0, sum2 = 0;
-    for (i = 0; i < n; i++)
+    int a = 0, b = 0;
+    int n;
+    printf("Vvedite kolichestvo strok i stolbcov kvadratnoi matrici: ");
+    scanf_s("%d", &n);
+    int** A = (int*)malloc(sizeof(int) * n);
+    for (int i = 0; i < n;i++)
+        A[i] = (int*)malloc(sizeof(int) * n);
+    printf("Vvedite elementi matrici:\n");
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            scanf_s("%d", &A[i][j]);
+        }
+    }
+    printf("\nSgenerirovannay matrica: \n");
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            printf("%d ", A[i][j]);
+        }
+        printf("\n");
+    }
+   for (i = 0; i < n; i++)
     {
         sum1 += A[i][i];
         sum2 += A[i][n - 1 - i];
     }
-    if (sum1 != sum2)
-        return 0;
-    for (i = 0; i < n; i++) 
+   f = n;
+   for (i = 0; i < n; i++)
     {
-        int stroka = 0, stolbec = 0;
         for (j = 0; j < n; j++)
         {
-            stroka += A[i][j];
-            stolbec += A[j][i];
+            a += A[i][j];
+            b += A[j][i];
         }
-        if (stroka != stolbec || stolbec != sum1)
-            return 0;
+        if ((a == b) && (b == sum1) && (sum1 == sum2))
+            f = f - 1;
+        a = 0; b = 0;
     }
-    return 1;
-}
 
-int main()
-{
-    int A[3][3] = { { 2, 7, 6 },
-                    { 9, 5, 1 },
-                    { 4, 3, 8 } };
+   if (f == 0)
+       printf("Magic Square");
+   else
+       printf("Not a magic Square");
 
-    if (MagicSquare(A))
-        printf("Magic Square");
-    else
-        printf("Not a magic Square");
-
-    return 0;
+   for (int i = 0; i < n + 1; i++)
+       for (int j = 0; j < n + 1; j++)
+           free(A[i][j]);
+   free(A);
+   return 0;
 }
