@@ -1,5 +1,7 @@
-#include "math.h"
-#include <stdio.h>
+﻿#include <stdio.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 
 typedef double(*FirstT)(double);
 typedef double(*NextT)(double,int);
@@ -22,19 +24,18 @@ double Teylor(double x, FirstT first, NextT nextt, double acc, double corr, int 
 	return sum;
 }
 void main() {
-	double PI = acos(-1.0);
 	double x, acc;
 	int N_max;
 	printf("Enter x:\n");
 	scanf_s("%lf", &x);
-	if (x > (2 * PI)) {
-		while (x > (2 * PI)) {
-			x = x - (2 * PI);
+	if (x > (2 * M_PI)) {
+		while (x > (2 * M_PI)) {
+			x = x - (2 * M_PI);
 		}
 	}
 	if (x < 0) {
 		while (x < 0) {
-			x = x + (2 * PI);
+			x = x + (2 * M_PI);
 		}
 	}
 	
