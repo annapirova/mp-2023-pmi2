@@ -11,8 +11,8 @@ double LnFirst(double x) { return x; }//ln (1+x)
 double LnNext(double x, int n) { return -x/n; } //ln(1+x)
 
 double Teylor(double x, FirstT first, NextT nextt, double acc, double corr, int N_max) {
-	int i=1,prev,sum;
-	int next;
+	int i = 1;
+	double prev,sum,next;
 	sum = first(x);
 	prev = sum;
 	while ((fabs(sum - corr)>acc) && (i < N_max)) {	
