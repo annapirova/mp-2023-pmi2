@@ -1,4 +1,5 @@
-﻿#include <stdio.h>
+﻿#define _USE_MATH_DEFINES
+#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 #include <stdlib.h> 
@@ -25,11 +26,10 @@ double Nextarcsin(double x, int n)
     return (x * x * (2 * n - 1) / (2 * n) / (2 * n + 1) * (2 * (n - 1) + 1));
 }
 
-double promezhutok(double x)
+double promezhutok(double x) 
 {
-    const double PI = 3.1415;
-    int k = x / (2 * PI);
-    return x - k * 2 * PI;
+    int k = x / (2 * M_PI);
+    return x - k * 2 * M_PI;
 }
 
 typedef double(*nextT)(double, int);
@@ -40,13 +40,13 @@ double Teylor(double x, firstT first, nextT f, double a, double b, int N_MAX)
     double sum, aa, bb, cc;
     int n = 1;
     sum = first(x);
-    a = sum;
+    aa = sum;
     cc = fabs(sum - b);
     while ((cc > a) && (n < N_MAX))
     {
-        b = a * f(x, n);
-        sum += b;
-        a = b;
+        bb = aa * f(x, n);
+        sum += bb;
+        aa = bb;
         cc = fabs(sum - b);
         n++;
     }
