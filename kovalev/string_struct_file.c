@@ -59,6 +59,7 @@ void zapros_1(FILMS *film_mas, int *count)
         }
     }
     if(flag==0) printf("NO exist\n");
+    free(str1);
 }
 void zapros_2(FILMS *film_mas, int *count)
 {
