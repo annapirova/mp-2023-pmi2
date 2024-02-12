@@ -42,12 +42,14 @@ void zapros_1(FILMS *film_mas, int *count)
 {
     printf("Input author ");
     char str[50];
-    fgets(str,sizeof(str),stdin);//kosyk!!!!!!
+    getchar();
     int i,flag=0;
     fgets(str,sizeof(str),stdin);
+    char *str1=(char*)malloc(strlen(str)*sizeof(str)-1);
+    for(i=0;i<strlen(str)-1;i++) str1[i]=str[i];
     for(i=0;i<*count;i++)
     {
-        if(strcmp (str,film_mas[i].author))
+        if(strcmp(str1,(film_mas[i].author))==0)
         {
             flag=1;
             printf("Author: %s\n",film_mas[i].author);
