@@ -90,16 +90,23 @@ void zapros_2(FILMS *film_mas, int *count)
 //Filtor #winston 1845 135.6785
 int main()
 {
+    FILE* f;
+    f=fopen("string.txt","r");
     int count,i,k;
-    printf("How many films you wonna input?\n");
+    fscanf(f,"%d",&count);
+    /*printf("How many films you wonna input?\n");
     scanf("%d",&count);
-    getchar(); // skip \n after scanf
+    getchar();*/ // skip \n after scanf
+    char strf[50];
+    fgets(strf,50,f);
     FILMS *film_mas=(FILMS*)malloc(count*sizeof(FILMS));
     for(i=0;i<count;i++)
     {
-        printf("Input %d film:\n",i+1);
+
+        //printf("Input %d film:\n",i+1);
         char str[50];
-        fgets(str,sizeof(str),stdin);
+        //fgets(str,sizeof(str),stdin);
+        fgets(str,50,f);
         razbienie(str,&film_mas[i]);
     }
     printf("\n");
@@ -140,5 +147,6 @@ int main()
         }
 	} while (k!=4);
     free(film_mas);
+    fclose(f);
     return 0;
 }
