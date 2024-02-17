@@ -44,20 +44,15 @@ void current(struct Contact* contact, const char* token) {
 	}
 	else if (strchr(token, '@') != NULL) {
 		free(contact->mail);
-		contact->mail = _strdup(token);
+		char stop[10] = "\n";
+		char* str;
+		str = strtok(_strdup(token), stop);
+		contact->mail = str;
+		
 	}
 	else {
 		if (contact->lastname == NULL) {
 			contact->lastname = _strdup(token);
-		}
-		else {
-			size_t len = strlen(contact->lastname) + strlen(token) + 2;
-			char* temp = (char*)malloc(len);
-			if (temp != NULL) {
-				sprintf_s(temp, len, "%s %s", contact->lastname, token);
-				free(contact->lastname);
-				contact->lastname = temp;
-			}
 		}
 	}
 }
