@@ -9,3 +9,6 @@ __Как назвать pull request?__
 
 __Как назвать файлы?__
 тема_номер задачи
+
+
+https://drive.google.com/drive/folders/0B7aD_XDRg9rNcDRLU0xuTFNKYWM?resourcekey=0-F4Hfh3tRstfBBjjd1xixRg
