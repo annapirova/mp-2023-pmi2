@@ -83,29 +83,18 @@ void zapros_2(FILMS *film_mas, int *count)
     if(flag==0) printf("NO exist\n");
 
 }
-//Rimers #death 1964 12323.12312421
-//Filtor #kiborg_ybica 1874 124.2343234
-//#pypsik Gosling 124124.5433 1700
-//2352.243523 #vladimir Gomer 145
-//Filtor #winston 1845 135.6785
 int main()
 {
     FILE* f;
     f=fopen("string.txt","r");
     int count,i,k;
     fscanf(f,"%d",&count);
-    /*printf("How many films you wonna input?\n");
-    scanf("%d",&count);
-    getchar();*/ // skip \n after scanf
     char strf[50];
     fgets(strf,50,f);
     FILMS *film_mas=(FILMS*)malloc(count*sizeof(FILMS));
     for(i=0;i<count;i++)
     {
-
-        //printf("Input %d film:\n",i+1);
         char str[50];
-        //fgets(str,sizeof(str),stdin);
         fgets(str,50,f);
         razbienie(str,&film_mas[i]);
     }

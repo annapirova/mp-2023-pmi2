@@ -5,7 +5,9 @@
 #include "string.h"
 #include <time.h>
 #include <sys/time.h>
-double PortableGetTime()
+#include "SORT_sortirovki.h"
+#include "SORT_OST.h"
+/*double PortableGetTime()
 {
     struct timeval t;
     gettimeofday(&t, 0);
@@ -147,7 +149,7 @@ void heapSort(int a[], int size) {
     downHeap(a, 0, i-1); 
   }
 }
-
+*/
 int main()
 {
 srand(time(NULL));
@@ -264,14 +266,12 @@ do
     }
     case 8:
     {
-      if(sort==1)
-      {
     for(i=0;i<size;i++)
     {
       printf("%d ",dubler[i]);
     }
-    printf("\n");}
-    else printf("please sort massiv\n");
+    printf("\n");
+
     printf("sellect new command\n");
     break;
     }
