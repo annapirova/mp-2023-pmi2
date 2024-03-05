@@ -16,14 +16,7 @@ class trian_gh
 			double s;
 			double cosl, sinl;
 			cosl = (a * a + b * b - c * c) / (2 * a * b);
-			if (cosl > 0)
-			{
-				sinl = sqrt(1 - cosl * cosl);
-			}
-			else
-			{
-				sinl = -1 * sqrt((1 - cosl * cosl));
-			}
+			sinl = sqrt(1 - cosl * cosl);
 			return s = a * b * sinl;
 		};
 };
