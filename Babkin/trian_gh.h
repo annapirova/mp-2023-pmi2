@@ -3,9 +3,9 @@
 class trian_gh
 {
 	private:
-		int a, b, c;
+		double a, b, c;
 	public:
-		trian_gh(int a_, int b_, int c_) { a = a_; b = b_; c = c_; }
+		trian_gh(double a_, double b_, double c_) { a = a_; b = b_; c = c_; }
 		int p()
 		{
 			int P;
