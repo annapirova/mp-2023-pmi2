@@ -21,13 +21,13 @@ void parse_address(const char* input, Address* addr) {
         if (isdigit(token[0])) {
             strcpy(addr->index, token);
         }
-        else if (strstr(token, "г.") == token) {
+        else if (strstr(token, "c.") == token) {
             strcpy(addr->city, token);
         }
-        else if (strstr(token, "ул.") == token) {
+        else if (strstr(token, "st.") == token) {
             strcpy(addr->street, token);
         }
-        else if (strstr(token, "д.") == token) {
+        else if (strstr(token, "h.") == token) {
             strcpy(addr->house, token);
         }
         token = strtok(NULL, delimiter);
@@ -69,14 +69,14 @@ void commands() {
 
 Address* allocate_addresses(int* n) {
     printf("Введите количество адресов: ");
-    scanf("%d", n);
+    scanf_s("%d", n);
     return (Address*)malloc(*n * sizeof(Address));
 }
 
 void enter_addresses_manually(Address* addresses, int n) {
     char buffer[100];
     for (int i = 0; i < n; i++) {
-        printf("Введите адрес %d в формате 'Индекс Город Улица Дом': ", i + 1);
+        printf("Введите адрес %d в формате 'Индекс,Город,Улица,Дом': ", i + 1);
         scanf(" %[^\n]", buffer);
         parse_address(buffer, &addresses[i]);
     }
@@ -105,28 +105,30 @@ void read_addresses_from_file(Address* addresses, int* n) {
 }
 
 int main() {
-    setlocale(LC_CTYPE, "Russian"); 
+    setlocale(LC_CTYPE, "Russian");
     Address* addresses = NULL;
     int n = 0;
+    int count;
     int command;
     char street_to_search[50];
     commands();
 
     while (1) {
         printf("\nВведите команду (6 для списка команд): ");
-        scanf("%d", &command);
+        scanf_s("%d", &command);
 
-switch (command) {
+        switch (command) {
         case 1:
             if (addresses != NULL) free(addresses);
             addresses = allocate_addresses(&n);
             enter_addresses_manually(addresses, n);
             break;
+
         case 2:
             if (addresses != NULL) free(addresses);
-             addresses = allocate_addresses(&n);
-        read_addresses_from_file(addresses, &n);
-        break;
+            addresses = allocate_addresses(&n);
+            read_addresses_from_file(addresses, &n);
+            break;
 
         case 3:
             if (addresses != NULL && n > 0) {
@@ -153,19 +155,20 @@ switch (command) {
             }
             break;
         case 5:
-    if (addresses != NULL) {
-        const char street_to_search[] = "Main Street"; // Пример названия улицы для поиска
-        int count = search_by_street(addresses, n, street_to_search);
-        
-        if (count == -1) {
-            printf("Улица '%s' не найдена в адресах.\n", street_to_search);
-        } else {
-            printf("Улица '%s' встречается %d раз(а) в адресах.\n", street_to_search, count);
-        }
-    } else {
-        printf("Массив адресов пуст. Необходимо сначала загрузить данные.\n");
-    }
-    break;
+            printf("Введите название улицы для поиска: ");
+            scanf("%s", street_to_search);
+            int found_index = search_by_street(addresses, n, street_to_search);
+            if (found_index != -1) {
+                printf("Address found: %s, %s, %s, %s\n",
+                    addresses[found_index].index,
+                    addresses[found_index].city,
+                    addresses[found_index].street,
+                    addresses[found_index].house);
+            }
+            else {
+                printf("Address not found.\n");
+            }
+            break;
         case 6:
             commands();
             break;
