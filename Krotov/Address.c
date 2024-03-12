@@ -14,25 +14,26 @@ typedef struct {
 } Address;
 
 void parse_address(const char* input, Address* addr) {
-    const char* delimiter = " ,.";
-    char* token = strtok(input, delimiter);
+    const char* delimiter = ",";
+    char* token = strtok((char*)input, delimiter);
 
     while (token != NULL) {
         if (isdigit(token[0])) {
             strcpy(addr->index, token);
         }
         else if (strstr(token, "г.") == token) {
-            strcpy(addr->city, token + 2); 
+            strcpy(addr->city, token);
         }
         else if (strstr(token, "ул.") == token) {
-            strcpy(addr->street, token + 3); 
+            strcpy(addr->street, token);
         }
         else if (strstr(token, "д.") == token) {
-            strcpy(addr->house, token + 2); 
+            strcpy(addr->house, token);
         }
         token = strtok(NULL, delimiter);
     }
 }
+
 
 void insertion_sort_by_street(Address* addresses, int n) {
     Address temp;
@@ -75,7 +76,7 @@ Address* allocate_addresses(int* n) {
 void enter_addresses_manually(Address* addresses, int n) {
     char buffer[100];
     for (int i = 0; i < n; i++) {
-        printf("Введите адрес %d: ", i + 1);
+        printf("Введите адрес %d в формате 'Индекс Город Улица Дом': ", i + 1);
         scanf(" %[^\n]", buffer);
         parse_address(buffer, &addresses[i]);
     }
