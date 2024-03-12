@@ -153,20 +153,19 @@ switch (command) {
             }
             break;
         case 5:
-            printf("Введите название улицы для поиска: ");
-            scanf("%s", street_to_search);
-            int found_index = search_by_street(addresses, n, street_to_search);
-            if (found_index != -1) {
-                printf("Address found: %s, %s, %s, %s\n",
-                    addresses[found_index].index,
-                    addresses[found_index].city,
-                    addresses[found_index].street,
-                    addresses[found_index].house);
-            }
-            else {
-                printf("Address not found.\n");
-            }
-            break;
+    if (addresses != NULL) {
+        const char street_to_search[] = "Main Street"; // Пример названия улицы для поиска
+        int count = search_by_street(addresses, n, street_to_search);
+        
+        if (count == -1) {
+            printf("Улица '%s' не найдена в адресах.\n", street_to_search);
+        } else {
+            printf("Улица '%s' встречается %d раз(а) в адресах.\n", street_to_search, count);
+        }
+    } else {
+        printf("Массив адресов пуст. Необходимо сначала загрузить данные.\n");
+    }
+    break;
         case 6:
             commands();
             break;
