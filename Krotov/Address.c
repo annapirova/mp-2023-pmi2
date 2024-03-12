@@ -84,7 +84,7 @@ void enter_addresses_manually(Address* addresses, int n) {
 
 void read_addresses_from_file(Address* addresses, int* n) {
     char filename[50];
-    printf("Введите имя файла: ");
+    printf("Введите имя файла с адресами: ");
     scanf("%s", filename);
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -124,9 +124,10 @@ switch (command) {
             break;
         case 2:
             if (addresses != NULL) free(addresses);
-            addresses = allocate_addresses(&n);
-            read_addresses_from_file(addresses, &n);
-            break;
+             addresses = allocate_addresses(&n);
+        read_addresses_from_file(addresses, &n);
+        break;
+
         case 3:
             if (addresses != NULL && n > 0) {
                 insertion_sort_by_street(addresses, n);
