@@ -15,11 +15,15 @@ vector:: vector(int size_): size(size_)
     }
 
 }
-vector:: vector()
+vector::vector (const vector &B)
 {
-    size=1;
+    size=B.size;
+
     vec=new double[size];
-    vec[0]=0.0;
+    for(int i=0;i<size;i++)
+    {
+        vec[i]=B.vec[i];
+    }
 }
 vector:: ~vector()
 {

@@ -6,18 +6,21 @@ using std::endl;
 int main()
 {
     srand(time(NULL));
-    vector m_1(10), m_2;
+    vector m_1(10), m_2(m_1);
     m_2.set_vector_size(10);
     m_1.set_random_vec(15,40);
     m_2.set_random_vec(50,100);
     m_1.Print();
     m_2.Print();
     cout<<endl;
+
+
     vector sum=m_1+m_2;
     sum.Print();
     vector zxc;
     zxc=m_2;
     zxc.Print();
+    
     cout<<zxc[0]<<endl;
     cout<<zxc[5]<<endl;
     vector m_3(5);

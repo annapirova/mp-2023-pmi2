@@ -6,8 +6,8 @@ class vector
     int size;
     double* vec;
     public:
-    vector();
-    vector(int size_);
+    vector(int size_ = 1);
+    vector(const vector &B);
     ~vector();
     vector operator + (const vector &B);
     vector& operator = (const vector &B);
