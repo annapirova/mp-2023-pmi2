@@ -2,13 +2,19 @@
 class vector
 {
 	private:
-	int size; double* vect = new double[size];
+	int size; 
+	double* vect;
+
 	public:
-		vector(int _size, double* _vect) { size = _size; vect = _vect;}
-		void set(int index, double value)
-		{
-			vect[index] = value;
+		vector(int _size = 3) { 
+			size = _size; 
+			vect = new double[size];
 		}
+		~vector()
+		{
+			delete[] vect;
+		}
+		vector(vector& other);
 		double& operator[](const int i)
 		{
 			return vect[i];
@@ -17,4 +23,13 @@ class vector
 		{
 			return vect[i];
 		}
+		double& operator=(const vector i)
+		{
+			return i;
+		}
+		const double& operator=(const vector i) const
+		{
+			return i;
+		}
+
 };
