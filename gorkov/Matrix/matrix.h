@@ -1,3 +1,7 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
 class  Matrix
 {
 	int n, m;
@@ -21,14 +25,21 @@ private:
 
 class Vector
 {
+	
 	int size;
 	double* vec;
 public:
 	Vector(int size = 1);
 	void Print();
 	void Genetate(int min, int max);
-	//istream operator>>(istream& in, Vector& tor);
 	Vector& operator= (const Vector& tor);
 	Vector operator+ (const Vector& tor);
+	Vector operator- (const Vector& tor);
+	Vector operator+= (const Vector& tor);
+
+	friend istream& operator>> (istream& input, Vector& tor);
+	friend istream& operator<< (ostream& os, const Vector& tor);
 	~Vector();
+	
 };
+
