@@ -37,43 +37,17 @@ Matrix::Matrix(const Matrix& B) : n(B.n), m(B.m) {
 
 
 Matrix Matrix::operator+(const Matrix& B) {
-	if ((n < B.n) || (m < B.m)) {
-		Matrix New_Matrix(B.n, B.m);
-		//Выделяем память под новую матрицу
-		New_Matrix.Memory = new double* [B.n];
-		for (int i = 0; i < B.n; i++) {
-			New_Matrix.Memory[i] = new double[B.m];
-		}
-		//Заполняем нулями
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] = 0;
-			}
-		}
-		//Переносим данные из меньшей матрицы
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				New_Matrix.Memory[i][j] = Memory[i][j];
-			}
-		}
-		//Складываем и возвращаем итоговую матрицу
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] += B.Memory[i][j];
-			}
-		}
-		n = B.n;
-		m = B.m;
-		return New_Matrix;
+	Matrix New_Matrix(B.n, B.m);
+	New_Matrix.Memory = new double* [n];
+	for (int i = 0; i < B.n; i++) {
+		New_Matrix.Memory[i] = new double[m];
 	}
-	else {
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				Memory[i][j] += B.Memory[i][j];
-			}
+	for (int i = 0; i < B.n; i++) {
+		for (int j = 0; j < B.m; j++) {
+			New_Matrix.Memory[i][j] = Memory[i][j] + B.Memory[i][j];
 		}
-		return *this;
 	}
+	return New_Matrix;
 }
 
 
@@ -105,125 +79,43 @@ Matrix &Matrix::operator=(const Matrix& B) {
 
 
 Matrix Matrix::operator-(const Matrix& B) {
-	if ((n < B.n) || (m < B.m)) {
-		Matrix New_Matrix(B.n, B.m);
-		//Выделяем память под новую матрицу
-		New_Matrix.Memory = new double* [B.n];
-		for (int i = 0; i < B.n; i++) {
-			New_Matrix.Memory[i] = new double[B.m];
-		}
-		//Заполняем нулями
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] = 0;
-			}
-		}
-		//Переносим данные из меньшей матрицы
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				New_Matrix.Memory[i][j] = Memory[i][j];
-			}
-		}
-		//Складываем и возвращаем итоговую матрицу
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] -= B.Memory[i][j];
-			}
-		}
-		return New_Matrix;
+	Matrix New_Matrix(B.n, B.m);
+	New_Matrix.Memory = new double* [n];
+	for (int i = 0; i < B.n; i++) {
+		New_Matrix.Memory[i] = new double [m];
 	}
-	else {
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				Memory[i][j] -= B.Memory[i][j];
-			}
+	for (int i = 0; i < B.n; i++) {
+		for (int j = 0; j < B.m; j++) {
+			New_Matrix.Memory[i][j] = Memory[i][j] - B.Memory[i][j];
 		}
-		return *this;
 	}
+	return New_Matrix;
 }
+
 
 
 Matrix &Matrix::operator+=(const Matrix& B){
-	if ((n < B.n) || (m < B.m)){
-		Matrix New_Matrix(B.n, B.m);
-		//Выделяем память под новую матрицу
-		New_Matrix.Memory = new double* [B.n];
-		for (int i = 0; i < B.n; i++) {
-			New_Matrix.Memory[i] = new double[B.m];
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			Memory[i][j] += B.Memory[i][j];
 		}
-		//Заполняем нулями
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] = 0;
-			}
-		}
-		//Переносим данные из меньшей матрицы
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				New_Matrix.Memory[i][j] = Memory[i][j];
-			}
-		}
-		//Складываем и возвращаем итоговую матрицу
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] += B.Memory[i][j];
-			}
-		}
-		Matrix::operator=(New_Matrix);
 	}
-	else {
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				Memory[i][j] += B.Memory[i][j];
-			}
-		}
-		return *this;
-	}
-	
+	return *this;
 }
+
 
  
 Matrix& Matrix::operator-=(const Matrix& B) {
-	if ((n < B.n) || (m < B.m)) {
-		Matrix New_Matrix(B.n, B.m);
-		//Выделяем память под новую матрицу
-		New_Matrix.Memory = new double* [B.n];
-		for (int i = 0; i < B.n; i++) {
-			New_Matrix.Memory[i] = new double[B.m];
+	for (int i = 0; i < B.n; i++) {
+		for (int j = 0; j < B.m; j++) {
+			Memory[i][j] -= B.Memory[i][j];
 		}
-		//Заполняем нулями
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] = 0;
-			}
-		}
-		//Переносим данные из меньшей матрицы
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				New_Matrix.Memory[i][j] = Memory[i][j];
-			}
-		}
-		//Складываем и возвращаем итоговую матрицу
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				New_Matrix.Memory[i][j] -= B.Memory[i][j];
-			}
-		}
-		Matrix::operator=(New_Matrix);
 	}
-	else {
-		for (int i = 0; i < B.n; i++) {
-			for (int j = 0; j < B.m; j++) {
-				Memory[i][j] -= B.Memory[i][j];
-			}
-		}
-		return *this;
-	}
-
+	return *this;
 }
 
 
-Matrix& Matrix::RandomMatrix() {
+void Matrix::RandomMatrix() {
 	double random_int;
 	double random_double;
 	for (int i = 0; i < n; i++) {
@@ -233,16 +125,15 @@ Matrix& Matrix::RandomMatrix() {
 			Memory[i][j] = random_double;
 		}
 	}
-	return *this;
 }
 
 
 Matrix Matrix::operator*(const Matrix& B) {
 	Matrix New_Matrix(n, B.m);
 	double summa = 0;
-	//Идем по строчкам 1 матрицы
+	//РРґРµРј РїРѕ СЃС‚СЂРѕС‡РєР°Рј 1 РјР°С‚СЂРёС†С‹
 	for (int i = 0; i < n; i++) {
-		//Идем по столбцам
+		//РРґРµРј РїРѕ СЃС‚РѕР»Р±С†Р°Рј
 		for (int j = 0; j < B.m; j++) {
 			for (int ind = 0; ind < m; ind++) {
 				summa += Memory[i][ind] * B.Memory[ind][j];
@@ -256,12 +147,12 @@ Matrix Matrix::operator*(const Matrix& B) {
 
 
 istream& operator>>(istream& in, Matrix& mat) {
-	cout << "Введите размер матрицы (n, m):  ";
+	cout << "Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ РјР°С‚СЂРёС†С‹ (n, m):  ";
 	in >> mat.n >> mat.m;
 	mat.Memory = new double* [mat.n];
 	for (int i = 0; i < mat.n; i++) {
 		mat.Memory[i] = new double[mat.m];
-		cout << "Введите " << i + 1 << " строку:   ";
+		cout << "Р’РІРµРґРёС‚Рµ " << i + 1 << " СЃС‚СЂРѕРєСѓ:   ";
 		for (int j = 0; j < mat.m; j++) {
 			in >> mat.Memory[i][j];
 		}
@@ -271,7 +162,7 @@ istream& operator>>(istream& in, Matrix& mat) {
 
 
 ostream& operator<<(ostream& os, const Matrix& mat) {
-	os << "Ваша матрица" << endl;
+	os << "Р’Р°С€Р° РјР°С‚СЂРёС†Р°" << endl;
 	for (int i = 0; i < mat.n; i++) {
 		for (int j = 0; j < mat.m; j++) {
 			os << mat.Memory[i][j] << " ";
