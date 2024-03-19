@@ -1,8 +1,7 @@
-﻿
 #include <iostream>
 #include <cstdio>
 #include <cmath>
-using namespace std;
+
 class Vector
 {
     int size;
@@ -18,11 +17,12 @@ public:
     Vector& operator-=(const Vector& tor);
     Vector operator*(double scalar);
     double& operator[](int index);
-    friend ostream& operator<<(ostream& os, const Vector& vec);
-    friend istream& operator>>(istream& is, Vector& vec);
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& is, Vector& vec);
     double Norm();
     ~Vector();
 };
+
 Vector::Vector(int size) : size(size)
 {
     vec = new double[size];
@@ -32,7 +32,7 @@ void Vector::Print()
 {
     for (int i = 0; i < size; i++)
     {
-        cout << vec[i] << endl;
+        std::cout << vec[i] << std::endl;
     }
 }
 
@@ -64,7 +64,7 @@ Vector Vector::operator+(const Vector& tor)
 {
     if (size != tor.size)
     {
-        cout << "wrong len" << endl;
+        std::cout << "wrong len" << std::endl;
         return *this;
     }
     Vector result(size);
@@ -79,7 +79,7 @@ Vector Vector::operator-(const Vector& tor)
 {
     if (size != tor.size)
     {
-        cout << "wrong len" << endl;
+        std::cout << "wrong len" << std::endl;
         return *this;
     }
     Vector result(size);
@@ -94,7 +94,7 @@ Vector& Vector::operator+=(const Vector& tor)
 {
     if (size != tor.size)
     {
-        cout << "wrong len" << endl;
+        std::cout << "wrong len" << std::endl;
         return *this;
     }
     for (int i = 0; i < size; i++)
@@ -108,7 +108,7 @@ Vector& Vector::operator-=(const Vector& tor)
 {
     if (size != tor.size)
     {
-        cout << "wrong len" << endl;
+        std::cout << "wrong len" << std::endl;
         return *this;
     }
     for (int i = 0; i < size; i++)
@@ -133,7 +133,7 @@ double& Vector::operator[](int index)
     return vec[index];
 }
 
-ostream& operator<<(ostream& os, const Vector& vec)
+std::ostream& operator<<(std::ostream& os, const Vector& vec)
 {
     for (int i = 0; i < vec.size; i++)
     {
@@ -142,7 +142,7 @@ ostream& operator<<(ostream& os, const Vector& vec)
     return os;
 }
 
-istream& operator>>(istream& is, Vector& vec)
+std::istream& operator>>(std::istream& is, Vector& vec)
 {
     for (int i = 0; i < vec.size; i++)
     {
@@ -165,15 +165,20 @@ Vector::~Vector()
 {
     delete[] vec;
 }
+
 int main() {
-	int min, max;
-	cout << "Enter min and max values: ";
-	cin >> min >> max;
-	Vector T(3), Y, X;
-	T.Generate(min, max);
-	Y = T;
-	Y.Print();
-	X = Y + T;  
-	X.Print();
-	return 0;
+    int min, max;
+    std::cout << "Enter min and max values: ";
+    std::cin >> min >> max;
+    Vector T(3), Y, X;
+    T.Generate(min, max);
+    Y = T;
+    Y.Print();
+    X = Y + T;  
+    X.Print();
+    return 0;
 }
+
+
+
+
