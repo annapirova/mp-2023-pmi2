@@ -25,8 +25,8 @@ int main()
 	T.Genetate(min, max);
 	Y = T;
 	Y.Print();
-	L = Y + T;
-	//Y.Print();
+	L = (Y + T);
 	L.Print();
+	
 	return 0;
 }
