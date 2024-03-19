@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include "matrix.h"
-using namespace std;
+
 
 Matrix::Matrix(int n, int m) :n(n), m(m)
 {
@@ -37,8 +37,8 @@ void Matrix::Generate(int a, int b) {
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++) {
-			//A[i][j]=a+(b-a)*((double)rand()/double(RAND_MAX));
-			A[i][j] = rand() % 10;
+			A[i][j]=a+(b-a)*((double)rand()/double(RAND_MAX));
+			//A[i][j] = rand() % 10;
 		}
 	}
 
@@ -89,26 +89,28 @@ Matrix& Matrix::operator+= (const Matrix& B) {
 }
 
 Matrix Matrix::operator+ (const Matrix& B) {
+	Matrix C(n, m);
 	if ((n == B.n) && (m == B.m)) {
 		for (int i = 0; i < n; i++)
 		{
 			for (int j = 0; j < m; j++) {
-				A[i][j] += B.A[i][j];
+				C.A[i][j]=A[i][j] + B.A[i][j];
 			}
 		}
 	}
-	return *this;
+	return C;
 }
 Matrix Matrix::operator- (const Matrix& B) {
+	Matrix C(n, m);
 	if ((n == B.n) && (m == B.m)) {
 		for (int i = 0; i < n; i++)
 		{
 			for (int j = 0; j < m; j++) {
-				A[i][j] -= B.A[i][j];
+				C.A[i][j]=A[i][j]- B.A[i][j];
 			}
 		}
 	}
-	return *this;
+	return C;
 }
 Matrix& Matrix::operator-= (const Matrix& B) {
 	if ((n == B.n) && (m == B.m)) {
@@ -176,7 +178,8 @@ Vector::~Vector() {
 
 void Vector::Genetate(int min, int max) {
 	for (int i = 0; i < size; i++) {
-		vec[i] = min + (max - min) * ((double)rand() / double(RAND_MAX));
+		//vec[i] = min + (max - min) * ((double)rand() / double(RAND_MAX));
+		vec[i] = rand() % 10;
 	}
 }
 
@@ -194,12 +197,53 @@ Vector& Vector::operator=(const Vector& tor) {
 }
 
 Vector Vector::operator+(const Vector& tor) {
-	if (size != tor.size) {
-		cout << "wrong len" << endl;
-		return *this;
-	}
+	Vector c(size);
+	if	(size == tor.size){
 	for (int i = 0; i < size; i++) {
-		vec[i]=vec[i]+ tor.vec[i];
+		c.vec[i] = vec[i] + tor.vec[i];
+	} 
+	}
+	return c;
+}
+Vector Vector::operator+=(const Vector& tor) {
+	if (size == tor.size) {
+		for (int i = 0; i < size; i++)
+			vec[i] += tor.vec[i];
 	}
 	return *this;
+}
+
+Vector Vector::operator-(const Vector& tor) {
+	Vector c(size);
+	if (size == tor.size) {
+		for (int i = 0; i < size; i++) {
+			c.vec[i] = vec[i] - tor.vec[i];
+		}
+	}
+	return c;
+}
+
+//istream& operator >> (istream& input, Vector& tor) {
+//	//cout << "enter len of vect";
+//	//in >> tor.size;
+//	for (int i = 0; i < tor.size; i++) {
+//		input >> tor.vec[i];
+//	}
+//	return input;
+//}
+
+/*istream& operator << (ostream& os, const Vector& tor) {
+	for (int i = 0; i < tor.size; i++) {
+		os << tor.vec[i];
+	}
+	return os;
+}*/
+
+istream& operator >> (istream& input, Vector& tor) {
+	//cout << "enter len of vect";
+	//in >> tor.size;
+	for (int i = 0; i < tor.size; i++) {
+		input >> tor.vec[i];
+	}
+	return input;
 }
