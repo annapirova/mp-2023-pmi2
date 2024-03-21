@@ -1,17 +1,23 @@
-﻿#include "massa.h"
+﻿#include <iostream>
+#include "Matrix.h"
+#include <iomanip>
+#include <ctime>
+using namespace std;
+int main()
+{
+    srand(time(NULL));
 
-int main() {
-    Mass mass1(1, 500);
-    Mass mass2(2, 300);
+    matrix mat1(2, 2);
+    matrix mat2(2, 2);
 
-    Mass mass3 = mass1 + mass2;
-    mass3.print(); // Выведет: 3 кг 800 г
+    mat1.set_random(1.0, 10.0);
+    mat2.set_random(1.0, 10.0);
 
-    Mass mass4 = mass1 - mass2;
-    mass4.print(); // Выведет: -1 кг 200 г
+    cout << "Matrix 1:" << endl;
+    mat1.Print();
 
-    std::cout << (mass1 == mass2) << std::endl; // Выведет: false
-    std::cout << (mass1 == mass3) << std::endl; // Выведет: false
+    cout << "Matrix 2:" << endl;
+    mat2.Print();
 
     return 0;
 }
