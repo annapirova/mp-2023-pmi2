@@ -14,7 +14,12 @@ class vector
 		{
 			delete[] vect;
 		}
-		vector(vector& other);
+		vector(const vector& othl)
+		{
+			size = othl.size;
+			vect = othl.vect;
+
+		}
 		double& operator[](const int i)
 		{
 			return vect[i];
@@ -23,13 +28,13 @@ class vector
 		{
 			return vect[i];
 		}
-		double& operator=(const vector i)
+		vector& operator==(const vector& i)
 		{
-			return i;
+			if (this != &i)
+			{
+				size = i.size;
+				vect = i.vect;
+			}
+			return *this;
 		}
-		const double& operator=(const vector i) const
-		{
-			return i;
-		}
-
 };
