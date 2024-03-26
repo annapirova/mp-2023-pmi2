@@ -45,6 +45,91 @@ vector vector:: operator + (const vector &B)
     }
         return c;
 }
+vector vector:: operator - (const vector &B)
+{
+    vector c(size);
+    if(size==B.size)
+    {
+        for(int i=0;i<size;i++)
+        {
+            c.vec[i]=vec[i]-B.vec[i];
+        }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return NULL vector"<<endl;
+    }
+    return c;
+}
+vector& vector:: operator += (const vector &B)
+{
+    if(size==B.size)
+    {
+    for(int i=0;i<size;i++)
+    {
+        vec[i]+=B.vec[i];
+    }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return vec1"<<endl;
+    }
+    return *this;
+}
+vector& vector:: operator -= (const vector &B)
+{
+    if(size==B.size)
+    {
+    for(int i=0;i<size;i++)
+    {
+        vec[i]-=B.vec[i];
+    }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return vec1"<<endl;
+    }
+    return *this;
+}
+vector operator * (vector zxc, double q)
+{
+    vector c(zxc.size);
+    for(int i=0;i<zxc.size;i++)
+    {
+        c.vec[i]=zxc.vec[i]*q;
+    }
+    return c;
+}
+vector operator * (double q, vector zxc)
+{
+    vector c(zxc.size);
+    for(int i=0;i<zxc.size;i++)
+    {
+        c.vec[i]=zxc.vec[i]*q;
+    }
+    return c;
+}
+vector& vector:: operator ++()
+{
+    for(int i=0;i<size;i++)
+    {
+        vec[i]+=1.0;
+    }
+    return *this;
+}
+vector vector:: operator ++(int k)
+{
+    vector c(*this);
+    for(int i=0;i<size;i++)
+    {
+        vec[i]+=1.0;
+    }
+    return c;
+}
+vector vector:: operator -()
+{
+    return (*this)*(-1.0);
+}
 void vector:: set_random_vec(double a, double b)
 {
     for(int i=0;i<size;i++)
@@ -54,7 +139,8 @@ void vector:: set_random_vec(double a, double b)
 }
 void vector:: set_vector_size(int size_)
 {
-    size=size_;
+    vector zxc(size_);
+    *this=zxc;
 }
 vector& vector:: operator = (const vector &B)
 {
@@ -71,7 +157,7 @@ vector& vector:: operator = (const vector &B)
         }
     return *this;
 }
-double& vector:: operator [] (const int i)
+double& vector:: operator [] (const int i) const
 {
     return vec[i];
 }
@@ -92,4 +178,24 @@ void vector:: set_some_vec()
         cin>>vec[i];
         cout<<endl;
     }
+}
+istream& operator >> (istream& in, vector& b)
+{
+    for(int i=0;i<b.size;i++)
+    {
+        cout<<"input ["<<i<<"]: ";
+        in>>b.vec[i];
+        cout<<endl;
+    }
+    return in;
+}
+ostream& operator << (ostream& out, const vector& b)
+{
+    for (int i=0;i<b.size;i++)
+    {
+        out<<setw(4)<<b.vec[i]<<" ";
+    }
+    out<<endl;
+    
+    return out;
 }

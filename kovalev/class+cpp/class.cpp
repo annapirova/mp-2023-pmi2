@@ -5,8 +5,7 @@ using std::endl;
  
 int main()
 {
-   // hexs zxc;
-   hexs m_1, m_2(123.456);
+    hexs m_1, m_2(123.456);
     cout<<"asd"<<endl;
     m_1.set(93.213);
     cout<<"for m_1:"<<endl;

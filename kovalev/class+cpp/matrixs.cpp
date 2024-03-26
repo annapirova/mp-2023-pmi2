@@ -52,27 +52,7 @@ void matrix:: Print()
         cout<<endl;
     }
 }
-matrix matrix:: plus(const matrix &B)
-{
-    matrix c(n,m);
-    if(n==B.n && m==B.m)
-    {
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<m;j++)
-        {
-            c.A[i][j]=A[i][j]+B.A[i][j];
-        }
-    }
-    }
-    else
-    {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
-    }
-        return c;
-
-}
-matrix matrix::operator +(const matrix &B)
+matrix matrix:: plus(const matrix& B)
 {
     matrix c(n,m);
     if(n==B.n && m==B.m)
@@ -91,7 +71,49 @@ matrix matrix::operator +(const matrix &B)
     }
         return c;
 }
-matrix matrix::operator -(const matrix &B)
+void matrix:: set_size_matrix(int n, int m)
+{
+    matrix zxc(n,m);
+    *this=zxc;
+}
+matrix matrix::operator +(const matrix& B)
+{
+    matrix c(n,m);
+    if(n==B.n && m==B.m)
+    {
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            c.A[i][j]=A[i][j]+B.A[i][j];
+        }
+    }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+    }
+        return c;
+}
+matrix& matrix:: operator+=(const matrix& B)
+{   
+    if(m==B.m && n==B.n)
+    {
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                A[i][j]+=B.A[i][j];
+            }
+        }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+    }
+    return *this;
+}
+matrix matrix::operator -(const matrix& B)
 {
     matrix c(n,m);
     if(n==B.n && m==B.m)
@@ -110,7 +132,25 @@ matrix matrix::operator -(const matrix &B)
     }
     return c;
 }
-matrix& matrix:: operator = (const matrix &B)
+matrix& matrix:: operator -=(const matrix& B)
+{  
+    if(m==B.m && n==B.n)
+    {
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                A[i][j]-=B.A[i][j];
+            }
+        }
+    }
+    else
+    {
+        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+    }
+    return *this;
+}
+matrix& matrix:: operator = (const matrix& B)
 {
     if(this==&B) return *this;
     if(n!=B.n || m!=B.m)
@@ -133,19 +173,19 @@ matrix& matrix:: operator = (const matrix &B)
     }
     return *this;
 }
-matrix matrix::operator * (const matrix &B)
+matrix matrix::operator * (const matrix& B)// don't normal
 { 
     matrix c(n,B.m);
     if(m==B.n)
     {
-    for(int i=0;i<n;i++)
+    for(int i=0;i<c.n;i++)
     {
-        for(int j=0;j<B.m;j++)
+        for(int j=0;j<c.m;j++)
         {
             double q=0.0;
-            for(int k=i;k<n-i;k++)
+            for(int k=0;k<m;k++)
             {
-                q+=A[i][j+k]*B.A[i+k][j];
+                q+=A[i][k]*B.A[k][j];
             }
             c.A[i][j]=q;
         }
@@ -157,4 +197,4 @@ matrix matrix::operator * (const matrix &B)
     }
     return c;
 }
-//+= -= *=
+// *const *= () << >> chislo_matrix matrix_chislo vector_matrix matrix_vector

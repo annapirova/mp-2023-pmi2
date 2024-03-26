@@ -13,15 +13,15 @@ class matrix
     ~matrix();
     void set_random(double a, double b);
     void Print();
-    matrix plus(const matrix &B);
-    matrix operator + (const matrix &B);
-    matrix operator - (const matrix &B);
-    matrix operator * (const matrix &B);
-    matrix& operator = (const matrix &B);
-    matrix& operator += (const matrix &B);
-    matrix& operator -= (const matrix &B);
-    matrix& operator *= (const matrix &B);
-
+    void set_size_matrix(int n=1, int m=1);
+    matrix plus(const matrix& B);
+    matrix operator + (const matrix& B);
+    matrix operator - (const matrix& B);
+    matrix operator * (const matrix& B);
+    matrix& operator = (const matrix& B);
+    matrix& operator += (const matrix& B);
+    matrix& operator -= (const matrix& B);
+    matrix& operator *= (const matrix& B);
 };
 
 #endif
