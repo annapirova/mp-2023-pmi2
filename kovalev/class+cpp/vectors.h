@@ -7,8 +7,9 @@ class vector
 {
     private:
     int size;
-    double* vec;
+    //double* vec;
     public:
+    double* vec;
     vector(int size_=1);
     vector(const vector &B);
     ~vector();
@@ -29,8 +30,7 @@ class vector
     void set_some_vec();
     friend istream& operator >> (istream& in, vector& b);
     friend ostream& operator << (ostream& out, const vector& b);
-    //функция вычмлсления нормы
-
     friend class matrix;
+    //функция вычмлсления нормы
 };
 #endif

@@ -1,7 +1,8 @@
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 #include <ctime>
-#include <matrixs.h>
+#include "matrixs.h"
 using std::cout;
 using std::endl;
 using std::setw;
@@ -67,14 +68,9 @@ matrix matrix:: plus(const matrix& B)
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1, return NULL matrix"<<endl;
     }
         return c;
-}
-void matrix:: set_size_matrix(int n, int m)
-{
-    matrix zxc(n,m);
-    *this=zxc;
 }
 matrix matrix::operator +(const matrix& B)
 {
@@ -91,7 +87,7 @@ matrix matrix::operator +(const matrix& B)
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1,return NULL matrix"<<endl;
     }
         return c;
 }
@@ -109,7 +105,7 @@ matrix& matrix:: operator+=(const matrix& B)
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1, return NULL matrix"<<endl;
     }
     return *this;
 }
@@ -128,7 +124,7 @@ matrix matrix::operator -(const matrix& B)
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1, return NULL matrix"<<endl;
     }
     return c;
 }
@@ -146,7 +142,7 @@ matrix& matrix:: operator -=(const matrix& B)
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1, return NULL matrix"<<endl;
     }
     return *this;
 }
@@ -173,7 +169,7 @@ matrix& matrix:: operator = (const matrix& B)
     }
     return *this;
 }
-matrix matrix::operator * (const matrix& B)// don't normal
+matrix matrix::operator * (const matrix& B)
 { 
     matrix c(n,B.m);
     if(m==B.n)
@@ -193,8 +189,80 @@ matrix matrix::operator * (const matrix& B)// don't normal
     }
     else
     {
-        cout<<"ERROR size!=size1"<<endl<<"return NULL matrix"<<endl;
+        cout<<"ERROR size!=size1, return NULL matrix"<<endl;
     }
     return c;
 }
-// *const *= () << >> chislo_matrix matrix_chislo vector_matrix matrix_vector
+matrix operator *(const matrix& a, const double zxc)
+{
+    matrix c(a.n,a.m);
+    for(int i=0;i<a.n;i++)
+    {
+        for(int j=0;j<a.m;i++)
+        {
+            c.A[i][j]=a.A[i][j]*zxc;
+        }
+        
+    }
+    return c;
+}
+matrix operator *(const double zxc, const matrix& a)
+{
+    matrix c(a.n,a.m);
+    for(int i=0;i<a.n;i++)
+    {
+        for(int j=0;j<a.m;i++)
+        {
+            c.A[i][j]=a.A[i][j]*zxc;
+        }
+        
+    }
+    return c;
+}
+double matrix:: operator()(const int i,const int j)
+{
+    return A[i][j];
+}
+ostream& operator <<(ostream& out, const matrix& a)
+{
+    for( int i=0;i<a.n;i++)
+    {
+        for(int j=0;j<a.m;j++)
+        {
+            out<<setw(8)<<a.A[i][j]<<" ";
+        }
+        out<<endl;
+    }
+    return out;
+
+}
+istream& operator >>(istream& in, matrix& a)
+{
+    for(int i=0;i<a.n;i++)
+    {
+        for(int j=0;j<a.m;j++)
+        {
+        cout<<"input ["<<i<<"]["<<j<<"]: ";
+        in>>a.A[i][j];
+        cout<<endl;
+        }
+    }
+    return in;
+
+}
+vector matrix:: operator *( const vector& b)
+{
+    vector c(n);
+    if(m==b.size)
+    {
+        for(int i=0;i<n;i++)
+        {
+            c.vec[i]=0;
+            for(int j=0;j<m;j++)
+            c.vec[i]+=A[i][j]*b.vec[j];
+        }
+    }
+    else
+    cout<<"ERROR m!=size"<<endl<<"return NULL vector"<<endl;
+    return c;
+}
