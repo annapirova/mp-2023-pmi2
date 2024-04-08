@@ -1,11 +1,11 @@
 #pragma once
-#include <ostream>
+#include <iostream>
+using namespace std;
 class vector
 {
 	private:
 	int size; 
 	double* vect;
-
 	public:
 		vector(int _size = 3) { 
 			size = _size; 
@@ -64,14 +64,16 @@ class vector
 			}
 			return *this;
 		}
-		void operator<<(const vector& y)
+		friend ostream& operator<<(ostream& vout,const vector& Imma)
 		{
-			cout << "Vector begining";
-			for (int u = 0; u < size; u++)
-			{
-				cout << y.vect[u];
-			}
-			cout << "Vector ending";
+			for (int i = 0; i < Imma.size; i ++)
+			{vout << Imma.vect[i];}
+			return vout;
 		}
-
+		friend istream& operator>>(istream& vin,const vector& Imma)
+		{
+			for (int i = 0; i < Imma.size; i ++)
+			{vin >> Imma.vect[i];}
+			return vin;
+		}
 };
