@@ -1,33 +1,60 @@
-﻿#include <iostream>
+#include <iostream>
+#include <locale.h>
 #include "vecmat.h"
-#include "Gauss.h"
-#include <ctime>
+#include "gauss.h"
+
 using namespace std;
+
 int main() {
-    // Создание матрицы и вектора, объекта класса Gauss
-    Matrix A(3, 3); 
-    A(0, 0) = 1; A(0, 1) = 2; A(0, 2) = 3;
-    A(1, 0) = 2; A(1, 1) = -1; A(1, 2) = 2;
-    A(2, 0) = 1; A(2, 1) = 1; A(2, 2) = 5;
+    setlocale(LC_CTYPE, "Rus");
+    double err;
+    int n;
+    cout << "Введите размерность: ";
+    cin >> n;
 
-    Vector x(A.GetN()); // Создаём вектор размера, соответствующего числу строк матрицы A
-    // Вектор x заполняется нулями по умолчанию
+    // Создаем матрицу, векторы и заполняем их вручную
+    Matrix A(n, n);
+    Vector X(n);
+    Vector B(n);
+    Vector Ans(n);
 
-    Vector b(3); // Создаём вектор размера 3
-    b(0) = 1; b(1) = 6; b(2) = -1;
+    cout << "Введите элементы матрицы A:" << endl;
+    cin >> A;
 
-    // Создание объекта класса Gauss
-    Gauss gauss(&A, &x, &b);
+    cout << "Введите элементы вектора X:" << endl;
+    cin >> X;
 
-    // Решение системы методом Гаусса
-    gauss.solve();
+    // Вычисляем вектор B
+    B = A * X;
 
-    // Вывод решения
-    cout << "ZNAHENIE x:" << endl;
-    cout << x << endl;
+    // Выводим элементы матрицы и векторов
+    cout << "Матрица A:" << endl << A << endl;
+    cout << "Вектор X:" << endl << X << endl;
+    cout << "Вектор B:" << endl << B << endl;
 
-    // Проверка решения
-    double err = gauss.Check();
-    cout << " error: " << err << endl;
+    // Решаем систему методом Гаусса
+    Gauss G(&A, &X, &B);
+    G.Solve();
+
+    // Проверяем решение
+    err = G.Check();
+    cout << "Относительная ошибка: " << err << endl;
+
     return 0;
 }
+//A.RandomMatrix(-3, 3);
+//X.Generate(-10, 10);
+//B = A * X;
+// G(&A, &X, &B);
+//G.Solve();
+//err = G.Check();
+//cout << err;
+//return 0;
+//}
+
+
+
+
+//5 1 2         1       13
+//1 6 3    ///X=2     B=22
+//5 2 6         3       27
