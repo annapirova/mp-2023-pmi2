@@ -1,36 +1,31 @@
-﻿#include <iostream>
+#include <iostream>
 #include "vecmat.h"
-#include "Gauss.h"
-#include <ctime>
 #include "gauss.h"
+#include <ctime>
 
-// Реализация методов класса Gauss...
+// Реализация методов класса Gauss
 
-using namespace std;
 Gauss::Gauss(Matrix* A, Vector* x, Vector* b) : A(A), x(x), b(b), status(0) {}
 
-void Gauss::solve() {
-    // Прямой ход метода Гаусса
-    for (int i = 0; i < A->GetN(); ++i) {
+void Gauss::Solve() {
+    for (int i = 0; i < A->Rows(); i++) {
         double pivot = (*A)(i, i);
         if (pivot == 0) {
-            // Обработка случая, когда главный элемент равен нулю
-            status = -1; // Устанавливаем статус ошибки
+            status = -1;
             return;
         }
-        for (int j = i + 1; j < A->GetN(); ++j) {
+        for (int j = i + 1; j < A->Rows(); j++) {
             double ratio = (*A)(j, i) / pivot;
-            for (int k = 0; k < A->GetM(); ++k) {
+            for (int k = 0; k < A->Cols(); k++) {
                 (*A)(j, k) -= ratio * (*A)(i, k);
             }
             (*b)(j) -= ratio * (*b)(i);
         }
     }
 
-    // Обратный ход метода Гаусса
-    for (int i = A->GetN() - 1; i >= 0; --i) {
+    for (int i = A->Rows() - 1; i >= 0; i--) {
         double sum = 0;
-        for (int j = i + 1; j < A->GetN(); ++j) {
+        for (int j = i + 1; j < A->Rows(); j++) {
             sum += (*A)(i, j) * (*x)(j);
         }
         (*x)(i) = ((*b)(i) - sum) / (*A)(i, i);
@@ -38,9 +33,14 @@ void Gauss::solve() {
 }
 
 double Gauss::Check() {
-    Vector e = (*A) * (*x) - (*b);
-    double a, y;
-    a = e.Norm();
-    y = b->Norm();
-    return a / y;
+    if (status != 0) {
+        return -1;
+    }
+
+    Matrix M = *A;
+    Vector e = M * (*x) - (*b); 
+    double a = e.Norm(); 
+    double y = (*b).Norm(); 
+
+    return a / y; 
 }
