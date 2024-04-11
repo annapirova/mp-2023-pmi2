@@ -1,4 +1,5 @@
-﻿#include <iostream>
+#include <iostream>
+#include <locale.h>
 #include "vecmat.h"
 #include <iomanip>
 #include <ctime>
@@ -104,10 +105,10 @@ ostream& operator<<(ostream& os, const Matrix& matr) {
 
 istream& operator>>(istream& in, Matrix& matr) {
     int rw, clmn;
-    cout << "Number of rows and col: "; in >> rw >> clmn;
+    cout << "Количество строк и столбцов: "; in >> rw >> clmn;
     matr = Matrix(rw, clmn);
     for (int i = 0; i < matr.n; i++) {
-        cout << "Row num." << i << " values: ";
+        cout << "строка " << i << " элементы: ";
         for (int j = 0; j < matr.m; j++)
             in >> matr.matrix[i][j];
     }
@@ -158,6 +159,17 @@ Vector Vector::operator*(double a) {
         NewV.vect[i] = vect[i] * a;
     return NewV;
 }
+Vector operator*(const Matrix& matr, const Vector& vect) {
+    Vector result(matr.Rows());
+    for (int i = 0; i < matr.Rows(); ++i) {
+        double sum = 0.0;
+        for (int j = 0; j < matr.Cols(); ++j) {
+            sum += matr(i, j) * vect(j);
+        }
+        result(i) = sum;
+    }
+    return result;
+}
 
 Vector& Vector::operator=(const Vector& v) {
     if (this == &v) return *this;
@@ -199,9 +211,23 @@ ostream& operator<<(ostream& os, const Vector& V) {
         os << V.vect[i] << " ";
     return os;
 }
+void Matrix::RandomMatrix(double min, double max) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            matrix[i][j] = min + (max - min) * ((double)rand() / double(RAND_MAX));
+        }
+    }
+}
+
+void Vector::Generate(double min, double max) {
+    for (int i = 0; i < len; i++) {
+        vect[i] = min + (max - min) * ((double)rand() / double(RAND_MAX));
+    }
+}
+
 
 istream& operator>>(istream& in, Vector& V) {
-    cout << "Values of row: ";
+    cout << "";
     for (int i = 0; i < V.len; i++)
         in >> V.vect[i];
     return in;
