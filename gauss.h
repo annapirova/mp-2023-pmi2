@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 #ifndef GAUSS_H
 #define GAUSS_H
-using namespace std;
+
 #include "vecmat.h"
 
 class Gauss {
@@ -13,8 +13,9 @@ private:
 
 public:
     Gauss(Matrix* A, Vector* x, Vector* b);
-    void solve();
+    void Solve();
     double Check();
 };
+
 #endif
 
