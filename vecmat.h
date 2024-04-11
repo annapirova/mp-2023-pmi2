@@ -1,7 +1,11 @@
-﻿#pragma once
+#pragma once
 #ifndef VECMAT_H
 #define VECMAT_H
-using namespace std;
+
+#include <iostream>
+#include <random>
+#include <ctime>
+
 class Vector;
 
 class Matrix {
@@ -10,9 +14,9 @@ private:
     double** matrix;
 
 public:
-    Matrix(int row = 1, int col = 1); // конструктор
-    Matrix(const Matrix& matr); // конструктор копирования
-    ~Matrix(); // деструктор
+    Matrix(int row = 1, int col = 1); 
+    Matrix(const Matrix& matr); 
+    ~Matrix(); 
 
     // Операторы
     Matrix operator+(const Matrix& matr);
@@ -25,12 +29,12 @@ public:
     const double& operator()(int i, int j) const;
 
     // Функции
-    int GetN() const { return n; };
-    int GetM() const { return m; };
-
+    int Rows() const { return n; };
+    int Cols() const { return m; };
+    void RandomMatrix(double min, double max);
     friend class Gauss;
-    friend ostream& operator<<(ostream& os, const Matrix& matr);
-    friend istream& operator>>(istream& os, Matrix& matr);
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& matr);
+    friend std::istream& operator>>(std::istream& os, Matrix& matr);
     friend Vector operator*(Matrix& matr, Vector& vect);
 };
 
@@ -40,9 +44,9 @@ private:
     int len;
 
 public:
-    Vector(int N = 1); // конструктор
-    Vector(const Vector& v); // конструктор копирования
-    ~Vector(); // деструктор
+    Vector(int N = 1); // Конструктор
+    Vector(const Vector& v); // Конструктор копирования
+    ~Vector(); 
 
     // Операторы
     Vector operator+(const Vector& v);
@@ -55,9 +59,12 @@ public:
     const double& operator()(int i) const;
     double Norm() const; // Вычисление нормы вектора
 
-    // Функции
+ 
     friend Vector operator*(Matrix& matr, Vector& vect);
-    friend ostream& operator<<(ostream& os, const Vector& vect);
-    friend istream& operator>>(istream& in, Vector& V);
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vect);
+    friend std::istream& operator>>(std::istream& in, Vector& V);
+    void Generate(double min, double max);
+    friend Vector operator*(Matrix& matr, Vector& vect);
 };
+
 #endif
