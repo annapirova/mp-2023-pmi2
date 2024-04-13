@@ -31,6 +31,7 @@ class vector
     friend istream& operator >> (istream& in, vector& b);
     friend ostream& operator << (ostream& out, const vector& b);
     friend class matrix;
-    //функция вычмлсления нормы
+    friend class GAUS;
+    double norma();
 };
 #endif

@@ -6,6 +6,7 @@
 using std::cout;
 using std::endl;
 using std::setw;
+using std::cin;
 matrix::matrix(int n_, int m_): n(n_), m(m_)
 {
     A=new double* [n];
@@ -41,6 +42,19 @@ void matrix:: set_random (double a, double b)
             A[i][j]=a+(b-a)*(double)rand()/(double)RAND_MAX;
         }
     }
+}
+void matrix:: set_some ()
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            cout<<"A["<<i<<"]["<<j<<"]= ";
+            cin>>A[i][j];
+            cout<<endl;
+        }
+    }
+    cout<<endl;
 }
 void matrix:: Print()
 {
@@ -219,7 +233,7 @@ matrix operator *(const double zxc, const matrix& a)
     }
     return c;
 }
-double matrix:: operator()(const int i,const int j)
+double& matrix:: operator()(const int i,const int j)
 {
     return A[i][j];
 }

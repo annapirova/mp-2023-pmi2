@@ -14,6 +14,7 @@ class matrix
     matrix(const matrix &B);
     ~matrix();
     void set_random(double a, double b);
+    void set_some ();
     void Print();
     matrix plus(const matrix& B);
     matrix operator + (const matrix& B);
@@ -25,12 +26,13 @@ class matrix
     vector operator *( const vector& b);
     friend matrix operator *(const matrix& a,const double zxc);
     friend matrix operator *(const double zxc, const matrix& a);
-    double operator()(const int i,const  int j);
+    double& operator()(const int i,const  int j);
     friend ostream& operator <<(ostream& out, const matrix& a);
     friend istream& operator >>(istream& in, matrix&a);
     friend double maxim_st(int i, matrix& MATRISA, vector& zxc);
     friend void prym_hod(matrix& MATRISA, vector& b);
     friend void obr_hod(matrix& MATRISA,vector& otvet_polych, vector& b);
+    friend class GAUS;
 };
 
 #endif

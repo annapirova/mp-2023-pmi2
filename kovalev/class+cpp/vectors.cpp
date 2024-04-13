@@ -6,6 +6,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::setw;
+using std::setprecision;
+using std::fixed;
 vector:: vector(int size_): size(size_)
 {
     vec=new double[size];
@@ -193,9 +195,18 @@ ostream& operator << (ostream& out, const vector& b)
 {
     for (int i=0;i<b.size;i++)
     {
-        out<<setw(4)<<b.vec[i]<<" ";
+        out<<fixed<<setprecision(10)<<b.vec[i]<<" ";
     }
     out<<endl;
     
     return out;
+}
+double vector::norma()
+{
+    double zxc=0.0;
+    for(int i=0;i<size;i++)
+    {  
+        zxc+=vec[i]*vec[i];
+    }
+    return sqrt(zxc);
 }
