@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef GAUSS_H
 #define GAUSS_H
 
@@ -18,4 +18,3 @@ public:
 };
 
 #endif
-

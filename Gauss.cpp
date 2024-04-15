@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "vecmat.h"
 #include "gauss.h"
 #include <ctime>

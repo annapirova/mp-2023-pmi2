@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <locale.h>
 #include "vecmat.h"
 #include "gauss.h"
