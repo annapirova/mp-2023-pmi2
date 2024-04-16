@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef GAUSS_H
 #define GAUSS_H
 
@@ -10,6 +10,8 @@ private:
     Vector* x;
     Vector* b;
     int status;
+    Matrix M;
+    Vector bold;
 
 public:
     Gauss(Matrix* A, Vector* x, Vector* b);
@@ -18,4 +20,3 @@ public:
 };
 
 #endif
-

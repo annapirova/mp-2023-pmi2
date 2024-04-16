@@ -1,25 +1,25 @@
-#include <iostream>
+﻿#include <iostream>
 #include "vecmat.h"
 #include "gauss.h"
 #include <ctime>
 
 // Реализация методов класса Gauss
 
-Gauss::Gauss(Matrix* A, Vector* x, Vector* b) : A(A), x(x), b(b), status(0) {}
+Gauss::Gauss(Matrix* A, Vector* x, Vector* b) : A(A), x(x), b(b), status(0) { M = *A; bold = *b; }
 
 void Gauss::Solve() {
     for (int i = 0; i < A->Rows(); i++) {
-        double pivot = (*A)(i, i);
-        if (pivot == 0) {
+        double p = (*A)(i, i);
+        if (p == 0) {
             status = -1;
             return;
         }
         for (int j = i + 1; j < A->Rows(); j++) {
-            double ratio = (*A)(j, i) / pivot;
+            double r = (*A)(j, i) / p;
             for (int k = 0; k < A->Cols(); k++) {
-                (*A)(j, k) -= ratio * (*A)(i, k);
+                (*A)(j, k) -= r * (*A)(i, k);
             }
-            (*b)(j) -= ratio * (*b)(i);
+            (*b)(j) -= r * (*b)(i);
         }
     }
 
@@ -37,10 +37,10 @@ double Gauss::Check() {
         return -1;
     }
 
-    Matrix M = *A;
-    Vector e = M * (*x) - (*b); 
+    //Matrix M = *A;
+    Vector e = M * (*x) - bold; 
     double a = e.Norm(); 
-    double y = (*b).Norm(); 
+    double y = bold.Norm();
 
     return a / y; 
 }

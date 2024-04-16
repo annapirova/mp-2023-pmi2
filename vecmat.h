@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef VECMAT_H
 #define VECMAT_H
 
