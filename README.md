@@ -12,3 +12,9 @@ __Как назвать файлы?__
 
 
 https://drive.google.com/drive/folders/0B7aD_XDRg9rNcDRLU0xuTFNKYWM?resourcekey=0-F4Hfh3tRstfBBjjd1xixRg
+
+Здесь лекции Владимирова:
+https://sourceforge.net/projects/cpp-lects-rus/files/cpp-graduate/
+
+Здесь лекции Меерова:
+https://drive.google.com/drive/folders/1vZYjhq-7kHFkA9lMYrfoYg2rL0KtvU-q
