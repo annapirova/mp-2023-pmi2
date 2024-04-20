@@ -1,9 +1,11 @@
-#pragma once
+п»ї#pragma once
+#include "Vector.h"
 
 #include <iostream>
 #include <cstdlib>
+#include <stdexcept>
 
-class Vector; 
+class Vector;
 
 class Matrix {
     double** A;
@@ -22,28 +24,9 @@ public:
     Matrix operator*(const Matrix& B);
     double& operator()(int i, int j);
     friend std::ostream& operator<<(std::ostream& os, const Matrix& B);
+    friend std::istream& operator>>(std::istream& is, const Matrix& B);
     void Generate(double lg, double ug);
     void NullMatrix();
-    Vector multiplyVector(Vector& v); // Объявление метода умножения матрицы на вектор
-};
-
-class Vector {
-    double** C;
-    int size;
-
-public:
-    Vector(int s = 1);
-    Vector(const Vector& B);
-    ~Vector();
-    Vector& operator=(const Vector& B);
-    Vector& operator+=(const Vector& B);
-    Vector& operator-=(const Vector& B);
-    Vector operator+(const Vector& B);
-    Vector operator-(const Vector& B);
-    double& operator[](int i);
-    int GiveSize() const; 
-    void Generate(double lg, double ug);
-    void NullVector();
-    friend std::ostream& operator<<(std::ostream& os, const Vector& B);
+    Vector multiplyVector(Vector& v);
 };
 
