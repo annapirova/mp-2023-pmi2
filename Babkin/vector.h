@@ -67,7 +67,7 @@ class vector
 		friend ostream& operator<<(ostream& vout,const vector& Imma)
 		{
 			for (int i = 0; i < Imma.size; i ++)
-			{vout << Imma.vect[i];}
+			{vout << Imma.vect[i] << " ";}
 			return vout;
 		}
 		friend istream& operator>>(istream& vin,const vector& Imma)
