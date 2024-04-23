@@ -15,12 +15,12 @@ Transport::Transport(const Transport& tr)
   nPassengers = tr.nPassengers;
   color = tr.color;
   name = tr.name;
-  std::cout<<"Transport Copy constructor\n";
+  std::cout<<" Transport Copy constructor\n";
 }
 
 Transport::~Transport()
 {
-  std::cout << name <<"Transport Destructor\n";
+  std::cout << name <<" Transport Destructor\n";
 }
 
 void Transport::Info()
@@ -31,5 +31,5 @@ void Transport::Info()
 
 void Transport::Go()
 {
-  std::cout << name << "Transport Go\n";
+  std::cout << name << " Transport Go\n";
 }

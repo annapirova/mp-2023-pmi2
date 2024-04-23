@@ -38,4 +38,14 @@ void main()
   std::cout << "****************\n";
 
   delete[] transpTable;
+
+  Transport& r = plane; 
+  r.Go(); // Plane->Go
+  AirTransport& a = dynamic_cast<AirTransport&>(r); // теперь можно
+  AirTransport* b = dynamic_cast<AirTransport*>(&car);
+  if (b)
+	  std::cout << "b is AirTransport\n";
+  else
+	  std::cout << "b is not AirTransport\n";
+  std::cout << "****************\n";
 }
