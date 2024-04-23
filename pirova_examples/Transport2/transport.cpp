@@ -3,7 +3,7 @@
 
 const char* ColorNames[] = {"red", "green", "blue", "white", "black"};
 
-Transport::Transport(std::string name_, int v, int nP, ColorType col)
+Transport::Transport(std::string name_, double v, int nP, ColorType col)
 {
   velocity = v;
   nPassengers = nP;

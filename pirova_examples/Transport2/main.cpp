@@ -13,7 +13,7 @@ void main()
   //man.Info();
   //tortoise.Info();
 
-  LandTransport car("caar", 60.0, 4, BLUE, WEELS, 4), car2(car), snowmobile("snowmobile");
+  LandTransport car("car", 60.0, 4, BLUE, WEELS, 4), car2(car), snowmobile("snowmobile");
 //  car.Info();
 //  car2.Info();
 //  snowmobile.Info();
