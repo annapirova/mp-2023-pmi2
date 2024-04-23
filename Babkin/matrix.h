@@ -4,112 +4,127 @@
 using namespace std;
 class matrix
 {
-	private:
-	int size,sizex; 
+private:
+	int size, sizex;
 	vector* matr;
-	public:
-		matrix(int _size = 3,int _sizex = 4) { 
-			size = _size; 
-			sizex = _sizex;
-			matr = new vector[size];
-			for (int u = 0; u < size; u++)
-			{
-				matr[u] = vector(sizex);
-			}
-		}
-		~matrix()
+public:
+	matrix(int _size = 3, int _sizex = 4) {
+		size = _size;
+		sizex = _sizex;
+		matr = new vector[size];
+		for (int u = 0; u < size; u++)
 		{
-			delete[] matr;
+			matr[u] = vector(sizex);
 		}
-		matrix(const matrix &othl)
+	}
+	~matrix()
+	{
+		delete[] matr;
+	}
+	matrix(const matrix& othl)
+	{
+		size = othl.size;
+		sizex = othl.sizex;
+		matr = new vector[size];
+		for (int u = 0; u < size; u++)
 		{
-			size = othl.size;
-			sizex = othl.sizex;
-			matr = new vector[size];
-			for (int u = 0; u < size; u++)
-			{
-				matr[u] = vector(sizex);
-			}
-			memcpy(matr, othl.matr, sizeof(vector)* sizex);
+			matr[u] = vector(sizex);
 		}
-		double& operator()(const int i,const int x)
-		{
-			return matr[i][x];
-		}
-		const double& operator() (const int i,const int x) const
-		{
-			return matr[i][x];
-		}
-		matrix& operator=(const matrix& p)
+		memcpy(matr, othl.matr, sizeof(vector) * sizex);
+	}
+	double& operator()(const int i, const int x)
+	{
+		return matr[i][x];
+	}
+	const double& operator() (const int i, const int x) const
+	{
+		return matr[i][x];
+	}
+	matrix& operator=(const matrix& p)
 
+	{
+		if (this != &p)
 		{
-			if (this != &p)
-			{
-				size = p.size;
-				sizex = p.sizex;
-				matr = new vector(size);
-				for (int u = 0; u < size; u++)
-				{
-					matr[u] = vector(sizex);
-				}
-			}
-			memcpy(matr, p.matr, sizeof(vector) * sizex);
-			return *this;
-		}
-		matrix& operator+=(const matrix& y)
-		{
+			size = p.size;
+			sizex = p.sizex;
+			matr = new vector(size);
 			for (int u = 0; u < size; u++)
 			{
-				for (int h = 0;h < sizex;h++)
-				{
-					matr[u][h] += y.matr[u][h];
-				}
+				matr[u] = vector(sizex);
 			}
-			return *this;
 		}
-		matrix& operator-=(const matrix& y)
+		memcpy(matr, p.matr, sizeof(vector) * sizex);
+		return *this;
+	}
+	matrix& operator+=(const matrix& y)
+	{
+		for (int u = 0; u < size; u++)
 		{
-			for (int u = 0; u < size; u++)
+			for (int h = 0; h < sizex; h++)
 			{
-				for (int h = 0;h < sizex;h++)
-				{
-					matr[u][h] -= y.matr[u][h];
-				}
+				matr[u][h] += y.matr[u][h];
 			}
-			return *this;
 		}
-		matrix& operator*=(double& y)
+		return *this;
+	}
+	matrix& operator-=(const matrix& y)
+	{
+		for (int u = 0; u < size; u++)
 		{
-			for (int u = 0; u < size; u++)
+			for (int h = 0; h < sizex; h++)
 			{
-				for (int h = 0; h<sizex;h++)
-				{
-					matr[u][h] *= y;
-				}
+				matr[u][h] -= y.matr[u][h];
 			}
-			return *this;
 		}
-		friend ostream& operator<<(ostream& vout,const matrix& Imma)
+		return *this;
+	}
+	matrix& operator*=(double& y)
+	{
+		for (int u = 0; u < size; u++)
 		{
-			for (int i = 0; i < Imma.size; i ++)
+			for (int h = 0; h < sizex; h++)
 			{
-				for (int u = 0; u < Imma.sizex; u++)
-				{
-					vout << Imma.matr[i][u] << " ";
-				}
-				vout << "\n";
+				matr[u][h] *= y;
 			}
-			return vout;
 		}
-		friend istream& operator>>(istream& vin,const matrix& Imma)
+		return *this;
+	}
+	friend ostream& operator<<(ostream& vout, const matrix& Imma)
+	{
+		for (int i = 0; i < Imma.size; i++)
 		{
-			for (int i = 0; i < Imma.size; i++)
+			for (int u = 0; u < Imma.sizex; u++)
 			{
-				for (int ox = 0; ox < Imma.sizex; ox++)
-				{
-					vin >> Imma.matr[i][ox];
-				}
+				vout << Imma.matr[i][u] << " ";
 			}
-			return vin;
+			vout << "\n";
 		}
+		return vout;
+	}
+	friend istream& operator>>(istream& vin, const matrix& Imma)
+	{
+		for (int i = 0; i < Imma.size; i++)
+		{
+			for (int ox = 0; ox < Imma.sizex; ox++)
+			{
+				vin >> Imma.matr[i][ox];
+			}
+		}
+		return vin;
+	}
+};
+class op
+{
+private:
+	matrix visp;
+	vector lop;
+	int laps, corpse;
+public:
+	op(int _laps = 3, int _corpse = 4)
+	{
+		laps = _laps;
+		corpse = _corpse;
+		visp = matrix(laps,corpse);
+		lop = vector(laps);
+	}
 };
