@@ -1,12 +1,3 @@
-#pragma once
-#include <iostream>
-using namespace std;
-class vector
-{
-private:
-	int size;
-	double* vect;
-public:
 	vector(int _size = 3) {
 		size = _size;
 		vect = new double[size];
@@ -29,15 +20,19 @@ public:
 	{
 		return vect[i];
 	}
-	vector& operator=(const vector& p)
 
+	vector& operator=(const vector& p)
 	{
 		if (this != &p)
 		{
-			size = p.size;
-			vect = new double[size];
+			if (size != p.size)
+			{
+				size = p.size;
+				vect = new double[size];
+			}
+			memcpy(vect, p.vect, sizeof(double) * size);
 		}
-		memcpy(vect, p.vect, sizeof(double) * size);
+		
 		return *this;
 	}
 	vector& operator+=(const vector& y)
@@ -88,5 +83,23 @@ public:
 			commence += abs(t[j]);
 		}
 		return commence;
+	}
+	double operator*=(const vector& camp) const
+	{
+		double sent = 0.0;
+		for (int a = 0; a < size; a++)
+		{
+			sent += vect[a] * camp.vect[a];
+		}
+		return sent;
+	}
+	double operator*(const vector& camp)
+	{
+		double sent = 0.0;
+		for (int a = 0; a < size; a++)
+		{
+			sent += vect[a] * camp.vect[a];
+		}
+		return sent;
 	}
 };
