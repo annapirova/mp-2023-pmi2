@@ -28,9 +28,8 @@ public:
 		matr = new vector[size];
 		for (int u = 0; u < size; u++)
 		{
-			matr[u] = vector(sizex);
+			matr[u] = othl.matr[u];
 		}
-		memcpy(matr, othl.matr, sizeof(vector) * sizex);
 	}
 	double& operator()(const int i, const int x)
 	{
@@ -41,29 +40,28 @@ public:
 		return matr[i][x];
 	}
 	matrix& operator=(const matrix& p)
-
 	{
 		if (this != &p)
 		{
-			size = p.size;
-			sizex = p.sizex;
-			matr = new vector(size);
+			if (size != p.size && sizex != p.sizex)
+			{
+				size = p.size;
+				sizex = p.sizex;
+			}
+			matr = new vector(sizex);
 			for (int u = 0; u < size; u++)
 			{
-				matr[u] = vector(sizex);
+				matr[u] = p.matr[u];
 			}
 		}
-		memcpy(matr, p.matr, sizeof(vector) * sizex);
+		
 		return *this;
 	}
 	matrix& operator+=(const matrix& y)
 	{
 		for (int u = 0; u < size; u++)
 		{
-			for (int h = 0; h < sizex; h++)
-			{
-				matr[u][h] += y.matr[u][h];
-			}
+			matr[u] += y.matr[u];
 		}
 		return *this;
 	}
@@ -71,10 +69,7 @@ public:
 	{
 		for (int u = 0; u < size; u++)
 		{
-			for (int h = 0; h < sizex; h++)
-			{
-				matr[u][h] -= y.matr[u][h];
-			}
+			matr[u] -= y.matr[u];
 		}
 		return *this;
 	}
@@ -82,10 +77,7 @@ public:
 	{
 		for (int u = 0; u < size; u++)
 		{
-			for (int h = 0; h < sizex; h++)
-			{
-				matr[u][h] *= y;
-			}
+			matr[u] *= y;
 		}
 		return *this;
 	}
@@ -93,10 +85,7 @@ public:
 	{
 		for (int i = 0; i < Imma.size; i++)
 		{
-			for (int u = 0; u < Imma.sizex; u++)
-			{
-				vout << Imma.matr[i][u] << " ";
-			}
+			vout << Imma.matr[i] << " ";
 			vout << "\n";
 		}
 		return vout;
@@ -105,26 +94,17 @@ public:
 	{
 		for (int i = 0; i < Imma.size; i++)
 		{
-			for (int ox = 0; ox < Imma.sizex; ox++)
-			{
-				vin >> Imma.matr[i][ox];
-			}
+			vin >> Imma.matr[i];
 		}
 		return vin;
 	}
-};
-class op
-{
-private:
-	matrix visp;
-	vector lop;
-	int laps, corpse;
-public:
-	op(int _laps = 3, int _corpse = 4)
+	friend vector operator*(const matrix& somb, const vector& inc)
 	{
-		laps = _laps;
-		corpse = _corpse;
-		visp = matrix(laps,corpse);
-		lop = vector(laps);
+		vector res;
+		for (int t = 0; t < somb.size; t++) // по строкам матр
+		{
+			res[t] = (inc *= somb.matr[t]);
+		}
+		return res;
 	}
 };
