@@ -31,5 +31,8 @@ public:
 	Vector operator++(int);
 	Vector& operator++();
 	Vector operator*(const Vector& C);
+
+	friend class Gauss;
+	friend class Matrix;
 };
 #endif

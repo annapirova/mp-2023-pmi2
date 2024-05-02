@@ -16,7 +16,6 @@ public:
 	Matrix(const Matrix& B);
 	void Generate(double a, double b);
 	int GetRowCount() const;
-	void SwapRows(int row1, int row2);
 	
 	~Matrix();
 
@@ -31,6 +30,9 @@ public:
 	double& operator()(const int i, const int j);
 	Matrix operator*(const Matrix& B);
 	Vector operator*(const Vector& C);
+
+	friend class Vector;
+	friend class Gauss;
 	
 };
 #endif

@@ -5,8 +5,10 @@
 
 using namespace std;
 
-Gauss::Gauss(Matrix* myA, Vector* myx, Vector* myb): status(0), A(myA), res(myx), b(myb)
+Gauss::Gauss(Matrix* myA, Vector* myx, Vector* myb) : status(0), A(myA), res(myx), b(myb)
 {
+    Z = *A;
+    swsw = *b;
 }
 
 void Gauss::Solve()
@@ -16,7 +18,11 @@ void Gauss::Solve()
     {
         for (int k = i + 1; k < n; k++)
         {
-            double alpha = (*A)(k, i) / (*A)(i, i);
+            double alpha = 0.0;
+            if ((*A)(i, i) != 0.0)
+            {
+                alpha = (*A)(k, i) / (*A)(i, i);
+            }
             for (int j = i; j < n; j++)
             {
                 (*A)(k, j) -= alpha * (*A)(i, j);
@@ -43,10 +49,9 @@ double Gauss::Check()
         return -1;
     }
 
-    Vector e(A->GetRowCount());
-    e = (*A) * (*res) - (*b);
+    Vector e = Z * (*res) - swsw;
     double a = e.Norma();
-    double d = b->Norma();
+    double d = swsw.Norma();
     return (a / d);
 }
 
