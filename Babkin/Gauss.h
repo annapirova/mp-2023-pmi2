@@ -33,13 +33,13 @@ class Gauss
     {
         pain = KAPPA.pain;
         suffer = KAPPA.suffer;
-        matvix = new vector[pain];
+        matvix = new vector(pain);
 		for (int u = 0; u < pain; u++)
 		{
 			matvix[u] = vector(suffer);
 		}
-        vectro = new vector[pain];
-        resmult = new vector[pain];
+        vectro = new vector(pain);
+        resmult = new vector(pain);
     }
     vector transGenerateVector(int y)
     {
@@ -56,8 +56,13 @@ class Gauss
         for (int i = 0;i<y;i++)
         {
             nrt.matvix[i] = transGenerateVector(m);
+            cout << nrt.matvix[i] << " " << "\n";
         }
+        cout << "\n";
+        cout << "\n";
         nrt.resmult[y] = transGenerateVector(y);
+        cout << nrt.resmult;
+        cout << "\n";
         return nrt;
     }
     double transMinelSearch(vector abyss, int size)
