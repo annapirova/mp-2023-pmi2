@@ -1,5 +1,6 @@
 #define _SCL_SECURE_NO_WARNINGS
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -18,17 +19,14 @@ enum  kategoria
     };
 class tovar
 {
-    int strix=0;
-    double skidka=0;
-    double cost_za_kg=0;
-    double countt=0;
-    kategoria kat=kategoria::hoz;
+    int strix;
+    double skidka;
+    double cost_za_kg;
+    double countt;
+    kategoria kat;
     string name;
-
-
-
     public:
-    tovar(int a,double b, double c, double d, kategoria e, string f): strix(a),skidka(b),cost_za_kg(c),kat(e), name(f){}
+    tovar(int a=0,double b=0, double c=0, double d=0, kategoria e=kategoria::hoz, string f=""): strix(a),skidka(b),cost_za_kg(c), countt(d), kat(e), name(f){}
     tovar (const tovar& zxc)
     {
         strix=zxc.strix;
@@ -38,7 +36,18 @@ class tovar
         kat=zxc.kat;
         name=zxc.name;
     }
-    tovar(string zxc): name(zxc){};
+
+    tovar& operator =(const tovar& zxc)
+    {
+        strix=zxc.strix;
+        skidka=zxc.skidka;
+        cost_za_kg=zxc.cost_za_kg;
+        countt=zxc.countt;
+        kat=zxc.kat;
+        name=zxc.name;
+        return *this;
+    }
+    tovar(string zxc,int a=0,double b=0, double c=0, double d=0, kategoria e=kategoria::hoz): strix(a),skidka(b),cost_za_kg(c),kat(e), name(zxc), countt(d){};
     bool operator ==(const tovar& zxc)
     {
         return (name==zxc.name);
@@ -47,10 +56,7 @@ class tovar
     {
         return((cost_za_kg*skidka*countt)>(zxc.cost_za_kg*zxc.skidka*zxc.countt));
     }
-    bool operator < (const tovar& zxc)
-    {
-        return((cost_za_kg*skidka*countt)<(zxc.cost_za_kg*zxc.skidka*zxc.countt));
-    }
+    friend bool less1(const tovar& z, const tovar& zxc);
     tovar& operator += (const tovar& zxc)
     {
         if(name==zxc.name)
@@ -118,35 +124,42 @@ class tovar
             break;
         }
         }
-    }
+        }
+             
+
 };
 ostream& operator <<(ostream& os, tovar& zxc) 
 {
     os<<"kategoria: "<<zxc.get_kat()<<endl<<"name: "<<zxc.get_name()<<endl<<"strix: "<<zxc.get_strix()<<endl<<"skidka "<<zxc.get_skidka()<<endl<<"cost_za_kg "<<zxc.get_cost()<<endl<<"count "<<zxc.get_count()<<endl;
     return os;
 }
+bool less1(const tovar& z, const tovar& zxc) 
+    {
+        return((z.cost_za_kg*z.skidka*z.countt)<(zxc.cost_za_kg*zxc.skidka*zxc.countt));
+    }
 
 class sklad
 {
-    static vector <tovar> skladik;
     public:
+    static vector <tovar> skladik;
+ 
     static void inicial()
     {
-        skladik.push_back(tovar(3457,0.15,249.57,25,kategoria::fruit,"persik"));
-        skladik.push_back(tovar(7563,0.07,30,25,kategoria::fruit,"arbuzin"));
-        skladik.push_back(tovar(2901,0.10,67,25,kategoria::fruit,"mandarin"));
-        skladik.push_back(tovar(1657,0.25,95,25,kategoria::ovoshi,"ogurec"));
-        skladik.push_back(tovar(1927,0.03,100,25,kategoria::ovoshi,"pomidor"));
-        skladik.push_back(tovar(5413,0.12,144,25,kategoria::molochka,"milk"));
-        skladik.push_back(tovar(9850,0.01,52,25,kategoria::molochka,"jogurt"));
-        skladik.push_back(tovar(9654,0.00,500,25,kategoria::molochka,"tvorog"));
-        skladik.push_back(tovar(1789,0.046,120,25,kategoria::hoz,"grabli"));
-        skladik.push_back(tovar(1405,0.034,721,25,kategoria::hoz,"cleaning voda"));
-        skladik.push_back(tovar(6540,0.073,31,25,kategoria::vipechka,"baget"));
-        skladik.push_back(tovar(1111,0.02,24,25,kategoria::vipechka,"sosiska v teste"));
-        skladik.push_back(tovar(2222,0.01,900,25,kategoria::soki,"dobryi"));
-        skladik.push_back(tovar(3333,0.09,174,25,kategoria::soki,"lybimi"));
-        skladik.push_back(tovar(7777,0.11,673,25,kategoria::soki,"fruit_sad"));
+        skladik.push_back(tovar(3457,0.15,249.57,30,kategoria::fruit,"persik"));
+        skladik.push_back(tovar(7563,0.07,30,200,kategoria::fruit,"arbuzin"));
+        skladik.push_back(tovar(2901,0.10,67,50,kategoria::fruit,"mandarin"));
+        skladik.push_back(tovar(1657,0.25,95,30,kategoria::ovoshi,"ogurec"));
+        skladik.push_back(tovar(1927,0.03,100,41,kategoria::ovoshi,"pomidor"));
+        skladik.push_back(tovar(5413,0.12,144,74,kategoria::molochka,"milk"));
+        skladik.push_back(tovar(9850,0.01,52,21,kategoria::molochka,"jogurt"));
+        skladik.push_back(tovar(9654,0.00,500,98,kategoria::molochka,"tvorog"));
+        skladik.push_back(tovar(1789,0.046,120,125,kategoria::hoz,"grabli"));
+        skladik.push_back(tovar(1405,0.034,721,96,kategoria::hoz,"cleaning voda"));
+        skladik.push_back(tovar(6540,0.073,31,11,kategoria::vipechka,"baget"));
+        skladik.push_back(tovar(1111,0.02,24,12,kategoria::vipechka,"sosiska_v_teste"));
+        skladik.push_back(tovar(2222,0.01,900,37,kategoria::soki,"dobryi"));
+        skladik.push_back(tovar(3333,0.09,174,75,kategoria::soki,"lybimi"));
+        skladik.push_back(tovar(7777,0.11,673,23,kategoria::soki,"fruit_sad"));
 
     }
     static void Add_tovar(int a,double b, double c, double d, kategoria e, string f)
@@ -194,55 +207,76 @@ class chek
             it1=it;
             it_1++;
             }
-            if(isdigit((*it)[0], loc))
+            else if(isdigit((*it)[0], loc))
             {
             it2=it;
             it_2++;
             }
+        }
             if(it_1!=1 || it_2!=1) throw "this tovar no exist or input 2naming or 2count";
-            if(it_1==1 && it_2==1)
+            else 
             {   tovar ibz(*it1);
                 stringstream sd(*it2);
-                double x;
+                double x=0.0;
                 sd>>x;
                 ibz.get_count()+=x;
-                if((find(chekkk.begin(),chekkk.end(),ibz)!=chekkk.end()))
-                {   if(  ((*(find(chekkk.begin(),chekkk.end(),ibz))).get_count()+ibz.get_count()) <= (*(find((sklad::skladik).begin(),sklad::skladik.end(),ibz))).get_count() )
-                    *(find(chekkk.begin(),chekkk.end(),ibz))+=ibz;
+                vector<tovar>::iterator in_chek=find(chekkk.begin(),chekkk.end(),ibz);
+                vector<tovar>::iterator in_sklad=find(sklad::skladik.begin(),sklad::skladik.end(),ibz);
+                if(in_chek!=chekkk.end())
+                {   if(((*in_chek).get_count()+ibz.get_count()) <= (*(in_sklad)).get_count())
+                    {
+                        *(in_chek)+=ibz;
+                    }
+                    else throw "net stol'ko na sklade";
                 }
                 else
-                {   tovar pipka(*(find((sklad::skladik).begin(),sklad::skladik.end(),ibz)));
+                { 
+                    tovar pipka(*(in_sklad));// проверка на количество
+                    if(pipka.get_count()>=ibz.get_count())
+                    {
                     pipka.get_count()=ibz.get_count();
                     chekkk.push_back(pipka);
-
+                    }
+                    else throw "net stol'ko na sklade";
                 }
             }
-        }
-
-
+        
     }
     static void print_check()
     {
         if(!(chekkk.empty()))
+        {
+        cout<<"                         Piterochka"<<endl;
+        cout<<"name     count    skidka    cost(kg)    kategoria    stoimost"<<endl;
         for(auto& a:chekkk)
         {
-            cout<<a;
+            cout<<std::setw(7)<<a.get_name()<<" "<<setw(4)<<a.get_count()<<"        "<<setw(3)<<a.get_skidka()<<"      "<<setw(4)<<a.get_cost()<<"    "<<setw(10)<<a.get_kat()<<"         "<<setw(6)<<a.stoimost()<<endl;
+        }
         }
         else throw "add any tovar in check";
     }
-   /* static void sort_check()
+    static void sort_check()
     {
-        sort(chekkk.begin(),chekkk.end());
+        sort(chekkk.begin(),chekkk.end(), less1);
+        reverse(chekkk.begin(),chekkk.end());
+        print_check();
     }
-    */
+    
 };
-int main()
+void info()
 {
+    cout<<"What are you wannt?\n1-Scan new tovar\n2-view sklad\n3-search tovar in sklad for name\n4-print check\n5-print sort check\n0-exit\n";
+}
+vector<tovar> sklad::skladik;
+vector<tovar> chek::chekkk;
+int main()
+{   
     sklad::inicial();
     srand(time(NULL));
     int k;
-    string stroka;// 1 скан товара // 4чек// 5сорт чек// 2склад товаров// 3поиск товара по складу //6 добавить товар на склад
-    do
+    string stroka;
+    info();
+    do// файлы запрос пользователь и вывод чека можно закинуть базу 
     {
         cout<<"input command"<<endl;
         cin>>k;
@@ -250,25 +284,24 @@ int main()
         {
             case 1:
             {   cout<<"INPUT name tovara and count"<<endl;
+                getchar();
                 getline(cin, stroka);
                 try
                 {
                     chek::add_tovar(stroka);
                 }
-                catch(char* error)
+                catch(char const* error)
                 {
                     cout<<error<<endl;
                 }
-                
-                chek::add_tovar(stroka);
                 break;
             }
-            case 2:
+            case 2://win
             {    
                 sklad::print_sklad();
                 break;
             }
-            case 3:
+            case 3://win
             {
                 cout<<"name of tovar for search: ";
                 string pups;
@@ -277,7 +310,7 @@ int main()
                 {
                 sklad::find_tovar(pups);
                 }
-                catch(char* error)
+                catch(char const* error)
                 {
                     cout<<error<<endl;
                 }
@@ -289,7 +322,7 @@ int main()
                 {
                    chek::print_check();
                 }
-                catch(char* error)
+                catch(char const* error)
                 {
                     cout<<error<<endl;
                 }
@@ -297,12 +330,12 @@ int main()
             }
             case 5:
             {
-                //chek::sort_check();
+                chek::sort_check();
                 try
                 {
                     chek::print_check();
                 }
-                catch(char* error)
+                catch(char const* error)
                 {
                     cout<<error<<endl;
                 }
@@ -322,6 +355,5 @@ int main()
         }
         
     } while (k!=0);
-    
     return 0;
 }
