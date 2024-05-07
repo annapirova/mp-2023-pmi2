@@ -1,3 +1,11 @@
+#pragma once
+#include <iostream>
+class vector
+{
+private:
+	int size;
+	double* vect;
+public:
 	vector(int _size = 3) {
 		size = _size;
 		vect = new double[size];
