@@ -1,6 +1,8 @@
 # mp-2023-pmi2
 Репозиторий для сдачи заданий группы 3823Б1ПМ2-1
 
+Домашние задания: https://drive.google.com/drive/folders/1g3-hLI7NX_7GZ6m_TPy--qN8e5XNSSVO
+
 Здесь инструкция к гит:
 https://github.com/annapirova/mp2-lab1-set/blob/master/docs/part1-git.md
 
