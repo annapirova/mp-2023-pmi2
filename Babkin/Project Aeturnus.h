@@ -1,3 +1,4 @@
+//  на переделку
 #pragma once
 using namespace std;
 #include <iostream>
@@ -7,11 +8,11 @@ class Gauss
 {
     private:
     int pain; int suffer;
-    vector* matvix;
+    vector* matvix;// matrix
     vector* vectro;
     vector* resmult;
     public:
-    Gauss(int _size = 3, int _sizex = 4)
+    Gauss(int _size = 3, int _sizex = 3)
     {
         pain = _size;
         suffer = _sizex;
@@ -41,12 +42,12 @@ class Gauss
         vectro = new vector(pain);
         resmult = new vector(pain);
     }
-    vector transGenerateVector(int y)
+    vector transGenerateVector(int y) // это в вектор
     {
         vector eclise;
         for (int g = 0;g < y;g++)
         {
-            eclise[g] = (double)(rand() % 1024);
+            eclise[g] = (double)rand() / (double)RAND_MAX * 10.0 - 5.0;
         }
         return eclise;
     }
@@ -65,7 +66,7 @@ class Gauss
         cout << "\n";
         return nrt;
     }
-    double transMinelSearch(vector abyss, int size)
+    double transMinelSearch(const vector& abyss, int size) // max
     {
         int k = 1;
         double min;
@@ -80,7 +81,7 @@ class Gauss
         }
         return k;
     }
-    double transNoneZeroSearch(vector abyss, int size)
+    double transNoneZeroSearch(const vector& abyss, int size)
     {
         int kl = 0;
         double key;
@@ -117,12 +118,12 @@ class Gauss
             if (eggs + u < dippa.pain)
             {
                 dippa.matvix[eggs + u] -= (dippa.matvix[eggs]*=(dippa.matvix[eggs + u][kel[eggs]]/dippa.matvix[eggs][kel[eggs]]));
-                dippa.resmult[eggs + u] -= (dippa.resmult[eggs] *= (dippa.resmult[eggs+u] / dippa.resmult[eggs]))
+                dippa.resmult[eggs + u] -= (dippa.resmult[eggs] *= (dippa.resmult[eggs + u] / dippa.resmult[eggs]));
             }
             if (eggs - u > - 1)
             {
                 dippa.matvix[eggs - u] -= (dippa.matvix[eggs]*=(dippa.matvix[eggs - u][kel[eggs]]/dippa.matvix[eggs][kel[eggs]]));
-                dippa.resmult[eggs - u] -= (dippa.resmult[eggs] *= (dippa.resmult[eggs+u] / dippa.resmult[eggs]))
+                dippa.resmult[eggs - u] -= (dippa.resmult[eggs] *= (dippa.resmult[eggs + u] / dippa.resmult[eggs]));
             }
             u += 1;
         }
