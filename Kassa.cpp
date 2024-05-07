@@ -6,6 +6,7 @@
 #include <map>
 #include <clocale>
 #include <regex>
+#include <fstream>
 
 using namespace std;
 
@@ -43,7 +44,7 @@ public:
 
     // Метод для расчета общей стоимости продукта
     double calculateCost() const {
-        return price * (1 - discount) * quantity;
+        return price * (1.0 - discount) * (double)quantity;
     }
 
     // Перегрузка оператора ==
@@ -71,7 +72,7 @@ public:
 
     // Перегрузка оператора <
     bool operator<(const Product& other) const {
-        return calculateCost() < other.calculateCost();
+        return calculateCost() * quantity < other.calculateCost() * other.quantity;
     }
 
 private:
@@ -89,21 +90,19 @@ public:
     void addProduct(const Product& product) {
         products.push_back(product);
     }
-
-    // Поиск товаров по имени
-    vector<Product> findProductsByName(const string& name) const {
-        vector<Product> foundProducts;
-        for (const auto& product : products) {
-            if (equalsIgnoreCase(product.getName(), name)) {
-                foundProducts.push_back(product);
-            }
-        }
-        return foundProducts;
+    // Публичный метод для получения продуктов
+    const vector<Product>& getProducts() const {
+        return products;
     }
-
-private:
+    // Поиск товаров по имени и возвращение итератора на первый найденный продукт
+    auto findProductByName(const string& name) const -> decltype(getProducts().begin()) {
+        return find_if(getProducts().begin(), getProducts().end(), [&name](const Product& product){
+            return equalsIgnoreCase(product.getName(), name);
+            });
+    }
     vector<Product> products;
-
+private:
+  
     // Статический метод для сравнения строк без учета регистра
     static bool equalsIgnoreCase(const string& str1, const string& str2) {
         if (str1.size() != str2.size()) {
@@ -161,7 +160,7 @@ string normalizeProductName(const string& name) {
         {"bananas", "Banana"},
         {"banan", "Banana"},
         {"apples", "Apple"},
-    // можно добавить различные вариации однокоренных названий
+        // можно добавить различные вариации однокоренных названий
     };
 
     string lowerCaseName = name;
@@ -176,36 +175,47 @@ string normalizeProductName(const string& name) {
 
 // Функция для обработки ввода пользователя и добавления товаров в чек
 void processUserInput(const string& userInput, Store& store, Receipt& receipt) {
-    // выражение для поиска чисел и слов, игнорирующее лишние символы
-    regex productRegex(".*?(\\d+)?\\s*([a-zA-Z]+)");
+    regex productRegex("(\\d+)\\s*([a-zA-Z]+)");
     auto words_begin = sregex_iterator(userInput.begin(), userInput.end(), productRegex);
     auto words_end = sregex_iterator();
 
+    map<string, int> productQuantities;
+
     for (sregex_iterator i = words_begin; i != words_end; ++i) {
         smatch match = *i;
-        int quantity = 1; // Количество по умолчанию
-        string productName;
+        string productName = normalizeProductName(match[2].str());
+        int quantity = stoi(match[1].str());
 
-        if (match[1].matched) {
-            // Если количество указано, извлекаем его
-            quantity = stoi(match[1].str());
-            productName = normalizeProductName(match[2].str());
+        // Суммируем количество для одинаковых товаров
+        productQuantities[productName] += quantity;
+    }
 
-        // Поиск товара по нормализованному названию
-        vector<Product> foundProducts = store.findProductsByName(productName);
-        if (!foundProducts.empty()) {
-            // Добавляем первый найденный товар в чек с указанным количеством
-            receipt.addItem(foundProducts[0], quantity);
+    // Добавляем товары в чек с учетом суммированного количества
+    for (const auto& pq : productQuantities) {
+        string productName = pq.first;
+        int totalQuantity = pq.second;
+
+        auto it = store.findProductByName(productName);
+        if (it != store.products.end()) {
+            receipt.addItem(*it, totalQuantity);
         }
     }
-}}
-        
-
+}
 
 int main() {
     setlocale(LC_ALL, "Russian");
+
+    // Открытие файлов для ввода и вывода
+    ifstream inputFile("SPISOK.txt");
+    ofstream outputFile("output.txt");
+
+    // Проверка успешного открытия файлов
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Ошибка при открытии файлов!" << endl;
+        return 1;
+    }
     // Инициализация словаря штрих-кодов
-    barcodes = { {"Apple", 1000}, {"Banana", 2}, {"Milk", 3}, {"Bread", 4}, {"Tomato", 5}, {"Cucumber", 6}, {"Potato", 7}, {"Cottage Cheese", 8}, {"Cheese", 9}, {"Sour Cream", 10}, {"Orange", 11}, {"Pear", 12}, {"Pineapple", 13}, {"Beef", 14}, {"Chicken", 15}, {"Pork", 16}, {"Soap", 17}, {"Shampoo", 18}, {"Pasta", 19} };
+    barcodes = { {"Apple", 41}, {"Banana", 2}, {"Milk", 3}, {"Bread", 4}, {"Tomato", 5}, {"Cucumber", 6}, {"Potato", 7}, {"Cottage Cheese", 8}, {"Cheese", 9}, {"Sour Cream", 10}, {"Orange", 11}, {"Pear", 12}, {"Pineapple", 13}, {"Beef", 14}, {"Chicken", 15}, {"Pork", 16}, {"Soap", 17}, {"Shampoo", 18}, {"Pasta", 19} };
 
     // Создание экземпляра `Store`
     Store store;
@@ -220,43 +230,38 @@ int main() {
     store.addProduct(Product("Potato", VEGETABLES, 1.5, 0.0, 10));
     store.addProduct(Product("Cottage Cheese", DAIRY, 2.0, 0.1, 10));
     store.addProduct(Product("Cheese", DAIRY, 5.0, 0.2, 8));
-    store.addProduct(Product("Sour Cream", DAIRY, 2.5, 0.0, 15));
-    store.addProduct(Product("Orange", FRUITS, 3.0, 0.1, 10));
-    store.addProduct(Product("Pear", FRUITS, 2.5, 0.0, 15));
-    store.addProduct(Product("Pineapple", FRUITS, 4.0, 0.15, 6));
-    store.addProduct(Product("Beef", MEAT, 8.0, 0.2, 5));
-    store.addProduct(Product("Chicken", MEAT, 5.0, 0.1, 10));
-    store.addProduct(Product("Pork", MEAT, 6.0, 0.15, 8));
-    store.addProduct(Product("Soap", OTHER, 1.5, 0.0, 20));
-    store.addProduct(Product("Shampoo", OTHER, 3.0, 0.0, 15));
-    store.addProduct(Product("Pasta", OTHER, 1.2, 0.0, 25));
-
-
+    store.addProduct(Product("Sour Cream", DAIRY, 2.5, 0.1, 10));
+    store.addProduct(Product("Orange", FRUITS, 3.5, 0.0, 15));
+    store.addProduct(Product("Pear", FRUITS, 4.0, 0.05, 10));
+    store.addProduct(Product("Pineapple", FRUITS, 5.0, 0.1, 5));
+    store.addProduct(Product("Beef", MEAT, 10.0, 0.15, 10));
+    store.addProduct(Product("Chicken", MEAT, 7.0, 0.1, 15));
+    store.addProduct(Product("Pork", MEAT, 8.0, 0.2, 10));
+    store.addProduct(Product("Soap", OTHER, 2.5, 0.05, 20));
+    store.addProduct(Product("Shampoo", OTHER, 4.5, 0.1, 15));
+    store.addProduct(Product("Pasta", OTHER, 1.5, 0.0, 30));
 
     Receipt receipt;
 
-    // Запрос у пользователя о желаемых товарах
-    cout << "Что вы хотите купить? (Введите 'g', чтобы закончить покупки)" << endl;
+    outputFile << "За покупками" << endl;
     string userInput;
-    while (true) {
-        getline(cin, userInput);
-        if (userInput == "g") {
-            break;
-        }
-
+    while (getline(inputFile, userInput)) {
         // Обработка ввода пользователя
         processUserInput(userInput, store, receipt);
     }
 
-    // Печать чека
+    // Печать чека в файл
+    streambuf* stream_buffer_cout = cout.rdbuf();
+    cout.rdbuf(outputFile.rdbuf());
+
     receipt.printReceipt();
+
+    // Восстановление стандартного вывода
+    cout.rdbuf(stream_buffer_cout);
+
+    // Закрытие файлов
+    inputFile.close();
+    outputFile.close();
 
     return 0;
 }
-//Что вы хотите купить? (Введите 'g', чтобы закончить покупки)
-//Xohy 4 banan, 7 apple
-//g
-//Чек :
-//Товар: Banana, Количество : 4, Стоимость : 136.8
-//Товар : Apple, Количество : 7, Стоимость : 157.5
-//Общая сумма : 294.3
