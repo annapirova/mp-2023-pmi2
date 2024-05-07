@@ -1,4 +1,3 @@
-#define _SCL_SECURE_NO_WARNINGS
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -7,6 +6,7 @@
 #include <ctime>
 #include <sstream>
 #include <locale>
+#include <fstream>
 using namespace std;
 enum  kategoria
     {
@@ -246,12 +246,15 @@ class chek
     {
         if(!(chekkk.empty()))
         {
-        cout<<"                         Piterochka"<<endl;
-        cout<<"name     count    skidka    cost(kg)    kategoria    stoimost"<<endl;
+            ofstream of;
+            of.open("kassa_out.txt");
+            of<<"                         Piterochka"<<endl;
+            of<<"name     count    skidka    cost(kg)    kategoria    stoimost"<<endl;
         for(auto& a:chekkk)
         {
-            cout<<std::setw(7)<<a.get_name()<<" "<<setw(4)<<a.get_count()<<"        "<<setw(3)<<a.get_skidka()<<"      "<<setw(4)<<a.get_cost()<<"    "<<setw(10)<<a.get_kat()<<"         "<<setw(6)<<a.stoimost()<<endl;
+            of<<std::setw(7)<<a.get_name()<<" "<<setw(4)<<a.get_count()<<"        "<<setw(3)<<a.get_skidka()<<"      "<<setw(4)<<a.get_cost()<<"    "<<setw(10)<<a.get_kat()<<"         "<<setw(6)<<a.stoimost()<<endl;
         }
+        of.close();
         }
         else throw "add any tovar in check";
     }
@@ -270,22 +273,26 @@ void info()
 vector<tovar> sklad::skladik;
 vector<tovar> chek::chekkk;
 int main()
-{   
+{ 
     sklad::inicial();
     srand(time(NULL));
     int k;
     string stroka;
     info();
-    do// файлы запрос пользователь и вывод чека можно закинуть базу 
+    do
     {
         cout<<"input command"<<endl;
         cin>>k;
         switch(k)
         {
             case 1:
-            {   cout<<"INPUT name tovara and count"<<endl;
-                getchar();
-                getline(cin, stroka);
+            {  
+                ifstream ifs;
+                ifs.open("kassa_in.txt");
+                //cout<<"INPUT name tovara and count"<<endl;
+                //getchar();
+                while(getline(ifs, stroka))
+                {
                 try
                 {
                     chek::add_tovar(stroka);
@@ -294,6 +301,8 @@ int main()
                 {
                     cout<<error<<endl;
                 }
+                }
+                ifs.close();
                 break;
             }
             case 2://win

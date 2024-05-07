@@ -1,0 +1,6 @@
+                         Piterochka
+name     count    skidka    cost(kg)    kategoria    stoimost
+ persik   20        0.15      249.57         fruit         748.71
+ grabli   24        0.046       120           hoz         132.48
+arbuzin   24        0.07        30         fruit           50.4
+mandarin   50        0.1        67         fruit            335
