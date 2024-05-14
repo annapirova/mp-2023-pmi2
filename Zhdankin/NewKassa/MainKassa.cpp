@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -13,13 +14,14 @@ void Menu()
 	cout << "1. Print Storage" << endl;
 	cout << "2. Add New Product in Storage" << endl;
 	cout << "3. Add New Product to Cart" << endl;
-	cout << "4. Parse String" << endl;
-	cout << "5. Print Check" << endl;
-	cout << "6. Exit" << endl;
+	cout << "4. Add New Product to Cart From File" << endl;
+	cout << "5. Parse String" << endl;
+	cout << "6. Print Check" << endl;
+	cout << "7. Exit" << endl;
 	cout << endl;
 }
 
-//string parse = "Good afternoon, I would like to buy 2 Bread, 3 Tomatoes and 1 Pineapple with 2 Onion";
+//string parse = "Good afternoon, I would like to buy 2 Bread, 3 Tomatoes and 1 Pineapple with 1 Pineapple";
 
 int main()
 {
@@ -82,6 +84,22 @@ int main()
 		}
 		case 4:
 		{
+			string line;
+			ifstream in("List.txt");
+			
+			if (in.is_open())
+			{
+				while (getline(in, line))
+				{
+					CH.Parsing(line, &Mag);
+				}
+			}
+			in.close();
+			cout << endl;
+			break;
+		}
+		case 5:
+		{
 			cout << "Enter String to Parse" << endl;
 			string str;
 			cin.ignore();
@@ -91,13 +109,13 @@ int main()
 			cout << endl;
 			break;
 		}
-		case 5:
+		case 6:
 		{
 			CH.Print();
 			cout << endl;
 			break;
 		}
-		case 6:
+		case 7:
 		{
 			return 0;
 		}
