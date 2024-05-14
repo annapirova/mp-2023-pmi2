@@ -1,0 +1,214 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <clocale>
+using namespace std;
+class Player {
+protected:
+ vector<vector<char>> myBoard;
+ vector<vector<char>> otherBoard;
+ vector<pair<int, int>> ships; 
+
+public:
+ Player() : myBoard(10, vector<char>(10, '~')), otherBoard(10, vector<char>(10, '~')) {}
+
+ virtual void placeShips() = 0;
+ virtual pair<int, int> makeMove() = 0;
+ bool checkHit(int x, int y) {
+ // Проверка попадания
+ for (auto& ship : ships) {
+ if (ship.first == x && ship.second == y) {
+ myBoard[x][y] = 'X'; // Попадание
+ return true;
+            }
+        }
+ myBoard[x][y] = 'O'; // Промах
+ return false;
+    }
+ bool isDefeated() {
+ // Проверка поражения
+        for (auto& ship : ships) {
+ if (myBoard[ship.first][ship.second] != 'X') {
+ return false; // Есть непотопленные корабли
+            }
+        }
+        return true; // Все корабли потоплены
+    }
+    void printBoards() {
+        cout << "My Board:" << endl;
+        for (const auto& row : myBoard) {
+            for (char c : row) {
+                cout << c << " ";
+            }
+            cout << endl;
+        }
+        cout << "Other Board:" << endl;
+        for (const auto& row : otherBoard) {
+            for (char c : row) {
+                cout << c << " ";
+            }
+            cout << endl;
+        }
+    }
+ 
+    bool canPlaceShip(int x, int y, int size, char direction);
+    void placeShip(int x, int y, int size, char direction);
+};
+
+
+class User : public Player {
+public:
+    void placeShips() override {
+        int shipSizes[] = { 5, 4, 3, 3, 2 }; // Размеры кораблей
+        for (int size : shipSizes) {
+            int x, y;
+            char direction;
+            bool isPlaced = false;
+            while (!isPlaced) {
+                cout << "Расставляем корабль размером " << size << ". Введите координаты начала (x y) и направление (g/v): ";
+                cin >> x >> y >> direction;
+                // Проверка корректности введенных данных
+                if (x < 0 || x >= 10 || y < 0 || y >= 10 || (direction != 'g' && direction != 'v')) {
+                    cout << "Некорректный ввод. Попробуйте еще раз." << endl;
+                    continue;
+                }
+        cout << "Введите координаты выстрела (x y): ";
+        cin >> x >> y;
+        return { x, y };
+    }
+    bool checkHit(int x, int y) {
+        if (Player::checkHit(x, y)) {
+            otherBoard[x][y] = 'X'; 
+            return true;
+        }
+        else {
+            otherBoard[x][y] = 'O'; 
+            return false;
+        }
+    }
+};
+
+
+class Computer : public Player {
+public:
+    void placeShips() override {
+        int shipSizes[] = { 5, 4, 3, 3, 2 }; // Размеры кораблей
+        for (int size : shipSizes) {
+            bool isPlaced = false;
+            while (!isPlaced) {
+                int x = rand() % 10;
+                int y = rand() % 10;
+                char directions[] = { 'g', 'v' };
+                char direction = directions[rand() % 2];
+                // Проверка возможности разместить корабль
+                if (canPlaceShip(x, y, size, direction)) {
+                    placeShip(x, y, size, direction);
+                    isPlaced = true;
+                }
+            }
+        }
+    }
+    pair<int, int> makeMove() override {
+        // Реализация хода компьютера
+        int x = rand() % 10;
+        int y = rand() % 10;
+        return { x, y };
+    }
+    bool checkHit(int x, int y) {
+        if (Player::checkHit(x, y)) {
+            otherBoard[x][y] = 'X'; // Попадание на доске противника
+            return true;
+        }
+        else {
+            otherBoard[x][y] = 'O'; // Промах на доске противника
+            return false;
+        }
+    }
+};
+
+// Общие методы для класса Player
+bool Player::canPlaceShip(int x, int y, int size, char direction) {
+    // Проверка, что корабль не выходит за пределы поля
+    if (direction == 'g' && (y + size > 10)) return false;
+    if (direction == 'v' && (x + size > 10)) return false;
+
+    // Проверка,что вокруг корабля нет других кораблей
+    for (int i = -1; i <= size; ++i) {
+        for (int j = -1; j <= 1; ++j) {
+            int checkX = (direction == 'v') ? x + i : x + j;
+            int checkY = (direction == 'g') ? y + i : y + j;
+
+            // Проверка, что координаты для проверки находятся в пределах поля
+            if (checkX >= 0 && checkX < 10 && checkY >= 0 && checkY < 10) {
+                if (myBoard[checkX][checkY] != '~') {
+                    return false; // Найден другой корабль рядом
+                }
+            }
+        }
+    }
+    return true; // Место для корабля свободно
+}
+
+void Player::placeShip(int x, int y, int size, char direction) {
+    // Размещение корабля на доске
+    ships.push_back({ x, y }); // Добавление начальной координаты корабля
+    if (direction == 'g') {
+        for (int i = 0; i < size; ++i) {
+            myBoard[x][y + i] = 'S';
+            ships.push_back({ x, y + i }); // Добавление координат корабля
+        }
+    }
+    else {
+        for (int i = 0; i < size; ++i) {
+            myBoard[x + i][y] = 'S';
+            ships.push_back({ x + i, y }); 
+        }
+    }
+}
+
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    srand(static_cast<unsigned int>(time(0))); // Инициализация генератора
+    User user;
+    Computer computer;
+
+    // Расстановка кораблей
+    user.placeShips();
+    computer.placeShips();
+
+    // Игровой цикл
+    while (true) {
+        user.printBoards();
+        auto userMove = user.makeMove();
+        // Проверка и обработка хода пользователя
+        if (computer.checkHit(userMove.first, userMove.second)) {
+            cout << "Попадание!" << endl;
+            if (computer.isDefeated()) {
+                cout << "Пользователь победил!" << endl;
+                break;
+            }
+        }
+        else {
+            cout << "Промах." << endl;
+        }
+
+        computer.printBoards();
+        auto computerMove = computer.makeMove();
+        // Проверка и обработка хода 
+        if (user.checkHit(computerMove.first, computerMove.second)) {
+            cout << "Компьютер попал!" << endl;
+            if (user.isDefeated()) {
+                cout << "Компьютер победил!" << endl;
+                break;
+            }
+        }
+        else {
+            cout << "Компьютер промахнулся." << endl;
+        }
+    }
+    cout << "Игра окончена. Спасибо за игру!" << endl;
+
+    return 0;
+}
