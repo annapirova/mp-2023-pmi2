@@ -20,7 +20,7 @@ public:
 	Vector operator ++(int temp);
 	Vector operator ++();
 	void Generate(double min_, double max_);
-
+	double norma();
 	friend ostream& operator <<(ostream& osin, const Vector& other);
 	friend istream& operator >>(istream& isin, const Vector& other);
 };
