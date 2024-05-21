@@ -38,5 +38,7 @@ int main()
 	cout << "operator v1[3]" << endl;
 	cout << v1[3] << endl;
 
+	cout << "norm v1" << endl;
+	cout << v1.norma() << endl;
 	return 0;
 }
