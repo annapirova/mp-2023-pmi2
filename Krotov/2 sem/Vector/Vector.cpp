@@ -149,6 +149,15 @@ void Vector::Generate(double min_, double max_)
 		vec[i] = 1.*(max-min)*rand()/RAND_MAX + min;
 	}
 }
+double Vector::norma()
+{
+	double sum2 = 0.0;
+	for (int i = 0; i < Size; i++)
+	{
+		sum2 =sum2 + vec[i] * vec[i];
+	}
+	return sqrt(sum2);
+}
 ostream& operator<<(ostream& osin, const Vector& other)
 {
 	for (int i = 0; i < other.Size; i++)
