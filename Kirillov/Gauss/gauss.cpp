@@ -269,41 +269,47 @@ Gauss::Gauss(Matrix& mat, Vector& ans) : matrix(&mat), m_copy(mat), answer(&ans)
 void Gauss::transformToUpperTriangular() {
 	m_copy = *matrix;
 	int n = m_copy.getRow();
-	for (int i = 0; i < n - 1; i++)
-	{
-		for (int k = i + 1; k < n; k++)
-		{
+	for (int i = 0; i < n - 1; i++) {
+		// Поиск строки с максимальным элементом в текущем столбце
+		int maxRow = i;
+		for (int k = i + 1; k < n; k++) {
+			if (abs(m_copy(k, i)) > abs(m_copy(maxRow, i))) {
+				maxRow = k;
+			}
+		}
+
+		// Перестановка текущей строки с найденной строкой с максимальным элементом
+		if (maxRow != i) {
+			for (int j = 0; j < n; j++) {
+				std::swap(m_copy(i, j), m_copy(maxRow, j));
+			}
+			std::swap((*answer)[i], (*answer)[maxRow]);
+		}
+
+		for (int k = i + 1; k < n; k++) {
 			double alpha = m_copy(k, i) / m_copy(i, i);
-			/*cout << alpha << endl;;*/
-			for (int j = i; j < n; j++)
-			{
+			for (int j = i; j < n; j++) {
 				m_copy(k, j) -= alpha * m_copy(i, j);
-				/*cout << m_copy(k, j);*/
 			}
 			(*answer)[k] -= alpha * (*answer)[i];
-			/*cout << endl << answer[k];*/
 		}
 	}
 }
+
 void Gauss::solve() {
 	transformToUpperTriangular();
-
 	int n = m_copy.getRow();
 	X.NullVector();
-	cout << X<<endl;
+
 	for (int i = n - 1; i >= 0; --i) {
 		double sum = 0;
-		for (int j = 0; j < n; ++j) {
+		for (int j = i + 1; j < n; ++j) {
 			sum += m_copy(i, j) * X[j];
 		}
-		cout << *answer;
-		cout << "answer:"<<(*answer)[i] << endl << "sum:"<< sum << endl<<"mcopy:"<< m_copy(i, i)<<endl;
-
 		X[i] = ((*answer)[i] - sum) / m_copy(i, i);
-		cout << X[i];
 	}
-	cout << X[0] << " " << X[1] << " " << X[2];
 }
+
 Vector Gauss::getAnswer2() {
 	return *answer;
 }
@@ -312,6 +318,16 @@ Vector Gauss::getAnswer() {
 }
 Matrix Gauss::getMCopy() {
 	return m_copy;
+}
+int Gauss::Check(Vector B,double cr) {
+	int status=1;
+	int i = 0;
+	Vector corr = (m_copy.multiplyVector(X) - B);
+	while ((status == 1) && (i < corr.GiveSize())) {
+		status = (abs(corr[i]) < cr);
+		i++;
+	}
+	return status;
 }
 
 ostream& operator<<(ostream& os, const Matrix& B) {

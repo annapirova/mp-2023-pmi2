@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdexcept>
+#include <cmath>
 using namespace std;
 class Vector {
     double* values;
@@ -62,4 +63,5 @@ public:
     Vector getAnswer();
     Vector getAnswer2();
     Matrix getMCopy();
+    int Check(Vector B,double cr);
 };
