@@ -17,7 +17,7 @@ public:
 	Matrix operator -(const Matrix& other);
 	Matrix operator +=(const Matrix& other);
 	Matrix operator -=(const Matrix& other);
-	double& operator ()(int index);
+	double& operator ()(int i,int j);
 	Matrix operator *(const Matrix& other);
 	void Generate(double min_, double max_);
 	friend ostream& operator <<(ostream& osin, const Matrix& other);
