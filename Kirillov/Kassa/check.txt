@@ -1,0 +1,4 @@
+Name: banan, Quantity: 5, Price: 105, Discount: 10%, Total: 472.5
+Name: pomidor, Quantity: 2, Price: 250, Discount: 5%, Total: 475
+Name: apple, Quantity: 10, Price: 120, Discount: 0%, Total: 1200
+Total Amount: 2147.5

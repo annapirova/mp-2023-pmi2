@@ -1,0 +1,3 @@
+banan 5
+pomidor 2
+apple 10

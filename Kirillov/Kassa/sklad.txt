@@ -1,0 +1,4 @@
+# Name Quantity Price Discount
+banan 1000 105.0 10
+pomidor 100 250.0 5
+apple 500 120.0 0
