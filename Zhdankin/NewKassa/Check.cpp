@@ -6,6 +6,10 @@
 #include "Shop.h"
 #include "Product.h"
 #include "Check.h"
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+
 
 Check::Check()
 {
@@ -19,15 +23,38 @@ void Check::AddCheck(string Name, int new_count, Shop* m)
 {
 	Product t = m->FindProd(Name);
 	t.count = new_count;
-	Ch.push_back(t);
+
+	bool found = false;
+	for (auto it = Ch.begin(); it != Ch.end(); it++)
+	{
+		if (t.Name == it->Name)
+		{
+			it->count += t.count;
+			found = true;
+			break;
+		}
+	}
+
+	if (!found)
+	{
+		Ch.push_back(t);
+	}
 }
 
 void Check::Print()
 {
+	double sum = 0;
+	ofstream out("Check.txt");
+
+	out << "Name					Count						Old_Price					New_Price" << endl;
 	for (auto it = Ch.begin(); it != Ch.end(); it++)
 	{
-		std::cout << *it << std::endl;
+		double New_Price = ((*it).price - ((*it).price * ((*it).discount / 100.0)));
+		out << setw(25) << left << (*it).Name << setw(25) << (*it).count << setw(25) << (*it).price << setw(25) << New_Price << endl;
+		sum += ((*it).count * New_Price);
 	}
+	out << "Sum:  " << sum << endl;
+	out.close();
 }
 
 void Check::Parsing(string str, Shop* m)
@@ -63,5 +90,5 @@ void Check::Parsing(string str, Shop* m)
 	}
 }
 
-//"Good afternoon, I would like to buy 2 Bread, 3 Tomatoes and 1 Pineapple with 321123 Bananas"
+//"Good afternoon, I would like to buy 2 Bread, 3 Tomatoes and 1 Pineapple with 321 Bananas"
 //"2 Bread, 3 Tomatoes and 1 Pineapple"
