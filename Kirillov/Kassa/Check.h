@@ -10,4 +10,5 @@ public:
     void AddTovar(const std::string& name, Magazin* m, int quantity);
     void PrintCheck();
     void SaveToFile(const std::string& filename);
+    int FindCheckTovar(const std::string& name);
 };
