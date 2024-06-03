@@ -15,34 +15,24 @@ int main()
 	s.assortiment();
 	cout << "------------------------------" << endl;
 	ch1.parser(s);
-	/*
-	cout << "Введите сколько видов товара покупает пользователь" << endl;
-	cin >> size;
-	cout << "Введите название товара и его количество: " << endl;
-	for (int i = 0;i < size;i++)
-	{
-		cin >> name >> kollichestvo;
-		ch1.AddTovar(name, s,kollichestvo);
-	}
-	*/
 	cout << ch1;
 	int yes_no1;
-	cout << "Вы хотите удалить товар? Да - 1, нет - 0" << endl; cin >> yes_no1;
+	cout << "Р’С‹ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ С‚РѕРІР°СЂ? Р”Р° - 1, РЅРµС‚ - 0" << endl; cin >> yes_no1;
 	if (yes_no1 == 1)
 	{
-		cout << "Введите название и сколько штук товара, который хотите убрать" << endl;
+		cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ Рё СЃРєРѕР»СЊРєРѕ С€С‚СѓРє С‚РѕРІР°СЂР°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ СѓР±СЂР°С‚СЊ" << endl;
 		cin >> name >> kollichestvo;
 		ch1.Delete_tovar(name, s, kollichestvo);
 		cout << ch1;
 	}
 	int yes_no2;
-	cout << "Отсортировать товары по цене?" << endl; cin >> yes_no2;
+	cout << "РћС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ С‚РѕРІР°СЂС‹ РїРѕ С†РµРЅРµ?" << endl; cin >> yes_no2;
 	if (yes_no2 == 1)
 	{
 		ch1.sort_ch();
 		cout << ch1;
 	}
-	cout << "Ваш чек:" << endl;
+	cout << "Р’Р°С€ С‡РµРє:" << endl;
 	ch1.vuvod(ch1);
-	//	cout << "Сумма Вашей покупки: " << ch1.summ_sh() << endl;
+	
 }
