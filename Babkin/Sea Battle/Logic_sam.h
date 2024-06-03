@@ -11,223 +11,214 @@ protected:
 public:
     PlayerSan()
     {
+        field = new matrix(12, 12); field_optional = new matrix(12, 12);
     }
     ~PlayerSan()
     {
+        delete[] field; delete[] field_optional;
     }
-    PlayerSan(const PlayerSan& masfx)
+    PlayerSan(const PlayerSan& h) { field = new matrix(12, 12); field_optional = new matrix(12, 12); }
+    void Nullify() 
     {
+        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { (*field)(j, i) = 0.0; } }
+        for (int i = 0; i < 12; i++) { (*field)(0, i) = 5.0; (*field)(i, 0) = 5.0; (*field)(i, 11) = 5.0; (*field)(11, i) = 5.0; }
+        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { (*field_optional)(j, i) = 0.0; } }
+        for (int i = 0; i < 12; i++) { (*field_optional)(0, i) = 5.0; (*field_optional)(i, 0) = 5.0; (*field_optional)(i, 11) = 5.0; (*field_optional)(11, i) = 5.0; }
     }
-
-    virtual void Nullify() {}
-    virtual int CheckStatus() {}
-    virtual int Attack() {}
-    virtual void PlaceShips() {}
+    int CheckSells()
+    {
+        int cells;
+        for (int u = 1; u < 12; u++) { for (int q = 1; q < 12; q++) { if ((*field)(u, q) == 1.0) { cells += 1; } } }
+        return cells;
+    }
+    virtual void SentAttack(int x, int y) {}
+    void GetResponse(int x, int y, PlayerSan& conb)
+    {
+        if ((*field)(x,y) == 1.0 || (*field)(x,y) == 3.0)
+        {
+            if ((*field)(x-1,y) == 1.0 || (*field)(x+1,y) == 1.0 || (*field)(x,y-1) == 1.0 || (*field)(x,y+1) == 1.0 || ((*field)(x-1,y) == 3.0 && (*field)(x-2,y) == 1.0) || ((*field)(x+1,y) == 3.0 && (*field)(x+2,y) == 1.0) || ((*field)(x,y+1) == 3.0 && (*field)(x,y+2) == 1.0) || ((*field)(x,y-1) == 3.0 && (*field)(x,y-2) == 1.0) || ((*field)(x+1,y) == 3.0 && (*field)(x+2,y) == 3.0 && (*field)(x+3,y) == 1.0) && ((*field)(x-1,y) == 3.0 && (*field)(x-2,y) == 3.0 && (*field)(x-3,y) == 1.0) || ((*field)(x,y+1) == 3.0 && (*field)(x,y+2) == 3.0 && (*field)(x,y+3) == 1.0) || ((*field)(x,y-1) == 3.0 && (*field)(x,y-2) == 3.0 && (*field)(x,y-3) == 1.0))
+            {
+                cout << "ship hurt\n";
+                (*field)(x,y) = 3.0;
+                (*conb.field_optional)(x,y) = 3.0;
+            }
+            else
+            {
+                cout << "ded ship lmao\n";
+                (*field)(x,y) = 3.0;
+                (*conb.field_optional)(x,y) = 3.0;
+            }
+        }
+        else
+        {
+            (*field)(x,y) = 2.0;
+            (*conb.field_optional)(x,y) = 2.0;
+        }
+    }
+    virtual void Placeship(int x, int y, int shipkind, int rotate) {}
     matrix FieldGet() { return *field; };
+    matrix FieldGet_op() { return *field_optional; };
 };
 class User : public PlayerSan
 {
 public:
-    User() { field = new matrix(12, 12); field_optional = new matrix(12, 12);}
-    ~User() { delete[] field; delete[] field_optional; }
-    void Nullify()
-    {
-        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { field->operator()(j, i) = 0.0; } }
-        for (int i = 0; i < 12; i++) { field->operator()(0, i) = 5.0; field->operator()(i, 0) = 5.0; field->operator()(i, 11) = 5.0; field->operator()(11, i) = 5.0; }
-        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { field_optional->operator()(j, i) = 0.0; } }
-        for (int i = 0; i < 12; i++) { field_optional->operator()(0, i) = 5.0; field_optional->operator()(i, 0) = 5.0; field_optional->operator()(i, 11) = 5.0; field_optional->operator()(11, i) = 5.0; }
-    }
+    User() {}
+    ~User() {}
     void Placeship(int x, int y, int shipkind, int rotate)
     {
+        bool canexist;
         if (shipkind > -1 && shipkind < 4)
         {
             switch (rotate)
             {
             case(0):
-                if (y - shipkind > 0 && (field->operator()(x - 1, y) != 1.0) && (field->operator()(x + 1, y) != 1.0) && field->operator()(x, y - 1) != 2.0 && (field->operator()(x - 1, y - 1) != 1.0) && (field->operator()(x + 1, y - 1) != 1.0) && stats[shipkind] > 0)
+                canexist = true;
+                for (int h = 0; h <= shipkind; h++)
                 {
-                    if (y + 1 < 11)
+                    if ((*field)(x-1 , y - h) != 1.0 && (*field)(x + 1 , y - h) != 1.0 && (*field)(x-1 , y - h - 1) != 1.0 && (*field)(x + 1 , y - h - 1) != 1.0 && (*field)(x-1 , y - h + 1) != 1.0 && (*field)(x+1 , y - h + 1) != 1.0 && (*field)(x , y - h - 1) != 1.0 && (*field)(x , y - h) != 5.0 && stats[shipkind] > 0)
+                    {}
+                    else
                     {
-                        field->operator()(x - 1, y + 1) = 2.0;
-                        field->operator()(x, y + 1) = 2.0;
-                        field->operator()(x + 1, y + 1) = 2.0;
+                        cout << "Invalid ship placement\n";
+                        canexist = false;
+                        break;
                     }
+                }
+                if (canexist)
+                {
                     for (int h = 0; h <= shipkind; h++)
                     {
-                        field->operator()(x, y - h) = 1.0;
-                        field->operator()(x - 1, y - h) = 2.0;
-                        field->operator()(x + 1, y - h) = 2.0;
+                        (*field)(x, y - h) = 1.0;
                     }
-                    field->operator()(x - 1, y - shipkind) = 2.0;
-                    field->operator()(x, y - shipkind) = 2.0;
-                    field->operator()(x + 1, y - shipkind) = 2.0;
                     stats[shipkind] -= 1;
+                    break;
                 }
                 else
-                {
-                    cout << "Invalid ship placement\n"; break;
-                }
-                break;
+                {break;}
             case(90):
-                if (x + shipkind < 11 && (field->operator()(x, y - 1) != 1.0) && (field->operator()(x, y + 1) != 1.0) && field->operator()(x + 1, y) != 2.0 && (field->operator()(x + 1, y - 1) != 1.0) && (field->operator()(x + 1, y + 1) != 1.0) && stats[shipkind] > 0)
+                canexist = true;
+                for (int h = 0; h <= shipkind; h++)
                 {
-                    if (x - 1 > 0)
+                    if ((*field)(x+h , y-1) != 1.0 && (*field)(x + h , y + 1) != 1.0 && (*field)(x + h + 1, y - 1) != 1.0 && (*field)(x + h + 1 , y + 1) != 1.0 && (*field)(x+h - 1 , y - 1) != 1.0 && (*field)(x+h-1 , y - h + 1) != 1.0 && (*field)(x + h + 1,y) != 1.0 && (*field)(x + h,y) != 5.0 && stats[shipkind] > 0)
+                    {}
+                    else
                     {
-                        field->operator()(x - 1, y - 1) = 2.0;
-                        field->operator()(x - 1, y) = 2.0;
-                        field->operator()(x - 1, y + 1) = 2.0;
+                        cout << "Invalid ship placement\n";
+                        canexist = false;
+                        break;
                     }
+                }
+                if (canexist)
+                {
                     for (int h = 0; h <= shipkind; h++)
                     {
-                        field->operator()(x + h, y) = 1.0;
-                        field->operator()(x + h, y - 1) = 2.0;
-                        field->operator()(x + h, y + 1) = 2.0;
+                        (*field)(x + h, y) = 1.0;
                     }
-                    field->operator()(x + shipkind, y + 1) = 2.0;
-                    field->operator()(x + shipkind, y) = 2.0;
-                    field->operator()(x + shipkind, y - 1) = 2.0;
                     stats[shipkind] -= 1;
+                    break;
                 }
                 else
-                {
-                    cout << "Invalid ship placement\n"; break;
-                }
-                break;
+                {break;}
             case(180):
-                if (y + shipkind < 11 && (field->operator()(x - 1, y) != 1.0) && (field->operator()(x + 1, y) != 1.0) && field->operator()(x, y + 1) != 2.0 && (field->operator()(x - 1, y + 1) != 1.0) && (field->operator()(x + 1, y + 1) != 1.0) && stats[shipkind] > 0)
+                canexist = true;
+                for (int h = 0; h <= shipkind; h++)
                 {
-                    if (y - 1 > 0)
+                    if ((*field)(x-1 , y + h) != 1.0 && (*field)(x + 1 , y + h) != 1.0 && (*field)(x-1 , y + h + 1) != 1.0 && (*field)(x + 1 , y + h + 1) != 1.0 && (*field)(x-1 , y + h - 1) != 1.0 && (*field)(x+1 , y + h - 1) != 1.0 && (*field)(x , y + h + 1) != 1.0 && (*field)(x , y + h) != 5.0 && stats[shipkind] > 0)
+                    {}
+                    else
                     {
-                        field->operator()(x - 1, y - 1) = 2.0;
-                        field->operator()(x - 1, y) = 2.0;
-                        field->operator()(x - 1, y + 1) = 2.0;
+                        cout << "Invalid ship placement\n";
+                        canexist = false;
+                        break;
                     }
+                }
+                if (canexist)
+                {
                     for (int h = 0; h <= shipkind; h++)
                     {
-                        field->operator()(x, y + h) = 1.0;
-                        field->operator()(x - 1, y + h) = 2.0;
-                        field->operator()(x + 1, y + h) = 2.0;
+                        (*field)(x, y + h) = 1.0;
                     }
-                    field->operator()(x - 1, y + shipkind) = 2.0;
-                    field->operator()(x, y + shipkind) = 2.0;
-                    field->operator()(x + 1, y + shipkind) = 2.0;
                     stats[shipkind] -= 1;
+                    break;
                 }
                 else
-                {
-                    cout << "Invalid ship placement\n"; break;
-                }
-                break;
+                {break;}
             case(270):
-                if (x - shipkind > 0 && (field->operator()(x, y - 1) != 1.0) && (field->operator()(x, y + 1) != 1.0) && field->operator()(x - 1, y) != 2.0 && (field->operator()(x - 1, y - 1) != 1.0) && (field->operator()(x - 1, y + 1) != 1.0) && stats[shipkind] > 0)
+                canexist = true;
+                for (int h = 0; h <= shipkind; h++)
                 {
-                    if (x - 1 > 0)
+                    if ((*field)(x-h , y-1) != 1.0 && (*field)(x - h , y + 1) != 1.0 && (*field)(x - h + 1, y - 1) != 1.0 && (*field)(x - h + 1 , y + 1) != 1.0 && (*field)(x-h - 1 , y - 1) != 1.0 && (*field)(x-h-1 , y - h + 1) != 1.0 && (*field)(x - h - 1,y) != 1.0 && (*field)(x - h,y) != 5.0 && stats[shipkind] > 0)
+                    {}
+                    else
                     {
-                        field->operator()(x - 1, y - 1) = 2.0;
-                        field->operator()(x - 1, y) = 2.0;
-                        field->operator()(x - 1, y + 1) = 2.0;
+                        cout << "Invalid ship placement\n";
+                        canexist = false;
+                        break;
                     }
+                }
+                if (canexist)
+                {
                     for (int h = 0; h <= shipkind; h++)
                     {
-                        field->operator()(x + h, y) = 1.0;
-                        field->operator()(x + h, y - 1) = 2.0;
-                        field->operator()(x + h, y + 1) = 2.0;
+                        (*field)(x + h, y) = 1.0;
                     }
-                    field->operator()(x + shipkind, y + 1) = 2.0;
-                    field->operator()(x + shipkind, y) = 2.0;
-                    field->operator()(x + shipkind, y - 1) = 2.0;
                     stats[shipkind] -= 1;
+                    break;
                 }
                 else
-                {
-                    cout << "Invalid ship placement\n"; break;
-                }
-                break;
+                {break;}
             default:
                 cout << "Wrong angle rotation\n";
                 break;
             }
         }
     }
-    int CheckStatus()
+    void SentAttack(int x,int y)
     {
-        int hurtedcells;
-        for (int u = 1; u < 12; u++) { for (int q = 1; q < 12; q++) { if (field->operator()(u, q) == 3.0) { hurtedcells += 1; } } }
-        return hurtedcells;
-    }
-    int Attack(int x, int y, PlayerSan& conb)
-    {
-        if (conb.FieldGet()(x, y) == 1.0 || conb.FieldGet()(x, y) == 3.0)
-        {
-            conb.FieldGet()(x, y) = 3.0;
-            field_optional->operator()(x, y) = 3.0;
-            if ((conb.FieldGet()(x + 1, y) == 1.0 || conb.FieldGet()(x, y + 1) == 1.0) && (conb.FieldGet()(x - 1, y) == 1.0 || conb.FieldGet()(x, y - 1) == 1.0))
-            {
-                cout << "Enemy ship got hurt\n";
-            }
-            else
-            {
-                cout << "Enemy ship destroyed\n";
-            }
-        }
-        else
-        {
-            conb.FieldGet()(x, y) = 2.0;
-            field_optional->operator()(x, y) = 2.0;
-            cout << "missed\n";
-        }
-        return 0;
+        cout << "Insert coo-s here\n";
+        cin >> x;
+        cin >> y;
     }
 };
 class ComputerSan : public PlayerSan
 {
-protected:
-    int Thonkx;  int Thonky; int demand;
-    ComputerSan() { field = new matrix(12, 12); field_optional = new matrix(12, 12); demand = 0;}
-    ~ComputerSan() { delete[] field; delete[] field_optional; }
-    ComputerSan(const ComputerSan& h) { field = new matrix(12, 12); field_optional = new matrix(12, 12); }
-    void Nullify()
+    public:
+    ComputerSan() {}
+    ~ComputerSan() {}
+    void Placeship(int x, int y, int shipkind, int rotate)
     {
-        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { field->operator()(j, i) = 0.0; } }
-        for (int i = 0; i < 12; i++) { field->operator()(0, i) = 5.0; field->operator()(i, 0) = 5.0; field->operator()(i, 11) = 5.0; field->operator()(11, i) = 5.0; }
-        for (int j = 1; j < 11; j++) { for (int i = 1; i < 11; i++) { field_optional->operator()(j, i) = 0.0; } }
-        for (int i = 0; i < 12; i++) { field_optional->operator()(0, i) = 5.0; field_optional->operator()(i, 0) = 5.0; field_optional->operator()(i, 11) = 5.0; field_optional->operator()(11, i) = 5.0; }
-    }
-    void PlaceShipLogic()
-    {
-        for (int y = 3; y >= 0; y++)
+        for (int y = 3; y >= 0; y--)
         {
             while (stats[y] > 0)
             {
-                int x = (1 + rand() % 10, 1 + rand() % 10), int z = (1 + rand() % 10, 1 + rand() % 10);
-                double key = field->operator()(x,z) != 2.0;
+                int x = 1 + rand() % 10; int z = 1 + rand() % 10;
+                double key = (*field)(x,z);
                 bool logic = true;
-                if (key != 1.0 && key != 2.0)
+                if (key != 1.0)
                 {
                     for (int u = 0; u < y; u++)
                     {
-                        if (z - u > 0 && field->operator()(x, z - u) != 1.0 && field->operator()(x, z - u) != 2.0)
+                        if ((*field)(x-1 , z - u) != 1.0 && (*field)(x + 1 , z - u) != 1.0 && (*field)(x-1 , z - u - 1) != 1.0 && (*field)(x + 1 , z - u - 1) != 1.0 && (*field)(x-1 , z - u + 1) != 1.0 && (*field)(x+1 , z - u + 1) != 1.0 && (*field)(x , z - u - 1) != 1.0 && (*field)(x , z - u) != 5.0)
                         {}
                         else
                         {
-                            break;
                             logic = false;
-                        }
-                        if (logic)
-                        {
-                            for (int u = 0; u < y; u++)
-                            {
-                                field->operator()(x, z - u) = 1.0;
-                            }
-                        }
-                        else
-                        {
                             break;
                         }
+                    if (logic)
+                    {
+                        for (int u = 0; u < y; u++)
+                        {
+                            (*field)(x, z - u) = 1.0;
+                        }
+                        stats[y] -= 1;
+                        break;
+                    }
+                    logic = true;
                     }
                     for (int u = 0; u < y; u++)
                     {
-                        if (x + u < 11 && field->operator()(x + u, z) != 1.0 && field->operator()(x+u,z) != 2.0)
+                        if ((*field)(x+u , z-1) != 1.0 && (*field)(x + u , z + 1) != 1.0 && (*field)(x + u + 1, z - 1) != 1.0 && (*field)(x + u + 1 , z + 1) != 1.0 && (*field)(x+u - 1 , z - 1) != 1.0 && (*field)(x+u-1 , z+1) != 1.0 && (*field)(x + u + 1,z) != 1.0 && (*field)(x + u,z) != 5.0)
                         {
                         }
                         else
@@ -239,17 +230,16 @@ protected:
                         {
                             for (int u = 0; u < y; u++)
                             {
-                                field->operator()(x + u, z) = 1.0;
+                                (*field)(x + u, z) = 1.0;
                             }
-                        }
-                        else
-                        {
+                            stats[y] -= 1;
                             break;
                         }
+                    logic = true;
                     }
                     for (int u = 0; u < y; u++)
                     {
-                        if (x - u > 0 && field->operator()(x - u, z) != 1.0 && field->operator()(x - u, z) != 2.0)
+                        if ((*field)(x-1 , z + u) != 1.0 && (*field)(x + 1 , z + u) != 1.0 && (*field)(x-1 , z + u + 1) != 1.0 && (*field)(x + 1 , z + u + 1) != 1.0 && (*field)(x-1 , z + u - 1) != 1.0 && (*field)(x+1 , z + u - 1) != 1.0 && (*field)(x , z + u + 1) != 1.0 && (*field)(x , z + u) != 5.0)
                         {
                         }
                         else
@@ -261,17 +251,16 @@ protected:
                         {
                             for (int u = 0; u < y; u++)
                             {
-                                field->operator()(x - u, z) = 1.0;
+                                (*field)(x - u, z) = 1.0;
                             }
-                        }
-                        else
-                        {
+                            stats[y] -= 1;
                             break;
                         }
                     }
+                    logic = true;
                     for (int u = 0; u < y; u++)
                     {
-                        if (z + u < 11 && field->operator()(x, z + u) != 1.0 && field->operator()(x, z + u) != 2.0)
+                        if ((*field)(x-u , z-1) != 1.0 && (*field)(x - u , z + 1) != 1.0 && (*field)(x - u + 1, z - 1) != 1.0 && (*field)(x - u + 1 , z + 1) != 1.0 && (*field)(x-u - 1 , z - 1) != 1.0 && (*field)(x-u-1 , y - z + 1) != 1.0 && (*field)(x - u - 1,z) != 1.0 && (*field)(x - u,z) != 5.0)
                         {
                         }
                         else
@@ -283,11 +272,9 @@ protected:
                         {
                             for (int u = 0; u < y; u++)
                             {
-                                field->operator()(x, z + u) = 1.0;
+                                (*field)(x, z + u) = 1.0;
                             }
-                        }
-                        else
-                        {
+                            stats[y] -= 1;
                             break;
                         }
                     }
@@ -295,37 +282,52 @@ protected:
             }
         }
     }
-    int CheckStatus()
+    void SentAttack(int x, int y)
     {
-        int hurtedcells;
-        for (int u = 1; u < 12; u++) { for (int q = 1; q < 12; q++) { if (field->operator()(u, q) == 3.0) { hurtedcells += 1; } } }
-        return hurtedcells;
-    }
-    void Attack(int x, int y, PlayerSan& conb)
-    {
-        if (demand == 0)
+        for (int i = 1;i<11;i++)
         {
-            if (conb.FieldGet()(x, y) == 1.0 || conb.FieldGet()(x, y) == 3.0)
+            for (int j = 1;j<11;j++)
             {
-                conb.FieldGet()(x, y) = 3.0;
-                demand = 1;
-            }
-        }
-        else
-        {
-            if (conb.FieldGet()(x + 1, y) == 1.0 && demand == 1)
-            {
-                conb.FieldGet()(x + 1, y) = 3.0;
-                demand = 1;
-            }
-            else
-            {
-                if (conb.FieldGet()(x, y+1) == 1.0 && demand == 1)
+                if ((*field_optional)(i,j) == 3.0)
                 {
-                    conb.FieldGet()(x, y+1) = 3.0;
-                    demand = 2;
+                    if ((*field_optional)(i+1,j) != 2.0 || (*field_optional)(i+1,j) != 3.0 || (*field_optional)(i+1,j) != 5.0)
+                    {
+                        x = i + 1;
+                        y = j;
+                        return;
+                    }
+                    else
+                    {
+                        if ((*field_optional)(i-1,j) != 2.0 || (*field_optional)(i-1,j) != 3.0 || (*field_optional)(i-1,j) != 5.0)
+                        {
+                            x = i - 1;
+                            y = j;
+                            return;
+                        }
+                        else
+                        {
+                            if ((*field_optional)(i,j-1) != 2.0 || (*field_optional)(i,j-1) != 3.0 || (*field_optional)(i,j-1) != 5.0)
+                            {
+                                x = i;
+                                y = j - 1;
+                                return;
+                            }
+                            else
+                            {
+                                if ((*field_optional)(i,j+1) != 2.0 || (*field_optional)(i,j+1) != 3.0 || (*field_optional)(i,j+1) != 5.0)
+                                {
+                                    x = i;
+                                    y = j + 1;
+                                    return;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
+        x = 1 + rand()%10;
+        y = 1 + rand()%10;
+        return;
     }
 };
