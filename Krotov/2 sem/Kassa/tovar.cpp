@@ -46,11 +46,13 @@ Tovar Tovar::operator+(const Tovar& t)
 }
 Tovar Tovar::operator-(const Tovar& t)
 {
-
 	if (barcode == t.barcode)
 	{
 		Tovar nov_tovar = t;
 		nov_tovar.kolvo = kolvo - nov_tovar.kolvo;
+		if (nov_tovar.kolvo < 0) {
+			throw "Недопустимая операция: количество товара не может быть отрицательным.";
+		}
 		return nov_tovar;
 	}
 	else
@@ -60,19 +62,16 @@ Tovar Tovar::operator-(const Tovar& t)
 }
 ostream& operator<<(ostream& ostr, Tovar& t)
 {
-	
 	t.operator_stoimost();
-	ostr << "Tovar: " << "name-" << t.name << ", " << "shtrichkod-" << t.barcode << ", " << "stoimost-" << t.stoimost << ", " << "kollichestvo-" << t.kolvo << endl;
+	ostr << "Товар: " << t.name << ", Штрихкод: " << t.barcode << ", Стоимость: " << t.stoimost << ", Количество: " << t.kolvo << endl;
 	return ostr;
 }
 bool Tovar::operator<(const Tovar& t)
 {
-	bool res = true;
-	if (((price * (100 - discount)) / 100 * kolvo) > (t.price * (100 - t.discount)) / 100 * t.kolvo) 
-	{
-		res = false;
-	}
-	return res;
+	// Сравнение товаров по общей стоимости
+	// Считается общая стоимость текущего товара (price * (1 - discount)) и товара t, учитывая количество
+	// Сравниваются общие стоимости
+	return ((price * (100 - discount)) / 100 * kolvo) < (t.price * (100 - t.discount)) / 100 * t.kolvo;
 }
 void Tovar::operator_stoimost()
 {
@@ -80,13 +79,6 @@ void Tovar::operator_stoimost()
 }
 bool Tovar::operator==(const Tovar& t)
 {
-	if (name == t.name)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return name == t.name;
 }
 
