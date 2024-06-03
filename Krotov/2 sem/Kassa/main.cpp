@@ -35,4 +35,5 @@ int main()
 	cout << "Ваш чек:" << endl;
 	ch1.vuvod(ch1);
 	
+	return 0;
 }
