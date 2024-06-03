@@ -16,6 +16,7 @@ int main()
 		user1->Nullify();
 		user2->Nullify();
 		cout << user1->FieldGet();
+		cout << "\n";
 		cout << user2->FieldGet_op();
 		int loop = 1;
 		while (loop == 1)
@@ -32,20 +33,23 @@ int main()
 			user1->Placeship(px,py,shipkind,rotation);
 			cout << user1->FieldGet();
 			cout << "\n";
-			cout << user2->FieldGet_op();
+			cout << user1->FieldGet_op();
 			cout << "If you want to place more ships press 1\n";
 			cin >> loop;
 		}
 		user2->Placeship(0,0,0,0);
-		while (user1->CheckSells() != 0 && user2->CheckSells() != 0)
+		cout << user2->FieldGet();
+		while (user1->CheckSells()!= 0 && user2->CheckSells() != 0)
 		{
-			user1->SentAttack(px,py);
+			cout << "Enter your coo-s\n";
+			cin >> px;
+			cin >> py;
 			user2->GetResponse(px,py,*user1);
 			user2->SentAttack(cx,cy);
 			user1->GetResponse(cx,cy,*user2);
 			cout << user1->FieldGet();
 			cout << "\n";
-			cout << user2->FieldGet_op();
+			cout << user1->FieldGet_op();
 		}
 		if (user1->CheckSells() == 0)
 		{
