@@ -4,7 +4,7 @@
 using namespace std;
 int main()
 {
-	PlayerSan* user1, *user2, *tmp;
+	PlayerSan* user1, *user2;
 	int wink = 0; int proc;
 	user1 = new User;
 	user2 = new ComputerSan;
@@ -38,7 +38,6 @@ int main()
 			cin >> loop;
 		}
 		user2->Placeship(0,0,0,0);
-		cout << user2->FieldGet();
 		while (user1->CheckSells()!= 0 && user2->CheckSells() != 0)
 		{
 			cout << "Enter your coo-s\n";
