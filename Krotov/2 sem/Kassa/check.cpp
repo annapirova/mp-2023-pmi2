@@ -36,26 +36,20 @@ ostream& operator<<(ostream& ostr, Check& ch)
 }
 void Check::Delete_tovar(string name, Sklad s, int kollichestvo)
 {
-
-	int flag = -1;
-	Tovar t(name, s, kollichestvo);
 	for (it = tovari.begin(); it != tovari.end(); it++)
 	{
-		if (t == *it)
+		if (it->name == name)
 		{
-			flag = 0;
-			if (it->kolvo > 1)
+			if (it->kolvo > kollichestvo)
 			{
-				flag = 1;
 				it->kolvo -= kollichestvo;
 			}
-			break;
+			else
+			{
+				tovari.erase(it);
+			}
+			return;
 		}
-	}
-
-	if (flag == 0)
-	{
-		tovari.erase(it);
 	}
 }
 int Check::summ_sh()
@@ -74,7 +68,7 @@ void Check::sort_ch()
 
 void Check::vuvod(Check& ch)
 {
-	ofstream ofs("tovaru_vuvod.txt"); // окрываем файл для записи
+	ofstream ofs("tovaru_vuvod.txt"); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё
 	if (ofs.is_open())
 	{
 		for (ch.it = ch.tovari.begin(); ch.it != ch.tovari.end(); ch.it++)
@@ -83,29 +77,29 @@ void Check::vuvod(Check& ch)
 			ofs << *ch.it;
 		}
 		//ofs << ch1;
-		ofs << "Сумма Вашей покупки: " << ch.summ_sh() << endl;
+		ofs << "РЎСѓРјРјР° Р’Р°С€РµР№ РїРѕРєСѓРїРєРё: " << ch.summ_sh() << endl;
 	}
 	ofs.close();
-	cout << "Ваш чек готов" << endl;
+	cout << "Р’Р°С€ С‡РµРє РіРѕС‚РѕРІ" << endl;
 }
 
 void Check::parser(const Sklad& s)
 {
-	int kollich;
-	string name;
-	ifstream ifs("tovaru.txt"); // окрываем файл для чтения
+	ifstream ifs("tovaru.txt");
 	if (ifs.is_open())
 	{
 		string currstr;
-		while (!ifs.eof())
+		while (getline(ifs, currstr))
 		{
-			getline(ifs, currstr, '\n');
 			pair<string, int> res = delenie_str(currstr, s);
 			AddTovar(res.first, s, res.second);
 		}
 	}
+	else
+	{
+		cout << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°." << endl;
+	}
 	ifs.close();
-	//cout << "File has been written" << endl;
 }
 pair<string, int> Check::delenie_str(string str, const Sklad& s)
 {
@@ -122,7 +116,7 @@ pair<string, int> Check::delenie_str(string str, const Sklad& s)
 	}
 	if (flag == string::npos)
 	{
-		throw 1;// в строке нет ни одного названия товара
+		throw 1;// РІ СЃС‚СЂРѕРєРµ РЅРµС‚ РЅРё РѕРґРЅРѕРіРѕ РЅР°Р·РІР°РЅРёСЏ С‚РѕРІР°СЂР°
 	}
 
 	for (int i = 0; i < str.size(); i++)
