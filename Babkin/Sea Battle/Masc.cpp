@@ -1,37 +1,63 @@
 #include "matrix.h"
 #include "Logic_sam.h"
-
-void main()
+#include <iostream>
+using namespace std;
+int main()
 {
-	Player* user1, *user2, *tmp;
-	
+	PlayerSan* user1, *user2, *tmp;
+	int wink = 0; int proc;
 	user1 = new User;
-	user2 = new Comp;
-
-	while ()
+	user2 = new ComputerSan;
+	cout << "do you want to start a game?[1(y)/2(n)]\n";
+	cin >> proc;
+	while (proc == 1)
 	{
-		user1->Attack(); // это сработает, если функции виртуальные
-		user2->Check();
-		user->WriteAnswer();
-		if (переход хода)
+		int px,py,shipkind,rotation,cx,cy;
+		user1->Nullify();
+		user2->Nullify();
+		cout << user1->FieldGet();
+		cout << user2->FieldGet_op();
+		int loop = 1;
+		while (loop == 1)
 		{
-			tmp = user;
-			user = user2;
-			user2 = user;
+			cout << "Write coords for ship. Then you must write type of ship and rotation angle\n";
+			cin >> px;
+			cout << "\n";
+			cin >> py;
+			cout << "\n";
+			cin >> shipkind;
+			cout << "\n";
+			cin >> rotation;
+			cout << "\n";
+			user1->Placeship(px,py,shipkind,rotation);
+			cout << user1->FieldGet();
+			cout << "\n";
+			cout << user2->FieldGet_op();
+			cout << "If you want to place more ships press 1\n";
+			cin >> loop;
 		}
-	}
-
-	delete user;
-	delete user2;
-	
-	// battle plan
-	// 1. Nullify previous battle - for CPU and  Player
-	// 2. Place ships for Player
-	// 3. CPU places ships
-	// 4. Begin battle while (есть корабли)
-	// 5. Player Attack(GetField1FromCpu --> Check CPU --> отметить у себя -- > PlaceOnFieldTwoForPlayer --> Message)
-	// обмен указателей user, comp
-	// 6. CPU(2 cases:ifAnyPlayerShipGetHurt --> Try to guess --> IfHurt(If not HUrt)(If destroyed) --> begin of case1(FromTryToGuess)(begin of case2),randomAttackOn0 --> Ifhurt/notHurt --> message
-	// 7. BattleUntilWin
-	// 8. If player wants to restart go to first punct
+		user2->Placeship(0,0,0,0);
+		while (user1->CheckSells() != 0 && user2->CheckSells() != 0)
+		{
+			user1->SentAttack(px,py);
+			user2->GetResponse(px,py,*user1);
+			user2->SentAttack(cx,cy);
+			user1->GetResponse(cx,cy,*user2);
+			cout << user1->FieldGet();
+			cout << "\n";
+			cout << user2->FieldGet_op();
+		}
+		if (user1->CheckSells() == 0)
+		{
+			cout << "Human's win\n";
+		}
+		else
+		{
+			cout << "Human's defeat\n";
+		}
+		}
+		delete user1;
+		delete user2;
+		cout << "Do you want to play again?(1 for yes)\n";
+		cin >> proc;
 }
