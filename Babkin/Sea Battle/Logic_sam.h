@@ -187,6 +187,7 @@ class ComputerSan : public PlayerSan
     ~ComputerSan() {}
     void Placeship(int x, int y, int shipkind, int rotate)
     {
+        srand(time(0));
         for (int y = 3; y >= 0; y--)
         {
             while (stats[y] > 0)
@@ -205,6 +206,7 @@ class ComputerSan : public PlayerSan
                             logic = false;
                             break;
                         }
+                    }
                     if (logic)
                     {
                         for (int u = 0; u < y; u++)
@@ -212,10 +214,8 @@ class ComputerSan : public PlayerSan
                             (*field)(x, z - u) = 1.0;
                         }
                         stats[y] -= 1;
-                        break;
                     }
                     logic = true;
-                    }
                     for (int u = 0; u < y; u++)
                     {
                         if ((*field)(x+u , z-1) != 1.0 && (*field)(x + u , z + 1) != 1.0 && (*field)(x + u + 1, z - 1) != 1.0 && (*field)(x + u + 1 , z + 1) != 1.0 && (*field)(x+u - 1 , z - 1) != 1.0 && (*field)(x+u-1 , z+1) != 1.0 && (*field)(x + u + 1,z) != 1.0 && (*field)(x + u,z) != 5.0)
@@ -226,17 +226,16 @@ class ComputerSan : public PlayerSan
                             break;
                             logic = false;
                         }
-                        if (logic)
-                        {
-                            for (int u = 0; u < y; u++)
-                            {
-                                (*field)(x + u, z) = 1.0;
-                            }
-                            stats[y] -= 1;
-                            break;
-                        }
-                    logic = true;
                     }
+                    if (logic)
+                    {
+                        for (int u = 0; u < y; u++)
+                        {
+                            (*field)(x + u, z) = 1.0;
+                        }
+                        stats[y] -= 1;
+                    }
+                    logic = true;
                     for (int u = 0; u < y; u++)
                     {
                         if ((*field)(x-1 , z + u) != 1.0 && (*field)(x + 1 , z + u) != 1.0 && (*field)(x-1 , z + u + 1) != 1.0 && (*field)(x + 1 , z + u + 1) != 1.0 && (*field)(x-1 , z + u - 1) != 1.0 && (*field)(x+1 , z + u - 1) != 1.0 && (*field)(x , z + u + 1) != 1.0 && (*field)(x , z + u) != 5.0)
@@ -247,15 +246,15 @@ class ComputerSan : public PlayerSan
                             break;
                             logic = false;
                         }
-                        if (logic)
+                    }
+                    if (logic)
+                    {
+                        for (int u = 0; u < y; u++)
                         {
-                            for (int u = 0; u < y; u++)
-                            {
-                                (*field)(x - u, z) = 1.0;
-                            }
-                            stats[y] -= 1;
-                            break;
+                            (*field)(x - u, z) = 1.0;
                         }
+                        stats[y] -= 1;
+                        break;
                     }
                     logic = true;
                     for (int u = 0; u < y; u++)
@@ -268,15 +267,15 @@ class ComputerSan : public PlayerSan
                             break;
                             logic = false;
                         }
-                        if (logic)
+                    }
+                    if (logic)
+                    {
+                        for (int u = 0; u < y; u++)
                         {
-                            for (int u = 0; u < y; u++)
-                            {
-                                (*field)(x, z + u) = 1.0;
-                            }
-                            stats[y] -= 1;
-                            break;
+                            (*field)(x, z + u) = 1.0;
                         }
+                        stats[y] -= 1;
+                        break;
                     }
                 }
             }
@@ -284,6 +283,7 @@ class ComputerSan : public PlayerSan
     }
     void SentAttack(int x, int y)
     {
+        srand(time(0));
         for (int i = 1;i<11;i++)
         {
             for (int j = 1;j<11;j++)
