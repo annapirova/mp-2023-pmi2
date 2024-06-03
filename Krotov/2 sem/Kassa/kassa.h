@@ -38,9 +38,9 @@ class Check
 	std::vector<Tovar> tovari;
 	vector <Tovar>::iterator it;
 public:
-	void AddTovar(string name, const Sklad& s, int kolvo);
+	void AddTovar(string name, const Sklad& s, int kollichestvo);
 	friend ostream& operator<<(ostream& ostr, Check& ch);
-	void Delete_tovar(string name, Sklad s, int kolvo);
+	void Delete_tovar(string name, Sklad s, int kollichestvo);
 	int summ_sh();
 	void sort_ch();
 	void vuvod(Check& ch);
