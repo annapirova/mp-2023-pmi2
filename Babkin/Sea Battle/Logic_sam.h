@@ -27,7 +27,7 @@ public:
     }
     int CheckSells()
     {
-        int cells;
+        int cells = 0;
         for (int u = 1; u < 12; u++) { for (int q = 1; q < 12; q++) { if ((*field)(u, q) == 1.0) { cells += 1; } } }
         return cells;
     }
@@ -40,19 +40,19 @@ public:
             {
                 cout << "ship hurt\n";
                 (*field)(x,y) = 3.0;
-                (*conb.field_optional)(x,y) = 3.0;
+                conb.FieldGet_op()(x,y) = 3.0;
             }
             else
             {
-                cout << "ded ship lmao\n";
+                cout << "dead ship\n";
                 (*field)(x,y) = 3.0;
-                (*conb.field_optional)(x,y) = 3.0;
+                conb.FieldGet_op()(x,y) = 3.0;
             }
         }
         else
         {
             (*field)(x,y) = 2.0;
-            (*conb.field_optional)(x,y) = 2.0;
+            conb.FieldGet_op()(x,y) = 2.0;
         }
     }
     virtual void Placeship(int x, int y, int shipkind, int rotate) {}
@@ -187,7 +187,6 @@ class ComputerSan : public PlayerSan
     ~ComputerSan() {}
     void Placeship(int x, int y, int shipkind, int rotate)
     {
-        srand(time(0));
         for (int y = 3; y >= 0; y--)
         {
             while (stats[y] > 0)
@@ -199,6 +198,8 @@ class ComputerSan : public PlayerSan
                 {
                     for (int u = 0; u < y; u++)
                     {
+                        if ((*field)(x , z + 1) == 1.0 && u == 0)
+                        {break;}
                         if ((*field)(x-1 , z - u) != 1.0 && (*field)(x + 1 , z - u) != 1.0 && (*field)(x-1 , z - u - 1) != 1.0 && (*field)(x + 1 , z - u - 1) != 1.0 && (*field)(x-1 , z - u + 1) != 1.0 && (*field)(x+1 , z - u + 1) != 1.0 && (*field)(x , z - u - 1) != 1.0 && (*field)(x , z - u) != 5.0)
                         {}
                         else
@@ -207,7 +208,7 @@ class ComputerSan : public PlayerSan
                             break;
                         }
                     }
-                    if (logic)
+                    if (logic == true)
                     {
                         for (int u = 0; u < y; u++)
                         {
@@ -218,6 +219,8 @@ class ComputerSan : public PlayerSan
                     logic = true;
                     for (int u = 0; u < y; u++)
                     {
+                        if ((*field)(x - 1 , z) == 1.0 && u == 0)
+                        {break;}
                         if ((*field)(x+u , z-1) != 1.0 && (*field)(x + u , z + 1) != 1.0 && (*field)(x + u + 1, z - 1) != 1.0 && (*field)(x + u + 1 , z + 1) != 1.0 && (*field)(x+u - 1 , z - 1) != 1.0 && (*field)(x+u-1 , z+1) != 1.0 && (*field)(x + u + 1,z) != 1.0 && (*field)(x + u,z) != 5.0)
                         {
                         }
@@ -227,7 +230,7 @@ class ComputerSan : public PlayerSan
                             logic = false;
                         }
                     }
-                    if (logic)
+                    if (logic == true)
                     {
                         for (int u = 0; u < y; u++)
                         {
@@ -238,6 +241,8 @@ class ComputerSan : public PlayerSan
                     logic = true;
                     for (int u = 0; u < y; u++)
                     {
+                        if ((*field)(x , z - 1) == 1.0 && u == 0)
+                        {break;}
                         if ((*field)(x-1 , z + u) != 1.0 && (*field)(x + 1 , z + u) != 1.0 && (*field)(x-1 , z + u + 1) != 1.0 && (*field)(x + 1 , z + u + 1) != 1.0 && (*field)(x-1 , z + u - 1) != 1.0 && (*field)(x+1 , z + u - 1) != 1.0 && (*field)(x , z + u + 1) != 1.0 && (*field)(x , z + u) != 5.0)
                         {
                         }
@@ -247,11 +252,11 @@ class ComputerSan : public PlayerSan
                             logic = false;
                         }
                     }
-                    if (logic)
+                    if (logic == true)
                     {
                         for (int u = 0; u < y; u++)
                         {
-                            (*field)(x - u, z) = 1.0;
+                            (*field)(x, z+u) = 1.0;
                         }
                         stats[y] -= 1;
                         break;
@@ -259,6 +264,8 @@ class ComputerSan : public PlayerSan
                     logic = true;
                     for (int u = 0; u < y; u++)
                     {
+                        if ((*field)(x + 1 , z) == 1.0 && u == 0)
+                        {break;}
                         if ((*field)(x-u , z-1) != 1.0 && (*field)(x - u , z + 1) != 1.0 && (*field)(x - u + 1, z - 1) != 1.0 && (*field)(x - u + 1 , z + 1) != 1.0 && (*field)(x-u - 1 , z - 1) != 1.0 && (*field)(x-u-1 , y - z + 1) != 1.0 && (*field)(x - u - 1,z) != 1.0 && (*field)(x - u,z) != 5.0)
                         {
                         }
@@ -268,11 +275,11 @@ class ComputerSan : public PlayerSan
                             logic = false;
                         }
                     }
-                    if (logic)
+                    if (logic == true)
                     {
                         for (int u = 0; u < y; u++)
                         {
-                            (*field)(x, z + u) = 1.0;
+                            (*field)(x - u, z) = 1.0;
                         }
                         stats[y] -= 1;
                         break;
@@ -283,7 +290,6 @@ class ComputerSan : public PlayerSan
     }
     void SentAttack(int x, int y)
     {
-        srand(time(0));
         for (int i = 1;i<11;i++)
         {
             for (int j = 1;j<11;j++)
