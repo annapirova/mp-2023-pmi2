@@ -195,7 +195,7 @@ class ComputerSan : public PlayerSan
                     {
                         if ((*field)(x , z + 1) == 1.0 && u == 0)
                         {break;}
-                        if ((*field)(x-1 , z - u) != 1.0 && (*field)(x + 1 , z - u) != 1.0 && (*field)(x-1 , z - u - 1) != 1.0 && (*field)(x + 1 , z - u - 1) != 1.0 && (*field)(x-1 , z - u + 1) != 1.0 && (*field)(x+1 , z - u + 1) != 1.0 && (*field)(x , z - u - 1) != 1.0 && (*field)(x , z - u) != 5.0)
+                        if ((*field)(x-1 , z - u) != 1.0 && (*field)(x + 1 , z - u) != 1.0 && (*field)(x-1 , z - u - 1) != 1.0 && (*field)(x + 1 , z - u - 1) != 1.0 && (*field)(x-1 , z - u + 1) != 1.0 && (*field)(x+1 , z - u + 1) != 1.0 && (*field)(x , z - u - 1) != 1.0)
                         {}
                         else
                         {
@@ -208,8 +208,13 @@ class ComputerSan : public PlayerSan
                         for (int u = 0; u < y; u++)
                         {
                             (*field)(x, z - u) = 1.0;
+                            if ((*field)(x,z-u-1) == 5.0)
+                            {
+                                break;
+                            }
                         }
                         stats[y] -= 1;
+                        break;
                     }
                     logic = true;
                     for (int u = 0; u < y; u++)
@@ -221,8 +226,8 @@ class ComputerSan : public PlayerSan
                         }
                         else
                         {
-                            break;
                             logic = false;
+                            break;
                         }
                     }
                     if (logic == true)
@@ -230,8 +235,13 @@ class ComputerSan : public PlayerSan
                         for (int u = 0; u < y; u++)
                         {
                             (*field)(x + u, z) = 1.0;
+                            if ((*field)(x + u + 1,z) == 5.0)
+                            {
+                                break;
+                            }
                         }
                         stats[y] -= 1;
+                        break;
                     }
                     logic = true;
                     for (int u = 0; u < y; u++)
@@ -243,8 +253,8 @@ class ComputerSan : public PlayerSan
                         }
                         else
                         {
-                            break;
                             logic = false;
+                            break;
                         }
                     }
                     if (logic == true)
@@ -252,6 +262,10 @@ class ComputerSan : public PlayerSan
                         for (int u = 0; u < y; u++)
                         {
                             (*field)(x, z+u) = 1.0;
+                            if ((*field)(x,z+u+1) == 5.0)
+                            {
+                                break;
+                            }
                         }
                         stats[y] -= 1;
                         break;
@@ -266,8 +280,8 @@ class ComputerSan : public PlayerSan
                         }
                         else
                         {
-                            break;
                             logic = false;
+                            break;
                         }
                     }
                     if (logic == true)
@@ -275,6 +289,10 @@ class ComputerSan : public PlayerSan
                         for (int u = 0; u < y; u++)
                         {
                             (*field)(x - u, z) = 1.0;
+                            if ((*field)(x-u-1,z) == 5.0)
+                            {
+                                break;
+                            }
                         }
                         stats[y] -= 1;
                         break;
@@ -291,7 +309,7 @@ class ComputerSan : public PlayerSan
             {
                 if ((*field_optional)(i,j) == 3.0)
                 {
-                    if ((*field_optional)(i+1,j) != 2.0 || (*field_optional)(i+1,j) != 3.0 || (*field_optional)(i+1,j) != 5.0)
+                    if ((*field_optional)(i+1,j) != 2.0 && (*field_optional)(i+1,j) != 3.0 && (*field_optional)(i+1,j) != 5.0)
                     {
                         x = i + 1;
                         y = j;
@@ -299,7 +317,7 @@ class ComputerSan : public PlayerSan
                     }
                     else
                     {
-                        if ((*field_optional)(i-1,j) != 2.0 || (*field_optional)(i-1,j) != 3.0 || (*field_optional)(i-1,j) != 5.0)
+                        if ((*field_optional)(i-1,j) != 2.0 && (*field_optional)(i-1,j) != 3.0 && (*field_optional)(i-1,j) != 5.0)
                         {
                             x = i - 1;
                             y = j;
@@ -307,7 +325,7 @@ class ComputerSan : public PlayerSan
                         }
                         else
                         {
-                            if ((*field_optional)(i,j-1) != 2.0 || (*field_optional)(i,j-1) != 3.0 || (*field_optional)(i,j-1) != 5.0)
+                            if ((*field_optional)(i,j-1) != 2.0 && (*field_optional)(i,j-1) != 3.0 && (*field_optional)(i,j-1) != 5.0)
                             {
                                 x = i;
                                 y = j - 1;
@@ -315,7 +333,7 @@ class ComputerSan : public PlayerSan
                             }
                             else
                             {
-                                if ((*field_optional)(i,j+1) != 2.0 || (*field_optional)(i,j+1) != 3.0 || (*field_optional)(i,j+1) != 5.0)
+                                if ((*field_optional)(i,j+1) != 2.0 && (*field_optional)(i,j+1) != 3.0 && (*field_optional)(i,j+1) != 5.0)
                                 {
                                     x = i;
                                     y = j + 1;
