@@ -40,12 +40,13 @@ int main()
 		user2->Placeship(0,0,0,0);
 		while (user1->CheckSells()!= 0 && user2->CheckSells() != 0)
 		{
+			cx = 0;cy = 0;
 			cout << "Enter your coo-s\n";
 			cin >> px;
 			cin >> py;
 			user2->GetResponse(px,py,*user1);
-			user2->SentAttack(cx,cy);
-			user1->GetResponse(cx,cy,*user2);
+			tuple<int,int> pics = user2->SentAttack(cx,cy);
+			user1->GetResponse(get<0>(pics),get<1>(pics),*user2);
 			cout << user1->FieldGet();
 			cout << "\n";
 			cout << user1->FieldGet_op();
