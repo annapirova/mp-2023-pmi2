@@ -2,6 +2,7 @@
 #include "matrix.h"
 #include <iostream>
 #include <cstdlib>
+#include <tuple>
 class PlayerSan
 {
 protected:
@@ -31,7 +32,7 @@ public:
         for (int u = 1; u < 12; u++) { for (int q = 1; q < 12; q++) { if ((*field)(u, q) == 1.0) { cells += 1; } } }
         return cells;
     }
-    virtual void SentAttack(int x, int y) {}
+    virtual tuple<int,int> SentAttack(int x, int y) {return {0,0};}
     void GetResponse(int x, int y, PlayerSan& conb)
     {
         if ((*field)(x,y) == 1.0 || (*field)(x,y) == 3.0)
@@ -40,19 +41,19 @@ public:
             {
                 cout << "ship hurt\n";
                 (*field)(x,y) = 3.0;
-                conb.FieldGet_op()(x,y) = 3.0;
+                (*conb.field_optional)(x,y) = 3.0;
             }
             else
             {
                 cout << "dead ship\n";
                 (*field)(x,y) = 3.0;
-                conb.FieldGet_op()(x,y) = 3.0;
+                (*conb.field_optional)(x,y) = 3.0;
             }
         }
         else
         {
             (*field)(x,y) = 2.0;
-            conb.FieldGet_op()(x,y) = 2.0;
+            (*conb.field_optional)(x,y) = 2.0;
         }
     }
     virtual void Placeship(int x, int y, int shipkind, int rotate) {}
@@ -173,12 +174,6 @@ public:
             }
         }
     }
-    void SentAttack(int x,int y)
-    {
-        cout << "Insert coo-s here\n";
-        cin >> x;
-        cin >> y;
-    }
 };
 class ComputerSan : public PlayerSan
 {
@@ -288,7 +283,7 @@ class ComputerSan : public PlayerSan
             }
         }
     }
-    void SentAttack(int x, int y)
+    tuple<int,int> SentAttack(int x, int y)
     {
         for (int i = 1;i<11;i++)
         {
@@ -300,7 +295,7 @@ class ComputerSan : public PlayerSan
                     {
                         x = i + 1;
                         y = j;
-                        return;
+                        return {x,y};
                     }
                     else
                     {
@@ -308,7 +303,7 @@ class ComputerSan : public PlayerSan
                         {
                             x = i - 1;
                             y = j;
-                            return;
+                            return {x,y};
                         }
                         else
                         {
@@ -316,7 +311,7 @@ class ComputerSan : public PlayerSan
                             {
                                 x = i;
                                 y = j - 1;
-                                return;
+                                return {x,y};
                             }
                             else
                             {
@@ -324,7 +319,7 @@ class ComputerSan : public PlayerSan
                                 {
                                     x = i;
                                     y = j + 1;
-                                    return;
+                                    return {x,y};
                                 }
                             }
                         }
@@ -334,6 +329,6 @@ class ComputerSan : public PlayerSan
         }
         x = 1 + rand()%10;
         y = 1 + rand()%10;
-        return;
+        return {x,y};
     }
 };
