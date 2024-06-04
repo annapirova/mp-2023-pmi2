@@ -214,88 +214,93 @@ class ComputerSan : public PlayerSan
                             }
                         }
                         stats[y] -= 1;
-                        break;
                     }
-                    logic = true;
-                    for (int u = 0; u < y; u++)
-                    {
-                        if ((*field)(x - 1 , z) == 1.0 && u == 0)
-                        {break;}
-                        if ((*field)(x+u , z-1) != 1.0 && (*field)(x + u , z + 1) != 1.0 && (*field)(x + u + 1, z - 1) != 1.0 && (*field)(x + u + 1 , z + 1) != 1.0 && (*field)(x+u - 1 , z - 1) != 1.0 && (*field)(x+u-1 , z+1) != 1.0 && (*field)(x + u + 1,z) != 1.0 && (*field)(x + u,z) != 5.0)
-                        {
-                        }
-                        else
-                        {
-                            logic = false;
-                            break;
-                        }
-                    }
-                    if (logic == true)
-                    {
+                    else
+                    {  
+                        logic = true;
                         for (int u = 0; u < y; u++)
                         {
-                            (*field)(x + u, z) = 1.0;
-                            if ((*field)(x + u + 1,z) == 5.0)
+                            if ((*field)(x - 1 , z) == 1.0 && u == 0)
+                            {break;}
+                            if ((*field)(x+u , z-1) != 1.0 && (*field)(x + u , z + 1) != 1.0 && (*field)(x + u + 1, z - 1) != 1.0 && (*field)(x + u + 1 , z + 1) != 1.0 && (*field)(x+u - 1 , z - 1) != 1.0 && (*field)(x+u-1 , z+1) != 1.0 && (*field)(x + u + 1,z) != 1.0 && (*field)(x + u,z) != 5.0)
                             {
+                            }
+                            else
+                            {
+                                logic = false;
                                 break;
                             }
                         }
-                        stats[y] -= 1;
-                        break;
-                    }
-                    logic = true;
-                    for (int u = 0; u < y; u++)
-                    {
-                        if ((*field)(x , z - 1) == 1.0 && u == 0)
-                        {break;}
-                        if ((*field)(x-1 , z + u) != 1.0 && (*field)(x + 1 , z + u) != 1.0 && (*field)(x-1 , z + u + 1) != 1.0 && (*field)(x + 1 , z + u + 1) != 1.0 && (*field)(x-1 , z + u - 1) != 1.0 && (*field)(x+1 , z + u - 1) != 1.0 && (*field)(x , z + u + 1) != 1.0 && (*field)(x , z + u) != 5.0)
+                        if (logic == true)
                         {
+                            for (int u = 0; u < y; u++)
+                            {
+                                (*field)(x + u, z) = 1.0;
+                                if ((*field)(x + u + 1,z) == 5.0)
+                                {
+                                    break;
+                                }
+                            }
+                            stats[y] -= 1;
                         }
                         else
                         {
-                            logic = false;
-                            break;
-                        }
-                    }
-                    if (logic == true)
-                    {
-                        for (int u = 0; u < y; u++)
-                        {
-                            (*field)(x, z+u) = 1.0;
-                            if ((*field)(x,z+u+1) == 5.0)
+                            logic = true;
+                            for (int u = 0; u < y; u++)
                             {
-                                break;
+                                if ((*field)(x , z - 1) == 1.0 && u == 0)
+                                {break;}
+                                if ((*field)(x-1 , z + u) != 1.0 && (*field)(x + 1 , z + u) != 1.0 && (*field)(x-1 , z + u + 1) != 1.0 && (*field)(x + 1 , z + u + 1) != 1.0 && (*field)(x-1 , z + u - 1) != 1.0 && (*field)(x+1 , z + u - 1) != 1.0 && (*field)(x , z + u + 1) != 1.0 && (*field)(x , z + u) != 5.0)
+                                {
+                                }
+                                else
+                                {
+                                    logic = false;
+                                    break;
+                                }
+                            }
+                            if (logic == true)
+                            {
+                                for (int u = 0; u < y; u++)
+                                {
+                                    (*field)(x, z+u) = 1.0;
+                                    if ((*field)(x,z+u+1) == 5.0)
+                                    {
+                                        break;
+                                    }
+                                }
+                                stats[y] -= 1;
+                            }
+                            else
+                            {
+                                logic = true;
+                                for (int u = 0; u < y; u++)
+                                {
+                                    if ((*field)(x + 1 , z) == 1.0 && u == 0)
+                                    {break;}
+                                    if ((*field)(x-u , z-1) != 1.0 && (*field)(x - u , z + 1) != 1.0 && (*field)(x - u + 1, z - 1) != 1.0 && (*field)(x - u + 1 , z + 1) != 1.0 && (*field)(x-u - 1 , z - 1) != 1.0 && (*field)(x-u-1 , y - z + 1) != 1.0 && (*field)(x - u - 1,z) != 1.0 && (*field)(x - u,z) != 5.0)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        logic = false;
+                                        break;
+                                    }
+                                }
+                                if (logic == true)
+                                {
+                                    for (int u = 0; u < y; u++)
+                                    {
+                                        (*field)(x - u, z) = 1.0;
+                                        if ((*field)(x-u-1,z) == 5.0)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    stats[y] -= 1;
+                                }
                             }
                         }
-                        stats[y] -= 1;
-                        break;
-                    }
-                    logic = true;
-                    for (int u = 0; u < y; u++)
-                    {
-                        if ((*field)(x + 1 , z) == 1.0 && u == 0)
-                        {break;}
-                        if ((*field)(x-u , z-1) != 1.0 && (*field)(x - u , z + 1) != 1.0 && (*field)(x - u + 1, z - 1) != 1.0 && (*field)(x - u + 1 , z + 1) != 1.0 && (*field)(x-u - 1 , z - 1) != 1.0 && (*field)(x-u-1 , y - z + 1) != 1.0 && (*field)(x - u - 1,z) != 1.0 && (*field)(x - u,z) != 5.0)
-                        {
-                        }
-                        else
-                        {
-                            logic = false;
-                            break;
-                        }
-                    }
-                    if (logic == true)
-                    {
-                        for (int u = 0; u < y; u++)
-                        {
-                            (*field)(x - u, z) = 1.0;
-                            if ((*field)(x-u-1,z) == 5.0)
-                            {
-                                break;
-                            }
-                        }
-                        stats[y] -= 1;
-                        break;
                     }
                 }
             }
