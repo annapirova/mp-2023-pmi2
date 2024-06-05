@@ -1,0 +1,4 @@
+tomato 2
+beer 1
+protein 3
+watermelon 1
